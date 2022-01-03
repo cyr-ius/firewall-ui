@@ -1,0 +1,30 @@
+{% extends "base_firewall.html" %}
+{% set tab_services=url_for('firewall.generic_tab', section=section, item=item, tabname='services') %}
+{% set tab_ports=url_for('firewall.generic_tab', section=section, item=item, tabname='ports') %}
+{% set tab_protocols=url_for('firewall.generic_tab', section=section, item=item, tabname='protocols') %}
+{% set tab_sourceports=url_for('firewall.generic_tab', section=section, item=item, tabname='sourceports') %}
+{% set tab_nat=url_for('firewall.generic_tab', section=section, item=item, tabname='nat') %}
+{% set tab_pat=url_for('firewall.generic_tab', section=section, item=item, tabname='pat') %}
+{% set tab_icmptypes=url_for('firewall.generic_tab', section=section, item=item, tabname='icmptypes') %}
+{% set tab_richrules=url_for('firewall.generic_tab', section=section, item=item, tabname='richrules') %}
+{% set tab_interfaces=url_for('firewall.generic_tab', section=section, item=item, tabname='interfaces') %}
+{% set tab_sources=url_for('firewall.generic_tab', section=section, item=item, tabname='sources') %}
+{% block content scoped%}
+<div class="container-fluid">
+  {% block tab_nav %}
+  <ul class="nav nav-tabs">
+    <li class="nav-item"><a class="nav-link {{ active(request.path,tab_services) }}" href="{{tab_services}}">{% trans %}Services{% endtrans %}</a></li>
+    <li class="nav-item"><a class="nav-link {{ active(request.path,tab_ports) }}" href="{{tab_ports}}">{% trans %}Ports{% endtrans %}</a></li>
+    <li class="nav-item"><a class="nav-link {{ active(request.path,tab_protocols) }}" href="{{tab_protocols}}">{% trans %}Protocols{% endtrans %}</a> </li>
+    <li class="nav-item"><a class="nav-link {{ active(request.path,tab_sourceports) }}" href="{{tab_sourceports}}">{% trans %}Source Ports{% endtrans %}</a> </li>
+    <li class="nav-item"><a class="nav-link {{ active(request.path,tab_nat) }}" href="{{tab_nat}}">{% trans %}NAT{% endtrans %}</a></li>
+    <li class="nav-item"><a class="nav-link {{ active(request.path,tab_pat) }}" href="{{tab_pat}}">{% trans %}PAT{% endtrans %}</a></li>
+    <li class="nav-item"><a class="nav-link {{ active(request.path,tab_icmptypes) }}" href="{{tab_icmptypes}}">{% trans %}ICMP Filter{% endtrans %}</a> </li>
+    <li class="nav-item"><a class="nav-link {{ active(request.path,tab_richrules) }}" href="{{tab_richrules}}">{% trans %}Rich Rules{% endtrans %}</a> </li>
+    <li class="nav-item"><a class="nav-link {{ active(request.path,tab_interfaces) }}" href="{{tab_interfaces}}">{% trans %}Interfaces{% endtrans %}</a></li>
+    <li class="nav-item"><a class="nav-link {{ active(request.path,tab_sources) }}" href="{{tab_sources}}">{% trans %}Sources{% endtrans %}</a></li>
+  </ul>
+  {% endblock %}
+  {% block tab_content %}{% endblock %}
+</div>
+{% endblock %}

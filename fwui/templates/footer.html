@@ -1,0 +1,45 @@
+
+
+ <nav class="navbar navbar-expand-lg navbar-light bg-light px-2 py-0">
+    <ul class="navbar-nav">
+        <span><strong><a href="https://github.com/cyr-ius/firewall-ui">{{ SITE_NAME }}</a> <small>v{{VERSION}}</small></strong><small> Copyright &copy; 2021 - All rights reserved.</small></span>
+    </ul>
+    <ul class="navbar-nav ms-md-auto">
+        <span class="navbar-text">Automatic Helpers:</span>
+        <li class="nav-link dropup">
+                <a class="text-reset text-decoration-none dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ g.automatic_helpers }}
+                </a>
+                <ul class="dropdown-menu" style="">
+                    <li><a class="dropdown-item" href="{{ url_for('main.actions', automatic_helpers='yes') }}">yes</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('main.actions', automatic_helpers='no') }}">no</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('main.actions', automatic_helpers='system') }}">system</a></li>
+                </ul>
+        </li>
+        <span class="navbar-text px-1">Denied log:</span>
+        <li class="nav-link dropup">
+                <a class="text-reset text-decoration-none dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ g.denied_log }}
+                </a>
+                <ul class="dropdown-menu" style="">
+                    <li><a class="dropdown-item" href="{{ url_for('main.actions', denied_log='all') }}">all</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('main.actions', denied_log='unicast') }}">unicast</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('main.actions', denied_log='broadcast') }}">broadcast</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('main.actions', denied_log='multicast') }}">multicast</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('main.actions', denied_log='off') }}">off</a></li>
+                </ul>
+        </li>
+        <span class="navbar-text px-1">Panic mode</span>
+        <li class="nav-link px-2">
+            <div class="form-check form-switch">
+                <input class="form-check-input header-checkbox" type="checkbox" {% if panic_mode %}checked{% endif %} onclick="location.href='{{ url_for('main.actions', panic_mode=g.panic_mode) }}';">
+            </div>
+        </li>
+        <span class="navbar-text px-1">Lockdown</span>
+        <li class="nav-link px-2">
+            <div class="form-check form-switch">
+                <input class="form-check-input header-checkbox" type="checkbox" {% if g.lockdown_mode %}checked{% endif %} onclick="location.href='{{ url_for('main.actions', lockdown_mode=g.lockdown_mode) }}';">
+            </div>
+        </li>        
+    </ul>
+</nav>

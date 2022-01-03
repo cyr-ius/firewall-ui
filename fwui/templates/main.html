@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row row-cols-1">
+    <div class="col-4">
+        <div class="card">
+            <div class="card-header">{% trans %}Connections {% endtrans %}</div>
+            <div class="card-body">
+                {% for connection in connections %}
+                {% for key, values in connection.items() %}
+                <p class="card-text">
+                    {% for value in values %}
+                <blockquote class="blockquote"><a href='#' data-bs-toggle="modal" data-bs-target="#changeZone" data-value="{{ value }}" data-type="interface">{{ value }}</a></blockquote>
+                <figcaption class="blockquote-footer"><cite title="Source Title">{% trans %}zone {% endtrans %}:</cite> {{key }}</figcaption>
+                {% endfor %}
+                </p>
+                {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card">
+            <div class="card-header">{% trans %}Sources{% endtrans %}</div>
+            <div class="card-body">
+                <p class="card-text">
+                    {% for source in sources %}
+                    {% for key, values in source.items() %}
+                    {% for value in values %}
+                <blockquote class="blockquote">
+                    <a href='#' data-bs-toggle="modal" data-bs-target="#changeZone" data-value="{{ value }}" data-type="source">{{ value }}</a>
+                </blockquote>
+                <figcaption class="blockquote-footer"><cite title="Source Title">{% trans %}zone{% endtrans %}:</cite> {{key }}</figcaption>
+                {% endfor %}
+                {% endfor %}
+                {% endfor %}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card">
+            <div class="card-header">{% trans %}Active Zones{% endtrans %}</div>
+            <div class="card-body">
+                <p class="card-text">
+                {% for key,value in actives_zones.items() %}
+                    {% for item in value.values()%}
+                    <figure>
+                        <blockquote class="blockquote">
+                            <p>{{ key }}</p>
+                        </blockquote>
+                        <figcaption class="blockquote-footer">
+                            <cite title="Source Title">{% trans %}interfaces{% endtrans %}:</cite> {{item.0}}
+                        </figcaption>
+                    </figure>
+                    {% endfor %}
+                {% endfor %}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 mt-4">
+        <div class="card mb-4 rounded-3 shadow-sm">
+            <h5 class="card-header">{% trans %}Zones{% endtrans %}</h5>
+            <div class="card-body">
+                <p class="card-text">
+                    {% for zone in zones%}
+                    <span class="badge rounded-pill bg-dark text-light ">
+                        <a class="text-reset text-decoration-none" href="{{ url_for('firewall.generic_tab', section='zones', item=zone, tabname='services') }}">{{zone}}</a>
+                    </span>
+                    {% endfor%}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="card mb-4 rounded-3 shadow-sm">
+            <h5 class="card-header">{% trans %}Logs{% endtrans %} (extract)</h5>
+            <div class="card-body">
+                <p class="card-text">
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extramodals %}
+{% include './modals/changeZone.html' %}
+{% endblock%}

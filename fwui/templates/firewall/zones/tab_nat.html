@@ -1,0 +1,13 @@
+{% extends 'firewall/zones.html' %}
+{% block tab_content%}
+<form id="form_add" class="row needs-validation mt-4 mb-4 align-items-center" novalidate>{{ form.csrf_token }}
+{{ form.hidden_fields }}
+  <div class="col form-inline-css">
+    <div class="form-check form-switch">
+      <input onchange="$(this).submit();" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" {% if settings %} checked {% endif %}>
+      {{ form.nat.label }}
+    </div>
+  </div>
+</form>
+<hr class="mt-0 mb-4" />
+{% endblock %}

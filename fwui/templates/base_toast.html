@@ -1,0 +1,26 @@
+<div id="toast" role="status" aria-live="polite" aria-atomic="true" class="position-relative bd-toasts">
+    <div class="toast-container position-absolute bottom-0 end-0 p-3">
+        <div class="toast_template" style="display:none;">
+            <div class="toast-header">
+                <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect class="toast-color" width="100%" height="100%" fill="green"></rect></svg>
+                <strong class="toast-title me-auto">Firewall UI</strong>
+                {# <small>1s ago</small> #}
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body"></div>
+        </div>
+        {% with messages = get_flashed_messages(with_categories=true) %} 
+        {% if messages|length > 0 %} 
+            {% for category,message in messages %}
+            <div id="toastBox" class="toast" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header {{category}}">
+                    <strong class="toast-title me-auto">Flash message</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">{{message}}</div>
+            </div>
+            {% endfor %} 
+        {% endif %} 
+        {% endwith %}
+    </div>
+</div>

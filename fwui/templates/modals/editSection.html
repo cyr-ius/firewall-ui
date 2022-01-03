@@ -1,0 +1,24 @@
+  <div class="modal fade" id="modal_edit_section" tabindex="-1" aria-labelledby="modal_section" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-secondary p-2">
+          <h5 class="modal-title" id="modal_section">{{ item }}</h5>
+          {{ render.cancel_button() }}
+        </div>
+        <div class="modal-body">
+          <form id="modal_form_section" class="needs-validation" method="POST" novalidate>
+            {{ form.csrf_token }}
+            {{ form.form_errors }}
+            {% for field in form if field.id not in ['submit','csrf_token']%}
+            <div class="mb-3">{{ render.field(field, label_before=true) }}</div>
+            {% endfor %}
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button id="section_edit" type="button" class="btn btn-sm btn-secondary" data-uri="{{ url_for('api.section.item', section=section, item=item) }}">
+            <i class="bi-save px-1"></i>{{ _("Save") }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

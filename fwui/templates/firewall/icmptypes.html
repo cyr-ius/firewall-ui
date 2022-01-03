@@ -1,0 +1,12 @@
+{% extends "base_firewall.html" %}
+{% set tab_destination=url_for('firewall.generic_tab', section=section, item=item, tabname='destination') %}
+{% block content scoped %}
+<div class="container-fluid">
+  {% block tab_nav%}
+  <ul class="nav nav-tabs">
+    <li class="nav-item"><a class="nav-link {{ active(request.path,tab_destination) }}" href="{{tab_destination}}">{{ _("Destination") }}</a></li>
+  </ul>
+  {% endblock %}
+  {% block tab_content %}{% endblock %}
+</div>
+{% endblock %}

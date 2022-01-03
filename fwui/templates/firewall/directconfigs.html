@@ -1,0 +1,17 @@
+{% extends "base_firewall.html" %}
+{% set tab_chains=url_for('firewall.specific_tab', section=section, tabname='chains') %}
+{% set tab_rules=url_for( 'firewall.specific_tab', section=section, tabname='rules') %}
+{% set tab_passthrough=url_for( 'firewall.specific_tab', section=section, tabname='passthrough') %}
+{% block content scoped %}
+<div class="container-fluid">
+    {% block tab_nav%}
+    <ul class="nav nav-tabs">
+        <li class="nav-item"><a class="nav-link {{ active(request.path,tab_chains) }}" href="{{tab_chains}}">{{ _("Chains")}}</a></li>
+        <li class="nav-item"><a class="nav-link {{ active(request.path,tab_rules) }}" href="{{tab_rules}}">{{ _("Rules")}}</a></li>
+        <li class="nav-item"><a class="nav-link {{ active(request.path,tab_passthrough) }}" href="{{tab_passthrough}}">{{ _("Passthrough")}}</a></li>
+    </ul>
+    {% endblock %}
+    {% block tab_content %}{% endblock %}
+</div>
+{% endblock %}
+    

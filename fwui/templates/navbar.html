@@ -1,0 +1,58 @@
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light pb-1 pt-0 pe-1">
+        <ul class="navbar-nav">
+            <li class="nav-item mt-2 ms-3">
+                <a role="button" type="button"id="sidebarCollapse"><i class="bi bi-justify"></i></a>
+            </li>
+            <span class="navbar-text ms-3">Mode:</span>
+            <li class="nav-item">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="text-danger">{{ session.config_mode }}</span>
+                    </a>
+                    <ul class="dropdown-menu" style="">
+                        <li><a class="dropdown-item" href="{{ url_for('main.actions', config_mode='runtime') }}">Runtime</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('main.actions', config_mode='permanent') }}">Permanent</a></li>
+                    </ul>
+            </li>   
+            <span class="navbar-text ms-3">Default Zone: </span>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="defaultZoneDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ g.default_zone }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="defaultZoneDropdown" style="z-index:1030">
+                    {% for zone in g.zones%}
+                    <a class="dropdown-item" href="{{ url_for('main.actions', default_zone=zone) }}">{{zone}}</a>
+                    {% endfor %}
+                </div>
+            </li>                                
+        </ul> 
+        <ul class="navbar-nav ms-md-auto">
+                {% if session.config_mode == 'permanent' %}
+                <div class="btn-group">
+                {% if section and item %}
+                    <button id="section_delete" class="btn btn-danger btn-sm" data-message="Are you sur to delete {{item}} ?" data-uri="{{url_for('api.section.item', section=section, item=item)}}">
+                        <span>{{ _("Delete") }}</span>
+                    </button>
+                    <button id="section_reset" class="btn btn-warning btn-sm" data-message="Are you sur to reset {{item}} ?" data-uri="{{url_for('api.section.reset', section=section, item=item)}}">
+                        <span>{{ _("Reset") }}</span>
+                    </button>
+                    <button class="btn btn-secondary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#modal_edit_section">
+                        <span>{{ _("Edit")}}</span>
+                    </button>
+                {% endif %}
+                    <button class="btn btn-success btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="{{ 'visually-hidden' if section and item }}">{{ _("New") }}</span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="sectionDropdownMenu" style="z-index:1030;">
+                        {% for label in g.modal_sections.keys() %}
+                        <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal_new_{{label}}" data-uri="{{ url_for('api.section.section', section=label) }}">{{ _(label.capitalize()) }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}        
+            <li class="nav-item"><a class="btn btn-secondary btn-sm ms-2" href="{{ url_for('main.actions', reload=true) }}"><i class="bi-load"></i>Reload</a></li>
+            <li class="nav-item"><a class="btn btn-secondary btn-sm ms-2" href="{{ url_for('main.actions', completreload=true) }}">Full Reload</a></li>
+            <li class="nav-item"><a class="btn btn-secondary btn-sm ms-2" href="{{ url_for('main.actions', runtimetopermanent=true) }}">To Permanent</a></li>     
+        </ul>   
+</nav>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% block modal_changezone %}
+<div class="modal fade" id="changeZone" tabindex="-1" aria-labelledby="changeZone" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h5 class="modal-title" id="changeZone"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="modalChangeZone" method="POST" action="/changezone">{{ frm_change_zone.csrf_token }}
+      <div class="modal-body">
+        {% for item in frm_change_zone if item.id not in ['submit','csrf_token']%}
+         {{ item }}
+         {% endfor %}
+      </div>
+      <div class="modal-footer">
+       {{ render.button(frm_change_zone.submit, class="btn btn-sm btn-secondary") }}
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+var changeZone = document.getElementById('changeZone')
+changeZone.addEventListener('show.bs.modal', function (event) {
+  var button = event.relatedTarget
+  var dataRecipient = button.getAttribute('data-value')
+  var dataType = button.getAttribute('data-type')
+  var modalTitle = changeZone.querySelector('.modal-title')
+  var modalBodyInput = changeZone.querySelector('.modal-body input')
+  var source = changeZone.querySelector('#source')
+  var type = changeZone.querySelector('#type')
+
+  modalTitle.textContent = 'Change zone for ' + dataRecipient
+  source.value = dataRecipient
+  type.value = dataType
+})
+</script>
+{% endblock %}
+

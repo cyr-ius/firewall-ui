@@ -1,0 +1,17 @@
+{% if security.registerable or security.recoverable or security.confirmable or security.unified_signin %}
+  {# {% if not skip_login_menu %}
+  <div class="mx-2"><a href="{{ url_for_security('login') }}{% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}"><small>{{ _fsdomain('Login') }}</small></a></div>
+  {% endif %} #}
+  {% if security.unified_signin and not skip_login_menu %}
+  <div class="mx-2"><a href="{{ url_for_security('us_signin') }}{% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}"><small>{{ _fsdomain("Unified Sign In") }}</small></a><br/></div>
+  {% endif %}
+  {% if security.registerable %}
+  <div class="mx-2"><a href="{{ url_for_security('register') }}{% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}"><small>{{ _fsdomain('Register') }}</small></a><br/></div>
+  {% endif %}
+  {% if security.recoverable %}
+  <div class="mx-2"><a href="{{ url_for_security('forgot_password') }}"><small>{{ _fsdomain('Forgot password') }}</small></a><br/></div>
+  {% endif %}
+  {% if security.confirmable %}
+  <div class="mx-2"><a href="{{ url_for_security('send_confirmation') }}"><small>{{ _fsdomain('Confirm account') }}</small></a></div>
+  {% endif %}
+{% endif %}

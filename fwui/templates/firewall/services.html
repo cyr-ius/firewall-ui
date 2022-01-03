@@ -1,0 +1,20 @@
+{% extends "base_firewall.html" %}
+{% set tab_ports=url_for('firewall.generic_tab', section=section, item=item, tabname='ports') %}
+{% set tab_protocols=url_for('firewall.generic_tab', section=section, item=item, tabname='protocols') %}
+{% set tab_sourceports=url_for('firewall.generic_tab', section=section, item=item, tabname='sourceports') %}
+{% set tab_modules=url_for('firewall.generic_tab', section=section, item=item, tabname='modules') %}
+{% set tab_destination=url_for('firewall.generic_tab', section=section, item=item, tabname='destination') %}
+{% block content scoped %}
+<div class="container-fluid">
+  {% block tab_nav%}
+  <ul class="nav nav-tabs">
+    <li class="nav-item"><a class="nav-link {{ active(request.path,tab_ports) }}" href="{{ tab_ports }}">{{ _("Ports") }}</a></li>
+    <li class="nav-item"><a class="nav-link {{ active(request.path,tab_protocols) }}" href="{{tab_protocols}}">{{ _("Protocols") }}</a></li>
+    <li class="nav-item"><a class="nav-link {{ active(request.path,tab_sourceports) }}" href="{{tab_sourceports}}">{{ _("Source Ports") }}</a></li>
+    <li class="nav-item"><a class="nav-link {{ active(request.path,tab_modules) }}" href="{{tab_modules}}">{{ _("Modules") }} </a></li>
+    <li class="nav-item"><a class="nav-link {{ active(request.path,tab_destination) }}" href="{{tab_destination}}">{{ _("Destination") }}</a></li>
+  </ul>
+  {% endblock %}
+  {% block tab_content %}{% endblock %}
+</div>
+{% endblock %}

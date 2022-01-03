@@ -1,0 +1,12 @@
+<form id="form_add" class="row row-cols-lg-auto g-1 needs-validation mt-1 mb-2 align-items-center" novalidate>
+  {{ form.csrf_token }}
+  {% for field in form %}
+  <div class="col-auto">{{ field }}</div>
+  <div class="invalid-feedback">{{ field.error }}</div>  
+  <div class="valid-feedback"></div>  
+  {% endfor %}
+  <div class="col-auto">
+    <input id="submit" class="btn btn-secondary" name="submit" type="submit" value="Add">
+  </div>
+</form>
+{{ form.form_errors }}

@@ -1,0 +1,23 @@
+{%if current_user.is_authenticated %}
+{% extends "base.html" %}
+{% block title %}{{ SITE_NAME }} - Error{% endblock %}
+{% else %}
+<title>{{ SITE_NAME }} - Error</title>
+{% endif%}
+{% block content %}
+<!-- Main content -->
+<section class="content">
+    <div class="error-page">
+        <h2 class="headline text-yellow">403</h2>
+        <div class="error-content">
+            <h3>
+                <i class="bi bi-exclamation-triangle text-yellow"></i> Oops! Access denied
+            </h3>
+            <p>
+                You don't have permission to access this page
+                You may <a href="{{ url_for('main.index') }}">return to the dashboard</a>.
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}

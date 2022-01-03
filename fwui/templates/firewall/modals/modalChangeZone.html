@@ -1,0 +1,45 @@
+{% load django_bootstrap5 %}
+{% block modal_changezone %}
+<div class="modal fade" id="modalChangeZone" tabindex="-1" aria-labelledby="ChangeZoneLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h5 class="modal-title" id="ChangeZoneLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="modalChangeZone" method="POST" action="{% url 'fwui:changezone' %}">{% csrf_token %}
+      <div class="modal-body">
+        
+         {% bootstrap_form form_changezone size="sm" layout='inline' %}
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-secondary" onclick="submit();">Save</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+<script>
+var modalChangeZone = document.getElementById('modalChangeZone')
+modalChangeZone.addEventListener('show.bs.modal', function (event) {
+  // Button that triggered the modal
+  var button = event.relatedTarget
+  // Extract info from data-bs-* attributes
+  var recipient = button.getAttribute('data-bs-value')
+  var type = button.getAttribute('data-bs-type')
+  // If necessary, you could initiate an AJAX request here
+  // and then do the updating in a callback.
+  //
+  // Update the modal's content.
+  var modalTitle = modalChangeZone.querySelector('.modal-title')
+  var modalBodyInput = modalChangeZone.querySelector('.modal-body input')
+  var id_source = modalChangeZone.querySelector('#id_source')
+  var id_type = modalChangeZone.querySelector('#id_type')
+
+  modalTitle.textContent = 'Change zone for ' + recipient
+  id_source.value = recipient
+  id_type.value = type
+})
+</script>

@@ -1,0 +1,13 @@
+{% extends "blank.html" %}
+{% block content %}
+{% include "security/_messages.html" %}
+<form action="{{ url_for_security('send_confirmation') }}" method="POST" name="send_confirmation_form" novalidate>
+  {{ send_confirmation_form.hidden_tag() }}
+  <div class="input-group mb-3">
+    {{ render.field(send_confirmation_form.email) }}
+  </div>
+  {{ render_field_errors(send_confirmation_form.csrf_token) }}
+  {{ render_errors }} 
+  <div class="d-grid gap-2">{{ render.button(send_confirmation_form.submit) }}</div>  
+</form>
+{% endblock %}

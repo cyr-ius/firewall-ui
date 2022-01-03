@@ -1,0 +1,18 @@
+{% extends "base_firewall.html" %}
+{% set tab_contexts=url_for('firewall.specific_tab', section=section, tabname='contexts') %}
+{% set tab_commands=url_for('firewall.specific_tab', section=section, tabname='commands') %}
+{% set tab_users=url_for('firewall.specific_tab', section=section, tabname='users') %}
+{% set tab_uids=url_for('firewall.specific_tab', section=section, tabname='uids') %}
+{% block content scoped %}
+<div class="container-fluid">
+    {% block tab_nav%}
+    <ul class="nav nav-tabs">
+        <li class="nav-item"><a class="nav-link {{ active(request.path,tab_contexts) }}" href="{{tab_contexts}}">{{ _("Contexts") }}</a></li>
+        <li class="nav-item"><a class="nav-link {{ active(request.path,tab_commands) }}" href="{{tab_commands}}">{{ _("Commands") }}</a></li>
+        <li class="nav-item"><a class="nav-link {{ active(request.path,tab_users) }}" href="{{tab_users}}">{{ _("Username") }}</a></li>
+        <li class="nav-item"><a class="nav-link {{ active(request.path,tab_uids) }}" href="{{tab_uids}}">{{ _("User identity") }}</a></li>
+    </ul>
+    {% endblock %}
+    {% block tab_content %}{% endblock %}
+</div>
+{% endblock %}

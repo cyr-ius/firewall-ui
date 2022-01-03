@@ -1,0 +1,11 @@
+.venv
+.vscode
+db.sqlite3
+__pycache__
+migrations
+flask_session
+database
+static
+.env-dev.py
+env.dev.py
+docker-compose.dev*

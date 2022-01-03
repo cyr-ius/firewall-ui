@@ -1,0 +1,68 @@
+{% import "_macros.html" as render %}
+{% from "security/_macros.html" import render_field_with_errors, render_field, render_field_errors %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  {% block head %}
+    {% block metas %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    {% endblock %} 
+    {% block extrameta%}{% endblock %}
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}">
+    {% assets "css_main" -%}<link rel="stylesheet" href="{{ ASSET_URL }}">{%- endassets %}
+    {% assets "css_custom" -%}<link rel="stylesheet" href="{{ ASSET_URL }}">{%- endassets %}
+    {% block extracss%}{% endblock %}
+    <title>{% block title %}{{ SITE_NAME }}{% endblock %}</title>
+  {% endblock %}
+  </head>
+  <body>
+  {% block  body %}  
+  <div class="container-fluid">
+    <div class="row flex-nowrap">
+      <!-- Sidebar Container -->
+      <aside id="sidebar" class="col-auto px-0 {% if g.collapsed %}active{%endif%}">
+      {% include "sidebar.html" %}
+      </aside>    
+      <!-- Content -->
+      <div class="col p-0 m-0">
+        {# {% debug %} #}
+        <!-- Header -->
+        <header>
+            {% include "navbar.html" %}
+        </header>    
+        <!-- Contains page content -->
+        <main class="container-fluid my-1">
+            {# {% include "subbar.html" %}  #}
+            {% block content_header %} {% endblock %}
+            {% block content %}{% endblock %}
+        </main>      
+        <footer>
+          {% include "footer.html" %}
+        </footer>  
+      </div>      
+    </div>
+  </div>
+  <!-- Toast box -->
+  {% block taost %}
+  {% include "base_toast.html" with context %}
+  {% endblock %}
+  <!-- Extra toast -->
+  {% block extratoasts %}{% endblock %}
+  <!-- Modals-->
+  {% block modals %}
+  {% include './modals/newSection.html' %}
+  {% include './modals/yesnoBox.html' %}
+  {% endblock %}
+  <!-- Extra modals -->
+  {% block extramodals %}{% endblock %}    
+  <!-- Scripts -->
+  {% block scripts %}
+  {% assets "js_main" -%}<script type="text/javascript" src="{{ ASSET_URL }}"></script>{%- endassets %}
+  {% assets "js_custom" -%}<script type="text/javascript" src="{{ ASSET_URL }}"></script>{%- endassets %}
+  {% endblock %}
+  <!-- Extra scripts -->
+  {% block extrascripts %}{% endblock %}
+{% endblock  body %}
+  </body>
+</html>

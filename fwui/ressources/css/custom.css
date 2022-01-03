@@ -1,0 +1,169 @@
+body {
+	font-family:Source Sans Pro, sans-serif;
+	font-weight:400;
+}
+
+main {
+	min-height:calc(100vh - 6rem);
+}
+
+#sidebar {
+	background-color:#b1263b;
+	max-width:200px;
+}
+
+#sidebar .nav-item ul li a {
+	text-decoration: none;
+	color: white;
+	display: block;
+	padding-left: 15px;
+	padding-right: 25px;
+}
+
+#sidebar .nav-item ul li a:hover{
+	text-decoration: none;
+	display: block;
+	/* background-color: #962e3e; */
+	
+}
+
+#sidebar .nav-item ul li a.active{
+	text-decoration: none;
+	display: block;
+	/* background-color: #962e3e; */
+	color: black
+	
+}
+
+#sidebar.active {
+    min-width: 76px;
+    max-width: 76px;
+    text-align: center;
+}
+
+#sidebar.active span {
+    display: none !important;
+}
+
+#sidebar.active ul ul a {
+    padding: 10px !important;
+}
+
+#sidebar.active #brand {
+	display: unset !important;
+	margin-right: 0px !important;
+	margin-left: 0px !important;	
+}
+
+#sidebar.active #logo {
+	margin-right: 0px !important;
+	margin-left: 0px !important;
+}
+
+#sidebar.active ul, #sidebar.active nav {
+	align-items: unset !important;
+}
+
+#sidebar.active .dropdown-toggle::after {
+    top: auto;
+    bottom: 10px;
+    right: 50%;
+    -webkit-transform: translateX(50%);
+    -ms-transform: translateX(50%);
+    transform: translateX(50%);
+}
+
+#sidebar.active #menu .nav-link{
+	width: unset;
+}
+
+#sidebar.active #menu li ul{
+	width: 150px;
+	background-color: rgb(170, 75, 59);
+	z-index: 100;
+	text-align: left;
+	padding-left: 5px;
+}
+
+#sidebar.active #menu li ul a{
+	padding: 0px !important;
+}
+
+#menu .nav-link {
+	width: 160px;
+}
+#menu a:hover {
+    color: #000000 ! important;
+}
+
+#menu .nav-link.active, .nav-pills .show > .nav-link {
+    /* background-color: #333a40; */
+    color: #2b0108 !important;
+}
+
+@media (min-width:568px) and (max-width: 768px) {
+    /* 80px and its content aligned to centre. Pushing it off the screen with the
+       negative left margin
+    */
+    #sidebar {
+        min-width: 76px;
+        max-width: 176px;
+        text-align: center;
+    }
+
+	/* Toggling the sidebar header content, hide the big heading [h3] and showing the small heading [strong] and vice versa*/
+	#sidebar span {
+		display: none !important;
+	}
+
+	/* Same dropdown links padding*/
+	#sidebar ul ul a {
+		padding: 10px !important;
+	}
+
+	#sidebar #brand {
+		display: unset !important;
+		margin-right: 0px !important;
+		margin-left: 0px !important;	
+	}
+
+	#sidebar #logo {
+		margin-right: 0px !important;
+		margin-left: 0px !important;
+	}
+
+	#sidebar ul, #sidebar nav {
+		align-items: unset !important;
+	}
+
+	/* Changing the arrow position to bottom center position, 
+	translateX(50%) works with right: 50% 
+	to accurately  center the arrow */
+	#sidebar .dropdown-toggle::after {
+		top: auto;
+		bottom: 10px;
+		right: 50%;
+		-webkit-transform: translateX(50%);
+		-ms-transform: translateX(50%);
+		transform: translateX(50%);
+	}
+
+	#menu .nav-link {
+		width: unset !important;
+	}
+}
+
+@media (max-width: 568px) {
+	#sidebar, #sidebar.active {
+		margin-left: 0px;
+	}
+	
+	#sidebar {
+		display:none;
+	}
+
+	#sidebar.active {
+		display:unset;
+	}	
+}
+

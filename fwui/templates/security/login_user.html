@@ -1,0 +1,20 @@
+{% extends "blank.html" %} 
+{% block content %} 
+{% include "security/_messages.html" %}
+<form  action="{{ url_for_security('login') }}"  method="POST"  name="login_user_form"  novalidate>
+  {{ login_user_form.hidden_tag() }}
+  <div class="input-group mb-3">
+    {{ render.field(login_user_form.email, placeholder="Email or account") }}
+  </div>
+  <div class="input-group mb-3">
+    {{ render.field(login_user_form.password) }}
+  </div>
+  <div class="mb-3">
+  {{ render.field_switch(login_user_form.remember)}}
+  </div>
+  {{ render_field_errors(login_user_form.csrf_token) }}
+  {{ render_errors }} 
+  <div class="d-grid gap-2">{{ render.button(login_user_form.submit) }}</div>
+</form>
+{% include "security/_menu.html" %} 
+{% endblock %}

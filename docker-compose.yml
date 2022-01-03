@@ -1,0 +1,19 @@
+version: "3.7"
+services:
+  wireguard:
+    image: firewallui:latest
+    build:
+      context: .
+      dockerfile: ./Dockerfile    
+    container_name: firewallui
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Paris
+      - SALT=123456789
+      - SECRET_KEY=123456789
+    ports:
+      - 8000:8000/tcp

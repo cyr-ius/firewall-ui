@@ -1,0 +1,67 @@
+{% macro field(field) %}
+  {% if kwargs.label_before %}{{ field.label(class="form-label col-form-label mb-1 col-auto") }}{% endif %}
+  <div class="col-auto">
+    {{ field(class="form-control is-invalid" if field.errors else "form-control", placeholder=field.label.text, **kwargs)|safe }}
+    <div class="invalid-feedback">{{ field.errors }}</div>    
+  </div>
+  {% if kwargs.label_after %}{{ field.label(class="form-label col-form-label mt-1 col-auto") }}{% endif %}
+{% endmacro%}
+
+{% macro field_switch(field) %}
+  <div class="form-check form-switch">
+  {{ field(class_="form-check-input", **kwargs) | safe}}
+  {{ field.label(class_="form-check-label", **kwargs) | safe}}
+  <div class="invalid-feedback">{{ field.errors }}</div>   
+  </div>
+{% endmacro %}
+
+{% macro field_check(field) %}
+  <div class="form-check">
+  {{ field(class_="form-check-input", **kwargs) | safe}}
+  {{ field.label(class_="form-check-label", **kwargs) | safe}}
+  <div class="invalid-feedback">{{ field.errors }}</div>   
+  </div>
+{% endmacro %}
+
+{% macro field_select(field) %}
+  {% if kwargs.label_before %}{{ field.label(class="form-label") }}{% endif %}
+  {{ field(class="form-select is-invalid" if field.errors else "form-select", **kwargs)|safe }}
+  {% if kwargs.label_after %}{{ field.label(class="form-label") }}{% endif %}   
+  <div class="invalid-feedback">{{ field.errors }}</div>   
+{% endmacro %}
+
+{% macro button(field) %}
+  {{ field(class="btn btn-primary", **kwargs) | safe}}
+{% endmacro%}
+
+{% macro cancel_button() %}
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+{% endmacro%}
+
+{% macro form_floating(field) %}
+{% if kwargs.label %}
+<div class="form-floating">
+  {{ field(**kwargs)|safe }}
+  {{ field.label }}
+</div>
+{% else %}
+<div class="form-floating">{{field}}</div>
+{% endif %}
+{% endmacro %}
+
+{% macro flash_message(category)%}
+<!-- Flash message -->
+{% with messages = get_flashed_messages(with_categories=true, category_filter=category) %}
+  {% if messages %}
+    {% for category, message in messages %}
+    <div class="col-auto mx-5 my-2">
+    <div class="alert alert-warning alert-dismissible fade show {{category}}" role="alert" >
+      <small>{{ message }}</small>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+{% endmacro%}
+

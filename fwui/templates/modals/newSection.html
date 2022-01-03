@@ -1,0 +1,23 @@
+{% for item, form in g.modal_sections.items() %}
+<div class="modal fade" id="modal_new_{{item}}" tabindex="-1" aria-labelledby="{{section}}" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-success p-2">
+        <h5 class="modal-title" id="{{item}}">{{_("Add")}} {{item}}</h5>
+          {{ render.cancel_button() }}
+      </div>
+      <form id="frm_modal_section_{{item}}" class="needs-validation" method="post" action="{{ url_for('api.section.section', section=item) }}" data-attr="{{item}}" novalidate>
+      {{ form.csrf_token }}
+      <div class="modal-body">
+          {% for field in form if field.id not in ['submit','csrf_token']%}
+          <div class="mb-3">{{ render.field(field,label_before=true) }}</div>
+          {% endfor %}
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-sm btn-secondary" onclick="section_create('#frm_modal_section_{{item}}');">Add</a>
+      </div>
+      </form>      
+    </div>
+  </div>
+</div>
+{% endfor %}

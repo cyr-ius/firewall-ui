@@ -1,0 +1,26 @@
+{% load tags %}
+{% load i18n %}
+{% load django_bootstrap5 %}
+{% block modal_init %}
+{% for modal in modalTemplate%}
+<div class="modal fade" id="modal{{modal.0}}Init" tabindex="-1" aria-labelledby="{{section}}Label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h5 class="modal-title" id="{{modal.0}}Label">{% translate "Add" %} {{modal.0}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="modalForm{{modal.0}}Init" method="POST" action="/fwui/{{modal.0}}/new/">{% csrf_token %}
+          {% bootstrap_form_errors modal.1 %}
+          {% bootstrap_form modal.1 size="sm" layout='inline' %}
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-secondary" onclick="document.forms['modalForm{{modal.0}}Init'].submit();">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% endblock %}

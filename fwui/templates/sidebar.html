@@ -1,0 +1,119 @@
+{% block sidebar %}
+<nav class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+    <a id="brand" href="/" class="d-flex align-items-center py-1  mb-md-0 me-md-auto text-white text-decoration-none">
+    <img id="logo" class="d-inline-block me-3" src="{{ url_for('static', filename='firewall-applet.png') }}" width="28">
+        <span class="fs-6 d-sm-inline">{{ SITE_NAME }}</span>
+    </a>
+    <hr class="my-0" style="width:100%;" />
+    <ul class="navbar-nav flex-column mb-auto align-items-center align-items-sm-start" id="menu">
+        <li class="nav-item">
+            <a class="nav-link px-0 align-middle text-white {% if section == 'zones' %}active{% endif %}" data-bs-toggle="collapse" data-bs-target="#zones-collapse" aria-expanded="{{ 'true' if section == 'zones'  else 'false' }}" href="#">
+                <i class="bi-layers-half"></i><span class="ms-1 d-sm-inline">Zones</span>
+            </a>
+            <div id="zones-collapse" class="collapse nav flex-column ms-1 {% if section == 'zones' and g.collapsed==false %}show{% endif %}" data-bs-parent="#sidebar" >
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small navbar-nav-scroll" style="--bs-scroll-height: 400px;">
+                    {% for zone in g.zones %}
+                    <li>
+                        <a class="{{ active(request.path, '/'+ zone +'/') }}" href="{{ url_for('firewall.generic_tab', section='zones', item=zone, tabname='services') }}">{{zone}}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </li>    
+        <li class="nav-item">
+            <a class="nav-link px-0 align-middle text-white {% if section == 'services' %}active{% endif %}" data-bs-toggle="collapse" data-bs-target="#services-collapse" aria-expanded="{{ 'true' if section == 'services'  else 'false' }}" href="#">
+                <i class="bi-box-seam"></i><span class="ms-1 d-sm-inline">Services</span>
+            </a>
+            <div id="services-collapse" class="collapse nav flex-column ms-1 {% if section == 'services' and g.collapsed==false %}show{% endif %}" data-bs-parent="#sidebar">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small navbar-nav-scroll"  style="--bs-scroll-height: 400px;">
+                    {% for service in g.services %}
+                    <li>
+                        <a class="link-dark {{ active(request.path,'/'+ service +'/') }}" href="{{ url_for('firewall.generic_tab', section='services', item=service, tabname='ports') }}">{{service}}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link px-0 align-middle text-white {% if section == 'ipsets' %}active{% endif %}" data-bs-toggle="collapse" data-bs-target="#ipsets-collapse" aria-expanded="{{ 'true' if section == 'ipsets'  else 'false' }}" href="#">
+                <i class="bi-bricks"></i><span class="ms-1 d-sm-inline">IPsets</span> 
+            </a>
+            <div id="ipsets-collapse" class="collapse  nav flex-column ms-1 {% if section == 'ipsets' and g.collapsed==false  %}show{% endif %}" data-bs-parent="#sidebar">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small navbar-nav-scroll"  style="--bs-scroll-height: 400px;">
+                    {% for ipset in g.ipsets %}
+                    <li>
+                        <a class="link-dark {{ active(request.path,'/'+ ipset +'/') }}" href="{{ url_for('firewall.generic_tab', section='ipsets', item=ipset, tabname='inputs') }}">{{ipset}}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link px-0 align-middle text-white {% if section == 'icmptypes' %}active{% endif %}" data-bs-toggle="collapse" data-bs-target="#icmptypes-collapse" aria-expanded="{{ 'true' if section == 'icmptypes'  else 'false' }}" href="#">
+                <i class="bi-code-square" aria-hidden="true"></i><span class="ms-1 d-sm-inline">ICMP Types</span>
+            </a>
+            <div id="icmptypes-collapse" class="collapse nav flex-column ms-1 {% if section == 'icmptypes' and g.collapsed==false  %}show{% endif %}" data-bs-parent="#sidebar">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small navbar-nav-scroll"  style="--bs-scroll-height: 400px;">
+                    {% for icmptype in g.icmptypes %}
+                    <li>
+                        <a class="link-dark {{ active(request.path,'/'+ icmptype +'/') }}" href="{{ url_for('firewall.generic_tab', section='icmptypes', item=icmptype, tabname='destination') }}">{{icmptype}}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link align-middle px-0 text-white {% if section == 'helpers' %}active{% endif %}" data-bs-toggle="collapse" data-bs-target="#assistants-collapse" aria-expanded="{{ 'true' if section == 'helpers'  else 'false' }}" href="#">
+                <i class="bi-life-preserver" aria-hidden="true"></i><span class="ms-1 d-sm-inline">Helpers</span>
+            </a>
+            <div id="assistants-collapse" class="collapse nav flex-column ms-1 {% if section == 'helpers' and g.collapsed==false  %}show{% endif %}" data-bs-parent="#sidebar">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small navbar-nav-scroll"  style="--bs-scroll-height: 400px;">
+                    {% for helper in g.helpers %}
+                    <li>
+                        <a class="link-dark {{ active(request.path,'/'+ helper+'/') }}" href="{{ url_for('firewall.generic_tab', section='helpers', item=helper, tabname='ports') }}">{{helper}}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link align-middle px-0 text-white {% if section == 'directconfigs' %}active{% endif %}"  href="{{ url_for('firewall.specific_tab', section='directconfigs', tabname='chains')}}">
+                <i class="bi-bullseye" aria-hidden="true"></i><span class="ms-1 d-sm-inline">Direct config</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link align-middle px-0 text-white {% if section == 'whitelists' %}active{% endif %}" href="{{ url_for('firewall.specific_tab', section='whitelists', tabname='contexts') }}">
+                <i class="bi-lock" aria-hidden="true"></i><span class="ms-1 d-sm-inline">White list</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link align-middle px-0 text-white {% if section == 'logs' %}active{% endif %}" href="{{ url_for('main.logs')}}">
+                <i class="bi-newspaper" aria-hidden="true"></i><span class="ms-1 d-sm-inline">Logs</span>
+            </a>
+        </li>
+    </ul>
+     <hr>
+    <div class="dropdown dropup pb-1">
+        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+            {%if current_user.gravatar_url %}
+            <img src="{{current_user.gravatar_url}}" alt="hugenerd" width="30" height="30" class="rounded-circle">
+            {% else %}
+            <i class="bi-person" style="font-size:30px"></i>
+            {% endif %}
+            <span class="d-none d-sm-inline mx-1">{{ current_user.username}}</span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+            <li><a class="dropdown-item" href="{{ url_for('accounts.profile')}}">Profile</a></li>
+            <li><a class="dropdown-item" href="{{ url_for_security('change_password')}}">Change Password</a></li>
+            <li><a class="dropdown-item" href="{{ url_for_security('two_factor_setup')}}">TOTP</a></li>
+            {% if current_user.has_role('admin')%}
+            <li><a class="dropdown-item" href="{{ url_for('accounts.advanced')}}">Advanced settings</a></li>
+            {% endif %}
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" onclick="location.href='{{ url_for_security('logout') }}';">Sign out</a></li>
+        </ul>
+    </div>     
+</nav>
+{% endblock %}

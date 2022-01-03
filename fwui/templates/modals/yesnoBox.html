@@ -1,0 +1,17 @@
+{% block modal_yesno %}
+<div class="modal fade" id="yesno" tabindex="-1" aria-labelledby="yesno" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-danger">
+        <h6 class="modal-title" id="yesno">{{ _("Are you sur") }} ?</h6>
+        {{ render.cancel_button()}}
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+          <button type="button" class="btn-valid btn btn-danger btn-sm" data-bs-dismiss="modal" aria-label="Yes" value="True">Yes</a>
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal" aria-label="No" value="False">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock modal_yesno %}

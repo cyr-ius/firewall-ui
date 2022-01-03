@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block body%}
+  <div class="container h-100 d-flex min-vh-100"> 
+    <div class="col-xs-2 col-3 m-auto">  
+      <div class="card shadow-sm">
+        <h2 class="card-header text-center text-muted fw-bold">{{ SITE_NAME }}</h2>
+        <div class="card-body ">
+          {% block content %}{% endblock %}
+        </div>
+        <div class="card-footer text-center text-muted">
+          <small class="text-muted">Powered by <a href="https://github.com/cyr-ius/{{ SITE_NAME }}">{{ SITE_NAME }}</a></small>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% assets "js_login" -%}<script type="text/javascript" src="{{ ASSET_URL }}"></script>{%- endassets %}
+  {% block extrascripts %}{% endblock %}  
+{% endblock %}  

@@ -1,0 +1,43 @@
+version: "3.6"
+services:
+  wui:
+    build:
+      context: https://github.com/cyr-ius/firewall-ui.git#master
+      dockerfile: Dockerfile
+    container_name: fui-app
+    restart: unless-stopped
+    volumes:
+      - static_volume:/app/static
+      - database_volume:/app/database
+      - /etc/timezone:/etc/timezone:ro
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Paris
+      - SALT=0123456789
+      - SECRET_KEY=01234567890123456789
+      - MAIL_SERVER=smtp.gmail.com
+      - MAIL_PORT=587
+      - MAIL_USE_TLS=True
+      - MAIL_USERNAME=change-me@localohst
+      - MAIL_PASSWORD=yyyyyyyy
+      - LOG_LEVEL=INFO
+      - USERNAME=me
+      - PASSWORD=xxxxxxxxx
+      - USER_MAIL=change-me@localohst
+
+  web:
+    image: nginx:stable-alpine
+    container_name: wui-web
+    restart: unless-stopped
+    depends_on:
+      - wui
+    volumes:
+      - static_volume:/var/www/html/static
+      - ./site.conf:/etc/nginx/conf.d/default.conf
+    environment:
+      - TZ=Europe/Paris
+
+volumes:
+  static_volume:
+  database_volume:

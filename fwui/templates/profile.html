@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% set active_page = "profile" %}
+{% block title %}My Profile - {{ SITE_NAME }}{% endblock %}
+{% block content_header %}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <ol class="breadcrumb">
+        <li class="active"><i class="bi bi-person-circle"></i> Profile</li>
+    </ol>
+</section>
+{% endblock %}
+{% block content %}
+ <!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Edit my profile</h3>
+                </div>
+                <div class="box-body">
+                    <!-- Custom Tabs -->             
+                    <div class="nav-tabs-custom" id="tabs">
+                        <nav class="nav nav-tabs" id="tablist">
+                            <a class="nav-link {% if request.path == url_for('accounts.profile') %}active{% endif%}" href="{{ url_for('accounts.profile') }}">Personal Information</a>
+                            <a class="nav-link {% if request.path == url_for_security('change_password') %}active{% endif%}" href="{{ url_for_security('change_password') }}">Change Password</a>
+                            <a class="nav-link {% if request.path == url_for_security('two_factor_setup') %}active{% endif%}" href="{{ url_for_security('two_factor_setup') }}">Authentication TOTP</a>
+                            {% if current_user.has_role('admin') %}
+                            <a class="nav-link {% if request.path == url_for('accounts.advanced') %}active{% endif%}" href="{{ url_for('accounts.advanced') }}">Advanced settings</a>
+                            {% endif%}
+                        </nav>    
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active mt-1" id="tabs-personal" role="tabpanel">
+                            {% block tabcontent %}{% endblock %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
