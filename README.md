@@ -91,7 +91,7 @@ You will find in the docker directory, a `docker-compose` file which allows you 
 
 * In a Production environment, prefer used unicorn (or other WSGI) :
 
-`gunicorn --bind :8000 --workers 3 'fwui:create_app()'`
+`gunicorn --bind :8000 --workers 3 'app:create_app()'`
 
 Be careful in this case, you must expose the static content (css, png, etc ..) with a web server type Apache server, Nginx, etc ...
 
