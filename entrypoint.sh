@@ -9,4 +9,4 @@ flask db upgrade --directory $dbm
 # Assets
 flask assets build
 
-exec gunicorn --bind 0.0.0.0:8000 --workers 2 'fwui:create_app()' "$@"
+exec gunicorn --bind 0.0.0.0:8000 --workers 3 'app:create_app()' "$@"

@@ -5,6 +5,9 @@
 	"settings": {
 		"cSpell.enabled": true,
 		"editor.formatOnSave": true,
+		"python.linting.pycodestyleArgs": [
+			"--ignore=W503, E501"
+		],		
 		"python.linting.flake8Args": [
 			"--ignore=E501,D100,D101,D102,D103"
 		],
@@ -128,7 +131,7 @@
 			"yesno",
 			"znmgnx"
 		],
-		"python.pythonPath": "/media/datas/firewall-ui/.venv/bin/python",
+		"python.pythonPath": ".venv/bin/python",
 		"cSpell.language": "en,en-US,en-GB"
 	}
 }

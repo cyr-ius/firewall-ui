@@ -15,7 +15,6 @@ from flask_babel import Babel
 
 from werkzeug.middleware.proxy_fix import ProxyFix
 
-from fwui.models.views import RoleView
 from .forms.security import ExtendedRegisterForm
 from firewall import client as firewall_client
 from .services.filters import active
@@ -71,7 +70,7 @@ def create_app(config=None):
     app.wsgi_app = ProxyFix(app.wsgi_app)
 
     # Load default configuration
-    app.config.from_object("fwui.config")
+    app.config.from_object("app.config")
 
     # Load config file from FLASK_CONF env variable
     if "FLASK_CONF" in os.environ:

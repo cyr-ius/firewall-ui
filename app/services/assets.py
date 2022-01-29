@@ -50,8 +50,8 @@ js_main = Bundle(
 )
 
 js_custom = Bundle(
-    "../fwui/ressources/js/custom.js", filters="rjsmin", output="js/custom.js"
+    "../app/ressources/js/custom.js", filters="rjsmin", output="js/custom.js"
 )
 css_custom = Bundle(
-    "../fwui/ressources/css/custom.css", filters="cssmin", output="css/custom.css"
+    "../app/ressources/css/custom.css", filters="cssmin", output="css/custom.css"
 )
