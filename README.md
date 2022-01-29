@@ -1,8 +1,9 @@
+
 # FirewallUI
+
 ## Web Interface for firewallD
 
 FirewallUI is a Web Interface to control [FirewallD](https://firewalld.org/).
-
 
 Thanks to this application, you can consult, modify, delete any element of your firewall using your preferred browser.
 
@@ -10,13 +11,13 @@ Unlike the native `firewalld-cmd` commands, with **FirewallUI** you can define r
 
 **FirewallUI** integrates a two-factor authentication module. It allows you to activate the TOTP (time-based On-time Password)
 
-**FirewallUI** is developed using the [*Flask Framework*](https://flask.palletsprojects.com) and [*Boostrap 5*](https://getbootstrap.com/) for the graphic elements
-
+**FirewallUI** is developed using the [*Flask Framework*](https://flask.palletsprojects.com) and [*Bootstrap 5*](https://getbootstrap.com/) for the graphic elements
 
 ![Screenshot!](https://github.com/cyr-ius/firewall-ui/blob/master/screenshot.png "Dashboard")
 
 ----------------
-#### Development
+
+### Development
 
 To check out the source repository, you can use:
 
@@ -24,40 +25,62 @@ To check out the source repository, you can use:
 
 This will create a local copy of the repository.
 
-####  Language Translations
+### Language Translations
 
 Firewalld uses GNU `gettext` for localization support.
 
-####  Docker
+### Docker
 
 You will find in the docker directory, a `docker-compose` file which allows you to run **FirewallUI** with an Nginx reverse proxy.
 
-#### Environnement variables
+### Environnement variables
 
-###### Random key - allows to encrypt the essential elements [MANDATORY]
+#### Random key - allows to encrypt the essential elements [MANDATORY]
+
 `SECRET_KEY=`
-###### Debug mode (True/False) default:False
+
+#### Debug mode (True/False) default:False
+
 `DEBUG=`
 
-###### Set smtp server default:None
+#### Set smtp server default:None
+
 `MAIL_SERVER=`
-###### Set port smtp server default:25
+
+#### Set port smtp server default:25
+
 `MAIL_PORT=`
-###### Set user to send to smtp server default:None
+
+#### Set user to send to smtp server default:None
+
 `MAIL_USERNAME=`
-###### Set password for user smtp default:None
+
+#### Set password for user smtp default:None
+
 `MAIL_PASSWORD=`
-###### Use TLS (True/False) default:False
+
+#### Use TLS (True/False) default:False
+
 `MAIL_USE_TLS=`
-###### Use SSL (True/False) default:False
+
+#### Use SSL (True/False) default:False
+
 `MAIL_USE_SSL=`
-###### The identifier /etc/machine-id. This will display the journalctl
+
+#### The identifier /etc/machine-id. This will display the journalctl
+
 `MACHINE_ID=`
-###### Administrator of FirewallUI
+
+#### Administrator of FirewallUI
+
 `USERNAME=`
-###### Password=
+
+#### Password
+
 `PASSWORD=`
-###### Email=
+
+#### Email
+
 `USER_MAIL=`
 
 #### Run Server
@@ -66,8 +89,7 @@ You will find in the docker directory, a `docker-compose` file which allows you 
 
 `SECRET_KEY=0000 FLASK_ENV="development" /usr/bin/python3 -m flask run`
 
-
-* In a Production envirnoment, prefer used unicorn (or other WSGI) :
+* In a Production environment, prefer used unicorn (or other WSGI) :
 
 `gunicorn --bind :8000 --workers 3 'fwui:create_app()'`
 
@@ -90,8 +112,7 @@ Flask-Babel2.0.0
 
 all packages in requirements.txt
 
---------------------------
 ### ToDo
 
 * Add a connector to use an LDAP authentication backend
-* Add second factor authentication through a Yubikey key
+* Add second factor authentication through a Yubikey key.
