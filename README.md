@@ -10,17 +10,17 @@ Unlike the native `firewalld-cmd` commands, with **FirewallUI** you can define r
 
 **FirewallUI** integrates a two-factor authentication module. It allows you to activate the TOTP (time-based On-time Password)
 
-**FirewallUI** is developed using the [*Django Framework*](https://www.djangoproject.com/) and [*Boostrap 5*](https://getbootstrap.com/) for the graphic elements
+**FirewallUI** is developed using the [*Flask Framework*](https://flask.palletsprojects.com) and [*Boostrap 5*](https://getbootstrap.com/) for the graphic elements
 
 
-![Screenshot!](https://github.com/cyr-ius/firewallui/blob/master/screenshot.png "Dashboard")
+![Screenshot!](https://github.com/cyr-ius/firewall-ui/blob/master/screenshot.png "Dashboard")
 
 ----------------
 #### Development
 
 To check out the source repository, you can use:
 
-  `git clone https://github.com/cyr-ius/firewallui.git`
+  `git clone https://github.com/cyr-ius/firewall-ui.git`
 
 This will create a local copy of the repository.
 
@@ -38,26 +38,27 @@ You will find in the docker directory, a `docker-compose` file which allows you 
 `SECRET_KEY=`
 ###### Debug mode (True/False) default:False
 `DEBUG=`
-###### Allow host default:127.0.0.1
-`ALLOWED_HOSTS=`
+
 ###### Set smtp server default:None
-`SMTP_SERVER=`
+`MAIL_SERVER=`
 ###### Set port smtp server default:25
-`SMTP_PORT=`
+`MAIL_PORT=`
 ###### Set user to send to smtp server default:None
-`SMTP_USERNAME=`
+`MAIL_USERNAME=`
 ###### Set password for user smtp default:None
-`SMTP_PASSWORD=`
+`MAIL_PASSWORD=`
 ###### Use TLS (True/False) default:False
-`SMTP_TLS=`
+`MAIL_USE_TLS=`
+###### Use SSL (True/False) default:False
+`MAIL_USE_SSL=`
 ###### The identifier /etc/machine-id. This will display the journalctl
 `MACHINE_ID=`
 ###### Administrator of FirewallUI
-`DJANGO_SUPERUSER_USERNAME=`
+`USERNAME=`
 ###### Password=
-`DJANGO_SUPERUSER_PASSWORD=`
+`PASSWORD=`
 ###### Email=
-`DJANGO_SUPERUSER_EMAIL=`
+`USER_MAIL=`
 
 #### Run Server
 
