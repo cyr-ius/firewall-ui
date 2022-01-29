@@ -32,13 +32,11 @@ COPY entrypoint.sh .
 RUN chmod +x entrypoint.sh
 
 WORKDIR /app
-COPY ./fwui /app/fwui
+COPY ./app /app/fwui
 COPY ./static /app/static
 
 ENV VIRTUAL_ENV /env
 ENV PATH /env/bin:$PATH
-
-ENV FLASK_APP=fwui
 
 EXPOSE 8000
 
