@@ -62,28 +62,33 @@ You will find in the docker directory, a `docker-compose` file which allows you 
 
 #### Run Server
 
-* You can launch an instance of firewallui in a development environment:
+* You can launch an instance of firewall-ui in a development environment:
 
-`python3 manage.py makemigrations`
+`SECRET_KEY=0000 FLASK_ENV="development" FLASK_APP="fwui" /usr/bin/python3 -m flask run`
 
-`python3 manage.py migrate`
-
-`python manage.py createsuperuser --noinput`
-
-`python3 manage.py runserver`
 
 * In a Production envirnoment, prefer used unicorn (or other WSGI) :
 
-`gunicorn --bind :8000 --workers 3 firewallui.wsgi:application`
+`gunicorn --bind :8000 --workers 3 'fwui:create_app()'`
 
 Be careful in this case, you must expose the static content (css, png, etc ..) with a web server type Apache server, Nginx, etc ...
 
-### Packages requirements
+### Flask packages requirements
 
-Django 3.2.6
-django-otp 1.0.6
-qrcode 7.2
-django-bootstrap5 2.1.1
+Flask 2.0.2
+Flask-Assets 2.0
+Flask-Login 0.5.0
+Flask-Mail 0.9.1
+Flask-SQLAlchemy 2.5.1
+Flask-Migrate 3.1.0
+Flask-Session 0.4.0
+Flask-SeaSurf 0.3.1
+Flask-WTF 1.0.0
+Flask-Admin 1.5.8
+Flask-Security-Too 4.1.2
+Flask-Babel2.0.0
+
+all packages in requirements.txt
 
 --------------------------
 ### ToDo
