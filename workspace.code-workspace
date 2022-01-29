@@ -7,7 +7,7 @@
 		"editor.formatOnSave": true,
 		"python.linting.pycodestyleArgs": [
 			"--ignore=W503, E501"
-		],		
+		],
 		"python.linting.flake8Args": [
 			"--ignore=E501,D100,D101,D102,D103"
 		],
@@ -48,6 +48,7 @@
 			"fwui",
 			"getattr",
 			"getenv",
+			"gettext",
 			"gunicorn",
 			"Gunicorn",
 			"GUNICORN",
@@ -83,6 +84,7 @@
 			"otptoken",
 			"pptp",
 			"prohib",
+			"pycodestyle",
 			"pyfile",
 			"qrcode",
 			"qrcodes",
@@ -121,14 +123,17 @@
 			"uids",
 			"unreach",
 			"unstyled",
+			"venv",
 			"werkzeug",
 			"wgclients",
 			"wggs",
 			"wgserver",
 			"wgsettings",
+			"WSGI",
 			"wtforms",
 			"xlink",
 			"yesno",
+			"Yubikey",
 			"znmgnx"
 		],
 		"python.pythonPath": ".venv/bin/python",
