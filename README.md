@@ -64,7 +64,7 @@ You will find in the docker directory, a `docker-compose` file which allows you 
 
 * You can launch an instance of firewall-ui in a development environment:
 
-`SECRET_KEY=0000 FLASK_ENV="development" FLASK_APP="fwui" /usr/bin/python3 -m flask run`
+`SECRET_KEY=0000 FLASK_ENV="development" /usr/bin/python3 -m flask run`
 
 
 * In a Production envirnoment, prefer used unicorn (or other WSGI) :
