@@ -16,7 +16,9 @@
     <div class="alert alert-warning {{ category }} p-0" role="alert">
     {% for category, message in messages %}
       <div>
-          <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+          <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="{{category}}">
+            <use xlink:href="#exclamation-triangle-fill"/>
+          </svg>
           <small>{{ message }}</small>
       </div>
     {% endfor %}

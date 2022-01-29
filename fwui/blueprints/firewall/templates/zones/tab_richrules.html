@@ -1,0 +1,432 @@
+{% extends 'zones.html' %} {% block tab_content%}
+<form id="form_add" class="row g-1 needs-validation mt-1 mb-2 align-items-center" novalidate>
+  {{ form.csrf_token }}
+  <div>{{ form.rule }}</div>
+  {% if form.errors %}
+    {% for field, errors in form.errors.items() %}
+    <div class="alert alert-error">{{ form[field].label }}: {{ ', '.join(errors) }}</div>
+    {% endfor %}
+  {% endif %}
+  <div class="row p-0 m-0">
+    <div class="col-auto">{{ form.family }}</div>
+    <div class="col-auto">{{ form.priority }}</div>
+    <div class="col-auto ms-auto">
+      <button id="submit" class="btn btn-secondary" type="submit">
+        <i class="bi-save me-2"></i>{{_("Save the rule")}}
+      </button>
+    </div>
+  </div>
+  <div class="accordion accordion-flush pt-3" id="accordionRichRules">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="panelElement-headingOne">
+        <button
+          class="accordion-button p-1"
+          type="button"
+          aria-expanded="false"
+          aria-controls="panelElement"
+        >
+          {{ render.field_switch(form.element) }}
+        </button>
+      </h2>
+      <div
+        id="panelElement"
+        class="accordion-collapse collapse"
+        aria-labelledby="panelElement-headingOne"
+      >
+        <div class="accordion-body row align-items-center">
+          <div class="col-auto">{{ form.element_level }}</div>
+          <div class="col-auto">{{ form.element_level_service }}</div>
+          <div class="col-auto">{{ form.element_level_port }}</div>
+          <div class="col-auto">{{ form.element_level_protocol }}</div>
+          <div class="col-auto">{{ form.element_level_icmpblock }}</div>
+          <div class="col-auto">{{ form.element_level_icmptype }}</div>
+          <div class="col-auto">{{ form.element_level_forwardport }}</div>
+          <div class="col-auto">{{ form.element_level_sourceport }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="panelAction-headingOne">
+        <button
+          class="accordion-button p-1"
+          type="button"
+          aria-expanded="false"
+          aria-controls="panelAction"
+        >
+          {{ render.field_switch(form.action) }}
+        </button>
+      </h2>
+      <div
+        id="panelAction"
+        class="accordion-collapse collapse"
+        aria-labelledby="panelAction-headingOne"
+      >
+        <div class="accordion-body row align-items-center">
+          <div class="col-auto">{{ form.action_level }}</div>
+          <div class="col-auto">
+            {{ render.field_switch(form.action_type) }}
+          </div>
+          <div class="col-auto">{{ form.action_type_ipv4 }}</div>
+          <div class="col-auto">{{ form.action_type_ipv6 }}</div>
+          <div class="col-auto">{{ form.action_mark }}</div>
+          <div class="col-auto">{{ form.action_mask }}</div>
+          <div class="col-auto">
+            {{ render.field_switch(form.action_limit) }}
+          </div>
+          <div class="col-auto">{{ form.action_value }}</div>
+          <div class="col-auto">{{ form.action_unit }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="panelSource-headingOne">
+        <button
+          class="accordion-button p-1"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#panelSource"
+          aria-expanded="false"
+          aria-controls="panelSource"
+        >
+          {{ _("Source") }}
+        </button>
+      </h2>
+      <div
+        id="panelSource"
+        class="accordion-collapse collapse"
+        aria-labelledby="panelSource-headingOne"
+      >
+        <div class="accordion-body row align-items-center">
+          <div class="col-auto">{{ form.src }}</div>
+          <div class="col-auto">{{ form.src_mac }}</div>
+          <div class="col-auto">{{ form.src_ipset}}</div>
+          <div class="col-auto">{{ form.src_ip }}</div>
+          <div class="col-auto">{{ render.field_check(form.src_reverse) }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="panelDestination-headingOne">
+        <button
+          class="accordion-button p-1"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#panelDestination"
+          aria-expanded="false"
+          aria-controls="panelDestination"
+        >
+          {{ _("Destination") }}
+        </button>
+      </h2>
+      <div
+        id="panelDestination"
+        class="accordion-collapse collapse"
+        aria-labelledby="panelDestination-headingOne"
+      >
+        <div class="accordion-body row align-items-center">
+          <div class="col-auto">{{ form.dst_ip }}</div>
+          <div class="col-auto">{{ render.field_check(form.dst_reverse) }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="panelLogs-headingOne">
+        <button
+          class="accordion-button p-1"
+          type="button"
+          aria-expanded="false"
+          aria-controls="panelLogs"
+        >
+          {{ render.field_switch(form.log)}}
+        </button>
+      </h2>
+      <div
+        id="panelLogs"
+        class="accordion-collapse collapse"
+        aria-labelledby="panelLogs-headingOne"
+      >
+        <div class="accordion-body row align-items-center">
+          <div class="col-auto">{{ form.log_level }}</div>
+          <div class="col-auto">{{ form.log_prefix }}</div>
+          <div class="col-auto">{{ render.field_switch(form.log_limit) }}</div>
+          <div class="col-auto">{{ form.log_value }}</div>
+          <div class="col-auto">{{ form.log_unit }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="panelAudit-headingOne">
+        <button
+          class="accordion-button p-1"
+          type="button"
+          aria-expanded="false"
+          aria-controls="panelAudit"
+        >
+          {{ render.field_switch(form.audit) }}
+        </button>
+      </h2>
+      <div
+        id="panelAudit"
+        class="accordion-collapse collapse"
+        aria-labelledby="panelAudit-headingOne"
+      >
+        <div class="accordion-body row align-items-center">
+          <div class="col-auto">
+            {{ render.field_switch(form.audit_limit) }}
+          </div>
+          <div class="col-auto">{{ form.audit_value }}</div>
+          <div class="col-auto">{{ form.audit_unit }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<hr class="mt-0 mb-4" />
+<table class="table table-striped">
+  <thead class="table-light">
+    <tr>
+      <th scope="col">{{ _("Rule") }}</th>
+      <th scope="col">{{ _("Actions") }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for rich_rule in settings %}
+    <tr>
+      <td class="col-11">{{rich_rule}}</td>
+      <td class="col-1">
+        <form id="view_{{ loop.index }}" method="post">
+          {{ form.csrf_token }}
+          <input type="hidden" name="rule" value="{{rich_rule}}" />
+        </form>
+        <div class="btn-group btn-group-sm" role="group" aria-label="view_list">     
+          <a href="#" class="btn_del btn btn-danger btn-sm" data-attr="#view_{{ loop.index }}"><i class="bi-trash"></i></a>
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %} {% block tabscript %}
+<script>
+  {# window.addEventListener("load", function(event) {
+    var changed_fields = {{ changed_data | safe }};
+    for(var i = 0; i < changed_fields.length; i++){
+      field_id = document.getElementById('id_'+changed_fields[i])
+
+      classList = field_id.parentElement.parentElement.parentElement.classList
+      if (classList.contains("accordion-collapse")) {
+        classList.add("show")
+      }
+
+      field_id.style.display = 'unset';
+      field_id.disabled = false;
+    }
+  }); #}
+
+
+  $(document).ready(function(event){
+    $("#service :input").prop("disabled",true);
+    $("#port :input").prop("disabled",true);
+    $("#protocol :input").prop("disabled",true);
+    $("#icmpblock :input").prop("disabled",true);
+    $("#icmptype :input").prop("disabled",true);
+    $("#forwardport :input").prop("disabled",true);
+    $("#sourceport :input").prop("disabled",true);
+  });
+
+  $('#family').change(function(event){
+    $('#src_ip').show().removeAttr("disabled");
+    $('#dst_ip').show().removeAttr("disabled");
+    $('#dst_reverse').parent().show()
+    if ($(this).val() == ''){
+      $('#src_ip').hide().attr("disabled","");
+      $('#dst_ip').hide().attr("disabled","");
+      $('#dst_reverse').parent().hide()
+    }
+    if ($(this).val() == 'ipv4' && $('#action_level').val() == 'reject'){
+      $('#action_type_ipv6').hide().attr("disabled","");
+      $('#action_type_ipv4').show().removeAttr("disabled");
+    }
+    if ($(this).val() == 'ipv6' && $('#action_level').val() == 'reject'){
+      $('#action_type_ipv4').hide().attr("disabled","");
+      $('#action_type_ipv6').show().removeAttr("disabled");
+    }
+  });
+
+  $('#element').click(function(event){
+    $("#service :input").prop("disabled",true);
+    $("#port :input").prop("disabled",true);
+    $("#protocol :input").prop("disabled",true);
+    $("#icmpblock :input").prop("disabled",true);
+    $("#icmptype :input").prop("disabled",true);
+    $("#forwardport :input").prop("disabled",true);
+    $("#sourceport :input").prop("disabled",true);  
+    $('#element_level').prop("disabled",true);  
+    if ($(this).is(':checked')) {
+      $('#panelElement').addClass("show");
+      $('#element_level').prop("disabled",false); 
+    } else {
+      $('#panelElement').removeClass("show");
+      $('#element_level').prop("disabled",true); 
+    }
+  });
+
+
+  $('#element_level').change(function(event){
+
+    $("#log").prop("disabled",false);
+    $("#audit").prop("disabled",false);
+    $("#action").prop("disabled",false);
+    $("#destination").prop("disabled",false);
+
+    $('#service').hide();
+    $('#port').hide();
+    $('#protocol').hide();
+    $('#icmpblock').hide();
+    $('#icmptype').hide();
+    $('#forwardport').hide();
+    $('#sourceport').hide();
+
+    $("#service :input").prop("disabled",true);
+    $("#port :input").prop("disabled",true);
+    $("#protocol :input").prop("disabled",true);
+    $("#icmpblock :input").prop("disabled",true);
+    $("#icmptype :input").prop("disabled",true);
+    $("#forwardport :input").prop("disabled",true);
+    $("#sourceport :input").prop("disabled",true);  
+
+    var $el = $(this).val().replace('-','');
+    $('#'+$el).show();
+    $('#'+$el+' :input').prop("disabled",false);
+    
+    if ($el == 'masquerade') {
+      $("#log").prop("disabled",true);
+      $("#audit").prop("disabled",true);
+      $("#action").prop("disabled",true);
+    }
+
+    if ($el == 'masquerade') {
+      $("#destination").prop("disabled",true);
+    }
+
+  });
+
+  $('#action').click(function(event){
+    $('#action_type').hide().attr("disabled","");
+    $('#action_type_ipv4').hide().attr("disabled","");
+    $('#action_type_ipv6').hide().attr("disabled","");
+    $('#action_limit').prop( "checked", false );
+    $('#action_value').hide().attr("disabled","");
+    $('#action_unit').hide().attr("disabled","");     
+    $('#action_type').prop( "checked", false );
+    if ($(this).is(':checked')) {
+      $('#panelAction').addClass("show");
+      $('#action_level').show().removeAttr("disabled");
+      $('#action_limit').show().removeAttr("disabled");
+    } else {
+      $('#panelAction').removeClass("show");
+      $('#action_level').show().removeAttr("disabled");
+      $('#action_limit').show().removeAttr("disabled");
+    }
+  });
+
+  $('#action_level').change(function(event){
+    $('#action_mark').hide().attr("disabled","");
+    $('#action_mask').hide().attr("disabled","");
+    $('#action_type').prop( "checked", false );    
+    $('#action_type').hide().attr("disabled","").removeAttr("checked");
+    $('#action_type_ipv4').hide().attr("disabled","");
+    $('#action_type_ipv6').hide().attr("disabled","");
+    $('#action_limit').prop( "checked", false );
+    $('#action_value').hide().attr("disabled","");
+    $('#action_unit').hide().attr("disabled","");    
+
+    if ($(this).val() == 'reject'){
+      $('#action_type').show().removeAttr("disabled");
+    }
+    if ($(this).val() == 'mark'){
+      $('#action_mark').show().removeAttr("disabled");
+      $('#action_mask').show().removeAttr("disabled");
+    }
+  });
+
+  $('#action_type').change(function(event){
+    $('#action_type_ipv4').hide().attr("disabled","");
+    $('#action_type_ipv6').hide().attr("disabled","");
+    if ($(this).is(':checked') && $('#family').val() == 'ipv4') { $('#action_type_ipv4').show().removeAttr("disabled");}
+    if ($(this).is(':checked') && $('#family').val() == 'ipv6') { $('#action_type_ipv6').show().removeAttr("disabled");}
+  });
+
+  $('#action_limit').click(function(event){
+    if ($(this).is(':checked')) {
+      $('#action_value').show().removeAttr("disabled");
+      $('#action_unit').show().removeAttr("disabled");
+    } else {
+      $('#action_value').hide().attr("disabled","");
+      $('#action_unit').hide().attr("disabled","");
+    }
+  });
+
+  $('#src').change(function(event){
+    $('#src_ip').hide().attr("disabled","");
+    $('#src_mac').hide().attr("disabled","");
+    $('#src_ipset').hide().attr("disabled","");
+    var $el = $(this).val()
+    var $fa = $('#family').val()
+    if ($el == 'IP' && $fa !='' ) {$('#src_ip').show().removeAttr("disabled")}
+    else if ($el == 'MAC') {$('#src_mac').show().removeAttr("disabled")}
+    else if ($el == 'ipset') {$('#src_ipset').show().removeAttr("disabled")}
+  });
+
+  $('#log').click(function(event){
+      $('#log_limit').hide().attr("disabled","");
+      $('#log_level').hide().attr("disabled","");
+      $('#log_prefix').hide().attr("disabled","");
+      $('#log_value').hide().attr("disabled","");
+      $('#log_unit').hide().attr("disabled","");  
+    if ($(this).is(':checked')) {
+      $('#panelLogs').addClass("show")
+      $('#log_limit').show().removeAttr("disabled");
+      $('#log_level').show().removeAttr("disabled");
+      $('#log_prefix').show().removeAttr("disabled");
+    } else {
+      $('#panelLogs').removeClass("show");
+    }
+  });
+
+
+  $('#log_limit').click(function(event){
+    if ($(this).is(':checked')) {
+      $('#log_value').show().removeAttr("disabled");
+      $('#log_unit').show().removeAttr("disabled");
+    } else {
+      $('#log_value').hide().attr("disabled","");
+      $('#log_unit').hide().attr("disabled","");
+    }
+  });
+
+
+  $('#audit').click(function(event){
+    $('#audit_limit').prop( "checked", false );
+    $('#audit_value').hide().attr("disabled","");
+    $('#audit_unit').hide().attr("disabled","");
+    if ($(this).is(':checked')) {
+      $('#panelAudit').addClass("show")
+      $('#audit_limit').show().removeAttr("disabled");
+    } else {
+      $('#panelAudit').removeClass("show");
+      $('#audit_limit').hide().attr("disabled","");
+    }
+  });
+
+  $('#audit_limit').click(function(event){
+    if ($(this).is(':checked')) {
+      $('#audit_value').show().removeAttr("disabled");
+      $('#audit_unit').show().removeAttr("disabled");
+    } else {
+      $('#audit_value').hide().attr("disabled","");
+      $('#audit_unit').hide().attr("disabled","");
+    }
+  });
+</script>
+{% endblock %}

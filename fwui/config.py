@@ -16,17 +16,15 @@ SECRET_KEY = os.getenv("SECRET_KEY", None)
 FILESYSTEM_SESSIONS_ENABLED = os.getenv("FILESYSTEM_SESSIONS_ENABLED", True)
 
 # DATABASE CONFIG
-SQLA_DB_TYPE = os.getenv("SQLA_DB_TYPE", "sqlite")
-SQLA_DB_USER = os.getenv("SQLA_DB_USER", None)
-SQLA_DB_PASSWORD = os.getenv("SQLA_DB_PASSWORD", None)
-SQLA_DB_HOST = os.getenv("SQLA_DB_HOST", None)
-SQLA_DB_NAME = os.getenv("SQLA_DB_NAME", "wui")
+DB_TYPE = os.getenv("DB_TYPE", "sqlite")
+DB_USER = os.getenv("DB_USER", None)
+DB_PASSWORD = os.getenv("DB_PASSWORD", None)
+DB_HOST = os.getenv("DB_HOST", None)
+DB_NAME = os.getenv("DB_NAME", "wui")
 SQLALCHEMY_TRACK_MODIFICATIONS = os.getenv("SQLALCHEMY_TRACK_MODIFICATIONS", True)
 
 # DATABASE - MySQL
-MARIADB_DATABASE_URI = (
-    f"mysql://{SQLA_DB_USER}:{SQLA_DB_PASSWORD}@{SQLA_DB_HOST}/{SQLA_DB_NAME}"
-)
+MARIADB_DATABASE_URI = f"mysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
 
 # MAIL
 MAIL_SERVER = os.getenv("MAIL_SERVER", None)
@@ -55,12 +53,10 @@ SECURITY_TWO_FACTOR_AUTHENTICATOR_VALIDITY = 30
 SECURITY_TWO_FACTOR_RESCUE_MAIL = SECURITY_EMAIL_SENDER
 SECURITY_TOTP_SECRETS = {"1": SECRET_KEY}
 SECURITY_TOTP_ISSUER = "Wireguard UI"
-SECURITY_TWO_FACTOR_SETUP_TEMPLATE = "profile/profile_authenticate.html"
-SECURITY_CHANGE_PASSWORD_TEMPLATE = "profile/profile_password.html"
+SECURITY_TWO_FACTOR_SETUP_TEMPLATE = "profile_authenticate.html"
+SECURITY_CHANGE_PASSWORD_TEMPLATE = "profile_password.html"
 
 # DEFAULT ACCOUNT
 USERNAME = os.getenv("USERNAME", "admin")
 PASSWORD = os.getenv("PASSWORD", "admin")
 USER_MAIL = os.getenv("USER_MAIL", "please_change_me@localhost")
-
-MACHINE_ID = ""

@@ -1,17 +1,16 @@
 {% macro field(field) %}
-  {% if kwargs.label_before %}{{ field.label(class="form-label col-form-label mb-1 col-auto") }}{% endif %}
-  <div class="col-auto">
+  {% if kwargs.label_before %}{{ field.label(class="form-label col-form-label mb-1") }}{% endif %}
     {{ field(class="form-control is-invalid" if field.errors else "form-control", placeholder=field.label.text, **kwargs)|safe }}
-    <div class="invalid-feedback">{{ field.errors }}</div>    
-  </div>
-  {% if kwargs.label_after %}{{ field.label(class="form-label col-form-label mt-1 col-auto") }}{% endif %}
+    <div class="valid-feedback"></div>    
+  {% if kwargs.label_after %}{{ field.label(class="form-label col-form-label mt-1") }}{% endif %}
 {% endmacro%}
 
 {% macro field_switch(field) %}
+  {% if kwargs.label_before %}{{ field.label(class="form-check-label") }}{% endif %}
   <div class="form-check form-switch">
-  {{ field(class_="form-check-input", **kwargs) | safe}}
-  {{ field.label(class_="form-check-label", **kwargs) | safe}}
-  <div class="invalid-feedback">{{ field.errors }}</div>   
+  {{ field(class_="form-check-input", **kwargs) }}
+  {% if kwargs.label_after %}{{ field.label(class="form-check-label") }}{% endif %}
+  <div class="valid-feedback"></div>   
   </div>
 {% endmacro %}
 
@@ -19,7 +18,7 @@
   <div class="form-check">
   {{ field(class_="form-check-input", **kwargs) | safe}}
   {{ field.label(class_="form-check-label", **kwargs) | safe}}
-  <div class="invalid-feedback">{{ field.errors }}</div>   
+  <div class="valid-feedback"></div>   
   </div>
 {% endmacro %}
 
@@ -27,7 +26,7 @@
   {% if kwargs.label_before %}{{ field.label(class="form-label") }}{% endif %}
   {{ field(class="form-select is-invalid" if field.errors else "form-select", **kwargs)|safe }}
   {% if kwargs.label_after %}{{ field.label(class="form-label") }}{% endif %}   
-  <div class="invalid-feedback">{{ field.errors }}</div>   
+  <div class="valid-feedback"></div>   
 {% endmacro %}
 
 {% macro button(field) %}

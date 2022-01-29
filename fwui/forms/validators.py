@@ -5,8 +5,9 @@ from firewall.functions import (
     checkUid,
     checkCommand,
     checkProtocol,
-    checkInterface
+    checkInterface,
 )
+
 
 class Interface(object):
     def __init__(self, message=None):
@@ -15,9 +16,8 @@ class Interface(object):
         self.message = message
 
     def __call__(self, form, field):
-        if not checkInterface(field.data):
+        if field.data and not checkInterface(field.data):
             raise ValidationError(self.message)
-
 
 
 class Protocol(object):
@@ -27,8 +27,9 @@ class Protocol(object):
         self.message = message
 
     def __call__(self, form, field):
-        if not checkProtocol(field.data):
+        if field.data and not checkProtocol(field.data):
             raise ValidationError(self.message)
+
 
 class Command(object):
     def __init__(self, message=None):
@@ -37,7 +38,7 @@ class Command(object):
         self.message = message
 
     def __call__(self, form, field):
-        if not checkCommand(field.data):
+        if field.data and not checkCommand(field.data):
             raise ValidationError(self.message)
 
 
@@ -48,7 +49,7 @@ class Uid(object):
         self.message = message
 
     def __call__(self, form, field):
-        if not checkUid(field.data):
+        if field.data and not checkUid(field.data):
             raise ValidationError(self.message)
 
 
@@ -59,7 +60,7 @@ class MacAddress(object):
         self.message = message
 
     def __call__(self, form, field):
-        if not check_mac(field):
+        if field and not check_mac(field):
             raise ValidationError(self.message)
 
 
@@ -70,7 +71,7 @@ class PortNumber(object):
         self.message = message
 
     def __call__(self, form, field):
-        if not check_port(field):
+        if field and not check_port(field):
             raise ValidationError(self.message)
 
 
@@ -83,7 +84,9 @@ class NumberRange(object):
         self.max = max
 
     def __call__(self, form, field):
-        if not (int(field.data) > self.min and int(field.data) < self.max):
+        if field.data and not (
+            int(field.data) > self.min and int(field.data) < self.max
+        ):
             raise ValidationError(self.message)
 
 
@@ -96,6 +99,8 @@ class PortRange(object):
         self.max = max
 
     def __call__(self, form, field):
+        if field.data is None:
+            return
         for item in field.data.split("-"):
             if not (int(item) > self.min and int(item) < self.max):
                 raise ValidationError(self.message)

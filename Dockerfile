@@ -1,5 +1,5 @@
 # For more information, please refer to https://aka.ms/vscode-docker-python
-FROM python:3.9-alpine
+FROM ubuntu:21.10
 
 # set version label
 ARG BUILD_DATE
@@ -17,19 +17,29 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 # Install dependencies
-RUN apk add --no-cache --virtual build build-base python3-dev libffi-dev zlib-dev jpeg-dev tiff-dev freetype-dev
+RUN apt-get update && apt-get install -y python3 python3-venv python3-systemd python3-dbus python3-firewall
 
 # Install pip requirements
 COPY requirements.txt .
-RUN python -m pip install --no-cache-dir -r requirements.txt
+RUN python3 -m venv --system-site-packages /env \
+    && /env/bin/pip3 install --upgrade pip \
+    && /env/bin/pip3 install --no-cache-dir -r requirements.txt 
 
 # clean content
-RUN apk del build
+RUN rm -rf /var/lib/apt/lists/*
 
 COPY entrypoint.sh .
 RUN chmod +x entrypoint.sh
 
 WORKDIR /app
-COPY . /app
+COPY ./fwui /app/fwui
+COPY ./static /app/static
+
+ENV VIRTUAL_ENV /env
+ENV PATH /env/bin:$PATH
+
+ENV FLASK_APP=fwui
+
+EXPOSE 8000
 
 ENTRYPOINT ["/entrypoint.sh"]

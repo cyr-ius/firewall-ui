@@ -1,7 +1,7 @@
 {% block sidebar %}
 <nav class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
     <a id="brand" href="/" class="d-flex align-items-center py-1  mb-md-0 me-md-auto text-white text-decoration-none">
-    <img id="logo" class="d-inline-block me-3" src="{{ url_for('static', filename='firewall-applet.png') }}" width="28">
+        <img id="logo" class="d-inline-block me-3" src="{{ url_for('static', filename='img/firewall-applet.png') }}" width="28">
         <span class="fs-6 d-sm-inline">{{ SITE_NAME }}</span>
     </a>
     <hr class="my-0" style="width:100%;" />
@@ -91,6 +91,15 @@
                 <i class="bi-newspaper" aria-hidden="true"></i><span class="ms-1 d-sm-inline">Logs</span>
             </a>
         </li>
+        <li>
+            <a class="nav-link align-middle px-0 text-white" data-bs-toggle="collapse" href="#admin_menu">
+                <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-sm-inline">Administration</span>
+            </a>
+            <ul class="collapse nav flex-column ms-1" id="admin_menu" data-bs-parent="#menu">
+                {% import 'admin/layout.html' as layout with context -%}
+                {{ layout.menu() }}
+            </ul>
+        </li>           
     </ul>
      <hr>
     <div class="dropdown dropup pb-1">

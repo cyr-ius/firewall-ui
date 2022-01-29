@@ -1,0 +1,54 @@
+{% extends 'services.html' %}
+{% block tab_content%}
+{% if session.config_mode == "permanent" %}
+{% include 'form.html' with context %}
+<hr class="mt-0 mb-4" />
+{% endif %}
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th scope="col">{{ _("Destination") }}</th>
+      <th scope="col">{{ _("Value") }}</th>
+      {% if session.config_mode == "permanent" and settings.ipv4 or settings.ipv6 %}
+      <th scope="col">{{ _("Actions") }}</th>
+      {% endif %}
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="col-1">IPV4</td>
+      <td class="col-1">{{settings.ipv4}}</td>
+      {% if session.config_mode == "permanent" and  settings.ipv4 %}
+      <td class="col-1">
+        <form id="destination_ipv4" method="post">
+          {{ form.csrf_token }}
+          <input type="hidden" name="destination" value="ipv4" />
+          <input type="hidden" name="address" value="{{settings.ipv4}}" />
+        </form>
+        <div class="btn-group btn-group-sm" role="group" aria-label="view_list">
+          <a href="#" class="btn_edit btn btn-info btn-sm" data-attr="#destination_ipv4}"><i class="bi-pencil"></i></a>
+          <a href="#" class="btn_del btn btn-danger btn-sm" data-attr="#destination_ipv4"><i class="bi-trash"></i></a>
+        </div>
+      </td>
+      {% endif %}
+    </tr>
+    <tr>
+      <td class="col-1">IPV6</td>
+      <td class="col-1">{{settings.ipv6}}</td>
+      {% if session.config_mode == "permanent" and  settings.ipv6%}
+      <td class="col-1">
+        <form id="destination_ipv6" method="post">
+          {{ form.csrf_token }}
+          <input type="hidden" name="destination" value="ipv6" />
+          <input type="hidden" name="address" value="{{settings.ipv6}}" />
+        </form>
+        <div class="btn-group btn-group-sm" role="group" aria-label="view_list">
+          <a href="#" class="btn_edit btn btn-info btn-sm" data-attr="#destination_ipv6"><i class="bi-pencil"></i></a>
+          <a href="#" class="btn_del btn btn-danger btn-sm" data-attr="#destination_ipv6"><i class="bi-trash"></i></a>
+        </div>
+      </td>
+      {% endif %}
+    </tr>
+  </tbody>
+</table>
+{% endblock %}

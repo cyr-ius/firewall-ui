@@ -1,0 +1,74 @@
+{% extends 'zones.html' %}
+{% block tab_content %}
+{% include 'form.html' with context %}
+<hr class="mt-0 mb-4">
+<table class="table table-striped">
+  <thead class="table-light">
+    <tr>
+      <th scope="col-11">{{ _("Source") }}</th>
+      <th scope="col-1">{{ _("Actions") }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in settings %}
+    <tr>
+      <form id="view_{{ loop.index }}"> {{ form.csrf_token }}
+        <td class="col-11">{{item}}</td>
+        <input type="hidden" name="source" value="{{item}}" />
+        <td class="col-1">
+      </form>
+      <div class="btn-group btn-group-sm" role="group" aria-label="view_list">     
+        <a href="#" class="btn_del btn btn-danger btn-sm" data-attr="#view_{{ loop.index }}"><i class="bi-trash"></i></a>
+      </div>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+{% block tabscript %}
+<script>
+  var schoice = document.getElementById("source_choice");
+  var ip = document.getElementById("source_ip");
+  var mac = document.getElementById("source_mac");
+  var ipset = document.getElementById("source_ipset");
+
+  window.addEventListener('load', function (event) {
+    if (schoice.value == 'IP') {
+      ip.required = true;
+      ip.style.display = 'block';
+      mac.style.display = 'none';
+      ipset.style.display = 'none';
+    } else if (schoice.value == 'MAC') {
+      mac.required = true;
+      ip.style.display = 'none';
+      mac.style.display = 'block';
+      ipset.style.display = 'none';
+    } else if (schoice.value == 'ipset') {
+      ipset.required = true;
+      ip.style.display = 'none';
+      mac.style.display = 'none';
+      ipset.style.display = 'block';
+    }
+  })
+
+  schoice.addEventListener('change', function (event) {
+    if (schoice.value == 'IP') {
+      ip.required = true;
+      ip.style.display = 'block'; ip.disabled = false;
+      mac.style.display = 'none'; mac.disabled = true;
+      ipset.style.display = 'none'; ipset.disabled = true;
+    } else if (schoice.value == 'MAC') {
+      mac.required = true;
+      mac.style.display = 'block'; mac.disabled = false;
+      ip.style.display = 'none'; ip.disabled = true;
+      ipset.style.display = 'none'; ipset.disabled = true;
+    } else if (schoice.value == 'ipset') {
+      ipset.required = true;
+      ipset.style.display = 'block'; ipset.disabled = false;
+      ip.style.display = 'none'; ip.disabled = true;
+      mac.style.display = 'none'; mac.disabled = true;
+    };
+  });
+</script>
+{% endblock %}

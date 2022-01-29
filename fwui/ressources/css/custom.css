@@ -101,6 +101,20 @@ main {
     color: #2b0108 !important;
 }
 
+#logviewer {
+	height:calc(100vh - 12rem);
+	width:calc(100vw - 240px);
+}
+
+#logviewer.active {
+	height:calc(100vh - 12rem);
+	width:calc(100vw - 128px);
+}
+
+#logviewer .even {
+	background-color: beige;
+}
+
 @media (min-width:568px) and (max-width: 768px) {
     /* 80px and its content aligned to centre. Pushing it off the screen with the
        negative left margin
@@ -151,6 +165,11 @@ main {
 	#menu .nav-link {
 		width: unset !important;
 	}
+
+	#logviewer {
+		height:calc(100vh - 12rem);
+		width:calc(100vw - 128px);
+	}
 }
 
 @media (max-width: 568px) {
@@ -164,6 +183,11 @@ main {
 
 	#sidebar.active {
 		display:unset;
+	}
+
+	#logviewer {
+		height:calc(100vh - 12rem);
+		width:unset;
 	}	
 }
 

@@ -45,6 +45,8 @@
 			"fwui",
 			"getattr",
 			"getenv",
+			"gunicorn",
+			"Gunicorn",
 			"GUNICORN",
 			"hxnx",
 			"Icmp",
@@ -111,6 +113,7 @@
 			"toastr",
 			"toport",
 			"totp",
+			"TOTP",
 			"totpdevice",
 			"uids",
 			"unreach",
@@ -125,6 +128,7 @@
 			"yesno",
 			"znmgnx"
 		],
-		"python.pythonPath": "/media/datas/firewall-ui/.venv/bin/python"
+		"python.pythonPath": "/media/datas/firewall-ui/.venv/bin/python",
+		"cSpell.language": "en,en-US,en-GB"
 	}
 }

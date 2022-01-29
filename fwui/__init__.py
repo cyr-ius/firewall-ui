@@ -14,16 +14,13 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_babel import Babel
 
 from werkzeug.middleware.proxy_fix import ProxyFix
+
+from fwui.models.views import RoleView
 from .forms.security import ExtendedRegisterForm
 from firewall import client as firewall_client
-from .filters import active
-from .assets import (
-    css_main,
-    js_main,
-    css_custom,
-    js_custom,
-)
-from .handle import (
+from .services.filters import active
+from .services.assets import css_main, js_main, css_custom, js_custom
+from .services.handle import (
     handle_access_forbidden,
     handle_bad_request,
     handle_internal_server_error,
@@ -39,7 +36,7 @@ migrate = Migrate()
 admin = Admin(
     name="Administration",
     template_mode="bootstrap4",
-    base_template="administration.html",
+    base_template="admin.html",
 )
 security = Security()
 babel = Babel()
@@ -90,20 +87,20 @@ def create_app(config=None):
     # Load Flask-Session
     if app.config.get("FILESYSTEM_SESSIONS_ENABLED"):
         app.config["SESSION_TYPE"] = "filesystem"
-        sess = Session()
-        sess.init_app(app)
+        session = Session()
+        session.init_app(app)
 
     # Load Database
-    SQLALCHEMY_DATABASE_URI = app.config.get("MARIADB_DATABASE_URI")
-    if app.config.get("SQLA_DB_TYPE") != "mariadb":
-        db_name = app.config.get("SQLA_DB_NAME")
+    DATABASE_URI = app.config.get("MARIADB_DATABASE_URI")
+    if app.config.get("DB_TYPE") != "mariadb":
+        db_name = app.config.get("DB_NAME")
         # Ensure the instance folder exists
         try:
             os.makedirs(app.root_path + "/../database", exist_ok=True)
         except OSError:
             pass
-        SQLALCHEMY_DATABASE_URI = f"sqlite:///{app.root_path}/../database/{db_name}.db"
-    app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
+        DATABASE_URI = f"sqlite:///{app.root_path}/../database/{db_name}.db"
+    app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
 
     # Open session to firewall
     fw = firewall_client.FirewallClient()
@@ -111,10 +108,10 @@ def create_app(config=None):
         app.permanent_config = fw.config()
         app.runtime_config = fw
     else:
-        app.logger.error("Firewall UI can not connected to firewall")
+        app.logger.error("Can not connected to firewalld, please start the service")
         return
 
-    from .models.views import HomeView, UserView
+    from .models.views import HomeView, UserView, RoleView
 
     # Load app's components
     mail.init_app(app)
@@ -132,10 +129,10 @@ def create_app(config=None):
 
     # Create app blueprints
     with app.app_context():
-        from .blueprints.firewall import fwl_bp
-    from .blueprints.main import main_bp
-    from .blueprints.user import user_bp
-    from .blueprints.api import api_bp
+        from .blueprints.firewall.routes import fwl_bp
+    from .blueprints.main.routes import main_bp
+    from .blueprints.user.routes import user_bp
+    from .blueprints.api.routes import api_bp
 
     app.register_blueprint(main_bp)
     app.register_blueprint(fwl_bp)
@@ -153,8 +150,9 @@ def create_app(config=None):
     app.jinja_env.add_extension("jinja2.ext.debug")
     app.jinja_env.add_extension("jinja2.ext.i18n")
 
-    # Import tables for security & admin
-    from .models import User, Role, Setting
+    # Import tables for security & setting
+    from .blueprints.user.models import User, Role
+    from .blueprints.main.models import Setting
 
     # Register Security model
     app.user_datastore = SQLAlchemySessionUserDatastore(db.session, User, Role)
@@ -167,6 +165,7 @@ def create_app(config=None):
 
     # Register Admin
     admin.add_view(UserView(model=User, session=db.session))
+    admin.add_view(RoleView(model=Role, session=db.session))
 
     # Init database
     @app.before_first_request
@@ -212,7 +211,7 @@ def create_app(config=None):
         setting = Setting()
         return dict(SETTING=setting)
 
-    # @app.context_processor
+    @app.context_processor
     def inject_context_processor():
         return dict(
             admin_base_template=admin.base_template,

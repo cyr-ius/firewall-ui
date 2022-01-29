@@ -1,0 +1,36 @@
+{% extends 'icmptypes.html' %}
+{% block tab_content %}
+{% if session.config_mode == "permanent" %}
+<form id="form_add" class="row needs-validation mt-4 mb-4 align-items-center" novalidate>{{ form.csrf_token }}
+  {% for item in form if item.id not in ['submit','csrf_token']%}
+  <div class="col-auto">{{ render.field_select(item, onchange="$(this).submit();") }}</div>
+  {% endfor %}
+</form>
+<hr class="mt-0 mb-4">
+{% endif %}
+<table class="table table-striped">
+  <thead class="table-light">
+    <tr>
+      <th scope="col">{{ _("Destination") }}</th>
+      {% if session.config_mode == "permanent" %}<th scope="col">{{ _("Actions") }}</th>{% endif %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in settings %}
+    <tr>
+      <td class="col-11">{{item}}</td>
+      {% if session.config_mode == "permanent" %}
+      <td class="col-1">
+        <form id="view_{{ loop.index }}" method="post">{{ form.csrf_token }}
+          <input type="hidden" name="destination" value="{{item}}" />
+        </form>
+        <div class="btn-group btn-group-sm" role="group" aria-label="view_list">
+          <a href="#" class="btn_del btn btn-danger btn-sm" data-attr="#view_{{ loop.index }}"><i class="bi-trash"></i></a>
+        </div>
+      </td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

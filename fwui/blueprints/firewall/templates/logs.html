@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block content %}
+<form id="searchForm" class="row  g-1 needs-validation mt-1 mb-2 align-items-center" method="post" action="{{ url_for('main.logs') }}" novalidate>
+{{ form.csrf_token }}
+{{ form.date_start }}
+{{ form.date_end }}
+{{ form.hidden_tags }}
+    <div class="col-6 me-2">{{ render.field(form.search) }}</div>
+    <div class="col-auto me-2">{{ render.field_select(form.level) }}</div>
+    <div class="col-auto me-2">{{ render.field_select(form.type) }}</div>
+    <div class="col-2 me-2"><input id="reportrange" class="form-control" type="text"></div>
+    <div class="col-auto">{{ render.button(form.submit, class="btn btn-secondary")}}</div>
+</form>
+<hr class="mt-0 mb-2">
+<div id="logviewer" class="overflow-auto">
+<table id="viewer" class="table table-striped table-hover demo">
+    <thead class="table-light"><tr>
+    {% for head in journal.headers %}
+    <th scope="col">{{head}}</th>
+    {% endfor%}
+    </tr></thead>
+    <tbody  >
+    {% for log in journal.logs %}
+        <tr>
+        <th scope="row">{{ log.get('DATETIME') }}</th>
+        {% for head in journal.headers if head != 'DATETIME' %}
+        <td>{{ log.get(head) }}</td>
+        {% endfor%}
+        </tr>
+    {% endfor%}
+    </tbody>
+</table>
+</div>
+{% endblock %}
+{% block extrascripts %}
+<script>
+$(function(){
+    // Get the input field
+    var input = document.getElementById("search");
+
+    // Execute a function when the user releases a key on the keyboard
+    input.addEventListener("search", function (event) {
+        // Number 13 is the "Enter" key on the keyboard
+        if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        document.getElementById("searchForm").submit();
+        }
+    });
+
+    console.log(moment.locale());
+    var start = moment().subtract(1, 'hour')
+    var end = moment()
+    if ($('#date_start').val()) {
+        var start = moment($('#date_start').val());
+    }
+    if ($('#date_end').val()) {
+        var end = moment($('#date_end').val());
+    }
+
+    function cb(start, end) {
+        input_start = start
+        input_end = end
+        start_date = start.toDate().toLocaleDateString();
+        var start_f = start_date+' '+start.format('HH:mm');
+        end_date = end.toDate().toLocaleDateString();
+        var end_f = end_date+' '+end.format('HH:mm');
+        $('#reportrange').val(start_f+' - '+end_f);
+        $('#date_start').val(input_start.format('YYYY-MM-DDTHH:mm'));
+        $('#date_end').val(input_end.format('YYYY-MM-DDTHH:mm'));
+    }
+
+    $('#reportrange').daterangepicker({
+        "opens": "left",
+        "timePicker": true,
+        "timePicker24Hour": true,
+        "autoApply": true,
+        "autoUpdateInput": false,
+        "startDate": start,
+        "endDate": end, 
+        "ranges": {
+           'Today': [moment().startOf('day'), moment()],
+           'Yesterday': [moment().startOf('day').subtract(1, 'days'), moment().endOf('day').subtract(1, 'days')],
+           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+           'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+           'This Month': [moment().startOf('month'), moment().endOf('month')],
+           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+    }, cb);
+
+    cb(start, end);
+
+    if ($('#type').val() == 'system') {$('#level').show()} else {$('#level').hide()}
+
+
+    var $table = $('table.demo');
+    $table.floatThead({
+        scrollContainer: function($table){
+            return $table.closest('.wrapper');
+        }
+    });
+
+
+});
+
+$('#type').change(function(){
+    $('#level').hide()
+    if ($(this).val() == 'system') {
+        $('#level').show()
+    }
+});
+
+</script>
+{% endblock%}

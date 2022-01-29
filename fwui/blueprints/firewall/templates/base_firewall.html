@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title%}{{ section.capitalize()}}{% endblock%}
+{% set active_page = tabname %}
+
+{% block extramodals %}
+  {% if section_form %}
+    {% set form=section_form %}
+    {% include './modals/editSection.html' %}
+  {% endif%}
+{% endblock %}
+
+{% block extrascripts %}
+<script>
+  {% if item %}
+  var api_url = "{{ url_for('api.firewall.item', section=section, item=item, tabname=tabname) }}";
+  var url = "{{ url_for('firewall.generic_tab', section=section, item=item, tabname=tabname) }}";
+  {% else %}
+  var api_url = "{{ url_for('api.firewall.tabname', section=section, tabname=tabname) }}";
+  var url = "{{ url_for('firewall.specific_tab', section=section, tabname=tabname) }}";
+  {% endif %}
+  $("#form_add").submit(function (event) {
+    event.preventDefault();
+    if (this.checkValidity()) {
+      data = $(this).serializeFormJSON();
+      $.ajax({
+        cache: false,
+        method: "POST",
+        url: api_url,
+        dataType: "json",
+        data: JSON.stringify(data),
+        contentType: "application/json",
+        success: function (responseJson) {
+          location.replace(url)
+        },
+        error: function (jqXHR, exception) {
+          checkMessage(jqXHR.responseJSON.error);
+        },
+      });
+    }    
+  });
+
+  $(".btn_del").click(function (event) {
+    event.preventDefault();
+    form = $(this).attr("data-attr");
+    data = $(form).serializeFormJSON();
+    $.ajax({
+      cache: false,
+      method: "DELETE",
+      url: api_url,
+      dataType: "json",
+      data: JSON.stringify(data),
+      contentType: "application/json",
+      success: function (responseJson) {    
+        location.replace(url)
+      },
+      error: function (jqXHR, exception) {
+        checkMessage(jqXHR.responseJSON.error);
+      },
+    });
+  });
+
+  $(".btn_edit").click(function (event) {
+    event.preventDefault();
+    form = $(this).attr("data-attr");
+    $(form).attr('action', url);
+    $(form).submit();
+  });
+
+  var alertList = document.querySelectorAll('#form_add .alert')
+  var alerts =  [].slice.call(alertList).map(function (element) {
+    return new bootstrap.Alert(element)
+  })
+
+</script>
+<!-- Tab script -->
+{% block tabscript %}{%endblock%}
+{% endblock %}

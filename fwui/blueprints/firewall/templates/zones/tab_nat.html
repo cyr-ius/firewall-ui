@@ -1,0 +1,28 @@
+{% extends 'zones.html' %}
+{% block tab_content%}
+<form id="form_add" method="POST" class="row needs-validation mt-4 mb-4 align-items-center" novalidate>
+  {{ form.csrf_token }}
+  <div class="col form-inline-css">
+  {% if settings  %}
+  {{ render.field_switch(form.nat, checked='checked') }}
+  {% else %}
+  {{ render.field_switch(form.nat) }}
+  {% endif %}
+  </div>
+  <input type="hidden" class="btn_del" data-attr="#form_add">
+</form>
+
+<hr class="mt-0 mb-4" />
+{% endblock %}
+{% block tabscript %}
+<script>
+$('#nat').change(function(event){
+  event.preventDefault();
+  if (this.checked) {
+    $('#form_add').submit();
+  } else {
+    $('.btn_del').click();
+  }
+});
+</script>
+{% endblock %}  

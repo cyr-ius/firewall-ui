@@ -1,16 +1,19 @@
 function checkMessage(jsonMsg) {
   if (jsonMsg.meta.type == 'form') {
     $("#form_add").removeClass("was-validated")
-    for (var k in jsonMsg.message) {
-      $('#'+k).addClass('is-invalid')
-      $('#'+k).siblings('.invalid-feedback').html(jsonMsg.message[k])
+    for (var i = 0; i < jsonMsg.errors.length; i++) {
+      var error = jsonMsg.errors[i]
+      for (var k in error) {
+        $('#'+k).addClass('is-invalid')
+        $('#'+k).siblings('.valid-feedback').addClass('invalid-feedback').removeClass('valid-feedback').html(error[k][0])
+      }
     }
   } else {
     for (var i = 0; i < jsonMsg.errors.length; i++) {
       if (jsonMsg.errors[i].message) {
-        flashMessage(jsonMsg.errors[i].message, "alert",'','',jsonMsg.errors[i].title);
+        alertForm(jsonMsg.errors[i].title+": "+jsonMsg.errors[i].message, "danger", "form_add");
       } else {
-        flashMessage(jsonMsg.errors[i], "alert");
+        alertForm(jsonMsg.errors[i], "danger", "form_add");
       }
     }
   }
@@ -23,6 +26,14 @@ function alert(message, type, elementId) {
     var liveAlert = document.getElementById(elementId)
     liveAlert.append(wrapper)
   }
+
+  // Alert Form
+function alertForm(message, type, elementId) {
+  var wrapper = document.createElement('div')
+  wrapper.innerHTML = '<div class="row py-1"><span class="badge bg-' + type +'" role="alert">' + message + '</span></div>'
+  var liveAlert = document.getElementById(elementId)
+  liveAlert.prepend(wrapper)
+}
 
 // Observer catch toast added
 function eventToast(element){
@@ -122,6 +133,7 @@ function flashMessage(message, type="success", time="", img="", title="Firewall 
 $("#sidebarCollapse").unbind()
 $('#sidebarCollapse').on('click', function () {
   $('#sidebar').toggleClass('active');
+  $('#logviewer').toggleClass('active');
   document.cookie = "sidebar-collapsed="+$('#sidebar').hasClass('active')+";path=/;samesite=strict;"; 
 });
 

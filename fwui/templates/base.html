@@ -17,7 +17,7 @@
   {% endblock %}
   </head>
   <body>
-  {% block  body %}  
+  {# {% block  body %}   #}
   <div class="container-fluid">
     <div class="row flex-nowrap">
       <!-- Sidebar Container -->
@@ -45,14 +45,14 @@
   </div>
   <!-- Toast box -->
   {% block taost %}
-  {% include "base_toast.html" with context %}
+  {% include "toast.html" with context %}
   {% endblock %}
   <!-- Extra toast -->
   {% block extratoasts %}{% endblock %}
   <!-- Modals-->
   {% block modals %}
-  {% include './modals/newSection.html' %}
-  {% include './modals/yesnoBox.html' %}
+  {% include 'modals/newSection.html' %}
+  {% include 'modals/yesnoBox.html' %}
   {% endblock %}
   <!-- Extra modals -->
   {% block extramodals %}{% endblock %}    
@@ -63,6 +63,6 @@
   {% endblock %}
   <!-- Extra scripts -->
   {% block extrascripts %}{% endblock %}
-{% endblock  body %}
+{# {% endblock  body %} #}
   </body>
 </html>

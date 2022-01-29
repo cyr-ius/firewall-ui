@@ -1,0 +1,34 @@
+{% extends 'zones.html' %}
+{% block tab_content%}
+<form id="form_add" class="row row-cols-lg-auto g-1 needs-validation mt-1 mb-2 align-items-center" novalidate>
+  {{ form.csrf_token }}
+  <div class="col-auto">{{ render.field_select(form.service, onchange="$(this).submit();") }}</div>
+</form>
+<hr class="mt-0 mb-4" />
+{% if settings %}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">{{ _("Service") }}</th>
+      <th scope="col">{{ _("Actions") }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in settings %}
+    <tr>
+      <td class="col-11">{{item}}</td>
+      <td class="col-1">
+        <form id="view_{{ loop.index }}">
+          {{ form.csrf_token }}
+          <input type="hidden" name="service" value="{{item}}" />
+        </form>      
+        <div class="btn-group btn-group-sm" role="group" aria-label="view_list">
+          <a href="#" class="btn_del btn btn-danger btn-sm" data-attr="#view_{{ loop.index }}"><i class="bi-trash"></i></a>
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %} 
+{% endblock %} 

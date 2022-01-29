@@ -1,7 +1,7 @@
 from flask_admin import AdminIndexView
 from flask_admin.contrib.sqla import ModelView
 
-from ..handle import handle_access_forbidden
+from ..services.handle import handle_access_forbidden
 from flask_login import current_user
 
 
@@ -14,8 +14,8 @@ class GlobalView(ModelView):
 
 
 class UserView(GlobalView):
+    can_create = True
     can_delete = True
-    can_view_details = True
     can_export = True
     can_view_details = True
     can_set_page_size = True
@@ -26,6 +26,14 @@ class UserView(GlobalView):
     column_exclude_list = ["password", "tf_totp_secret"]
     form_excluded_columns = ["password", "tf_totp_secret"]
 
+
+class RoleView(GlobalView):
+    template_mode = "bootstrap5"
+    column_display_actions = False
+    can_create = True
+    can_delete = True
+    can_edit = True
+    can_view_details = True
 
 class HomeView(AdminIndexView):
     template_mode = "bootstrap4"
