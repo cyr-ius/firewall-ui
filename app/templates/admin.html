@@ -2,49 +2,38 @@
 {% import 'admin/static.html' as admin_static with context %}
 {% import 'admin/actions.html' as actionslib with context %}
 {% extends "base.html" %}
+{% set section="admin" %}
 {% block title%}
 {% if admin_view.category %}{{ admin_view.category }} - {% endif %}{{ admin_view.name }} - {{ admin_view.admin.name }}
 {% endblock%}
 {% block extracss %}
-    {% block head_css %}
-        {% if admin_view.extra_css %}
-          {% for css_url in admin_view.extra_css %}
-            <link href="{{ css_url }}" rel="stylesheet">
-          {% endfor %}
-        {% endif %}
-        <style>
-            .hide {
-                display: none;
-            }
-        </style>
-    {% endblock %}
-    {% block head_tail %}
-    {% endblock %}
+    {% if admin_view.extra_css %}
+        {% for css_url in admin_view.extra_css %}
+        <link href="{{ css_url }}" rel="stylesheet">
+        {% endfor %}
+    {% endif %}
+    <style>
+        .hide {
+            display: none;
+        }
+    </style>
+    {# {% block head %} {% endblock %} #}
+    {% block head_tail %} {% endblock %}
 {% endblock %}
+
 {% block content %}
-<div class="container{% if config.get('FLASK_ADMIN_FLUID_LAYOUT', False) %}-fluid{% endif %}">
+<div id="adminviewer" class="overflow-auto">
   {% block messages %}{{ layout.messages() }}{% endblock %}
   {% set render_ctx = h.resolve_ctx() %}
-  {% block body %}{% endblock %}
+  {% block fa_body %}{% endblock %}
 </div>
 {% endblock %}
 
 {% block extrascripts%}
-    <script src="{{ admin_static.url(filename='vendor/moment.min.js', v='2.9.0') }}" type="text/javascript"></script>
-    <script src="{{ admin_static.url(filename='vendor/select2/select2.min.js', v='4.2.1') }}" type="text/javascript"></script>
-    <script src="{{ admin_static.url(filename='vendor/multi-level-dropdowns-bootstrap/bootstrap4-dropdown-ml-hack.js') }}" type="text/javascript"></script>
-    <script src="{{ admin_static.url(filename='admin/js/helpers.js', v='1.0.0') }}" type="text/javascript"></script>
-    {% if admin_view.extra_js %}
-        {% for js_url in admin_view.extra_js %}
-            <script src="{{ js_url }}" type="text/javascript"></script>
-        {% endfor %}
-    {% endif %}
-    <script>
-        // fixes "content does not load remote modal on clicked modal button"
-    $('body').on('click.modal.data-api', '[data-bs-toggle="modal"]', function () {
-        $($(this).data("bsTarget") + ' .modal-content').load($(this).attr('href'));
-    }); 
-    </script>
-    {% block tail %}
-    {% endblock %}    
+{% if admin_view.extra_js %}
+    {% for js_url in admin_view.extra_js %}
+        <script src="{{ js_url }}" type="text/javascript"></script>
+    {% endfor %}
+{% endif %}
+{% block tail %}{% endblock %}    
 {% endblock%}
