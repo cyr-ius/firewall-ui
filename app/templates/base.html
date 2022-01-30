@@ -17,7 +17,7 @@
   {% endblock %}
   </head>
   <body>
-  {# {% block  body %}   #}
+  {% block body %}  
   <div class="container-fluid">
     <div class="row flex-nowrap">
       <!-- Sidebar Container -->
@@ -33,7 +33,6 @@
         </header>    
         <!-- Contains page content -->
         <main class="container-fluid my-1">
-            {# {% include "subbar.html" %}  #}
             {% block content_header %} {% endblock %}
             {% block content %}{% endblock %}
         </main>      
@@ -63,6 +62,6 @@
   {% endblock %}
   <!-- Extra scripts -->
   {% block extrascripts %}{% endblock %}
-{# {% endblock  body %} #}
+{% endblock  body %}
   </body>
 </html>
