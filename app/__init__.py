@@ -3,7 +3,8 @@ import logging
 import os
 
 from flask import Flask, request, g
-from flask_admin import Admin, helpers as admin_helpers
+from flask_admin import Admin, AdminIndexView, helpers as admin_helpers
+from flask_admin.consts import ICON_TYPE_FONT_AWESOME
 from flask_assets import Environment
 from flask_mail import Mail
 from flask_migrate import Migrate
@@ -34,8 +35,9 @@ assets = Environment()
 migrate = Migrate()
 admin = Admin(
     name="Administration",
-    template_mode="bootstrap4",
+    template_mode="bootstrap5",
     base_template="admin.html",
+    index_view=AdminIndexView(name="Database", template="admin/index.html", url="/"),
 )
 security = Security()
 babel = Babel()
@@ -163,8 +165,24 @@ def create_app(config=None):
     )
 
     # Register Admin
-    admin.add_view(UserView(model=User, session=db.session))
-    admin.add_view(RoleView(model=Role, session=db.session))
+    admin.add_view(
+        UserView(
+            model=User,
+            session=db.session,
+            menu_class_name="nav-item",
+            menu_icon_value="bi-credit-card-2-front",
+            menu_icon_type=ICON_TYPE_FONT_AWESOME,
+        )
+    )
+    admin.add_view(
+        RoleView(
+            model=Role,
+            session=db.session,
+            menu_class_name="nav-item",
+            menu_icon_value="bi-person-badge",
+            menu_icon_type=ICON_TYPE_FONT_AWESOME,
+        )
+    )
 
     # Init database
     @app.before_first_request
