@@ -13,23 +13,25 @@
 </form>
 <hr class="mt-0 mb-2">
 <div id="logviewer" class="overflow-auto">
-<table id="viewer" class="table table-striped table-hover demo">
-    <thead class="table-light"><tr>
-    {% for head in journal.headers %}
-    <th scope="col">{{head}}</th>
-    {% endfor%}
-    </tr></thead>
-    <tbody  >
-    {% for log in journal.logs %}
-        <tr>
-        <th scope="row">{{ log.get('DATETIME') }}</th>
-        {% for head in journal.headers if head != 'DATETIME' %}
-        <td>{{ log.get(head) }}</td>
+    <table class="table table-striped table-hover">
+        <thead class="table-light">
+            <tr>
+            {% for head in journal.headers %}
+                <th scope="col">{{head}}</th>
+            {% endfor%}
+            </tr>
+        </thead>
+        <tbody  >
+        {% for log in journal.logs %}
+            <tr>
+            <th scope="row">{{ log.get('DATETIME') }}</th>
+            {% for head in journal.headers if head != 'DATETIME' %}
+                <td>{{ log.get(head) }}</td>
+            {% endfor%}
+            </tr>
         {% endfor%}
-        </tr>
-    {% endfor%}
-    </tbody>
-</table>
+        </tbody>
+    </table>
 </div>
 {% endblock %}
 {% block extrascripts %}
@@ -94,7 +96,7 @@ $(function(){
     if ($('#type').val() == 'system') {$('#level').show()} else {$('#level').hide()}
 
 
-    var $table = $('table.demo');
+    var $table = $('#logviewer table');
     $table.floatThead({
         scrollContainer: function($table){
             return $table.closest('.wrapper');
