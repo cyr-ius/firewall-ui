@@ -20,14 +20,14 @@ main {
 	padding-right: 25px;
 }
 
-#sidebar .nav-item ul li a:hover{
+#sidebar .nav-item ul li a:hover, #admin_menu .nav-item ul li a:hover {
 	text-decoration: none;
 	display: block;
 	/* background-color: #962e3e; */
 	
 }
 
-#sidebar .nav-item ul li a.active{
+#sidebar .nav-item ul li a.active, #admin_menu .nav-item ul li a.active{
 	text-decoration: none;
 	display: block;
 	/* background-color: #962e3e; */
@@ -101,17 +101,17 @@ main {
     color: #2b0108 !important;
 }
 
-#logviewer {
-	height:calc(100vh - 12rem);
-	width:calc(100vw - 240px);
+#logviewer, #adminviewer {
+	height:calc(100vh - 94px);
+	width:calc(100vw - 244px);
 }
 
-#logviewer.active {
-	height:calc(100vh - 12rem);
-	width:calc(100vw - 128px);
+#sidebar.active + div main #logviewer, #sidebar.active + div main #adminviewer  {
+	height:calc(100vh - 94px);
+	width:calc(100vw - 124px);
 }
 
-#logviewer .even {
+#logviewer .even, #adminviewer .even {
 	background-color: beige;
 }
 
@@ -166,9 +166,9 @@ main {
 		width: unset !important;
 	}
 
-	#logviewer {
-		height:calc(100vh - 12rem);
-		width:calc(100vw - 128px);
+	#logviewer, #adminviewer {
+		height:calc(100vh - 94px);
+		width:calc(100vw - 124px);
 	}
 }
 
@@ -185,9 +185,9 @@ main {
 		display:unset;
 	}
 
-	#logviewer {
-		height:calc(100vh - 12rem);
-		width:unset;
+	#logviewer, #adminviewer {
+		height:calc(100vh - 94px);
+		width:calc(100vw - 48px);
 	}	
 }
 

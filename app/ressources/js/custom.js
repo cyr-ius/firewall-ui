@@ -133,7 +133,6 @@ function flashMessage(message, type="success", time="", img="", title="Firewall 
 $("#sidebarCollapse").unbind()
 $('#sidebarCollapse').on('click', function () {
   $('#sidebar').toggleClass('active');
-  $('#logviewer').toggleClass('active');
   document.cookie = "sidebar-collapsed="+$('#sidebar').hasClass('active')+";path=/;samesite=strict;"; 
 });
 
