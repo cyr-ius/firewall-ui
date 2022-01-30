@@ -88,6 +88,7 @@
 			"pyfile",
 			"qrcode",
 			"qrcodes",
+			"rediscli",
 			"richrules",
 			"rjsmin",
 			"rpassword",
@@ -136,7 +137,7 @@
 			"Yubikey",
 			"znmgnx"
 		],
-		"python.pythonPath": ".venv/bin/python",
+		"python.pythonPath": "/media/datas/firewall-ui/.venv/bin/python",
 		"cSpell.language": "en,en-US,en-GB"
 	}
 }
