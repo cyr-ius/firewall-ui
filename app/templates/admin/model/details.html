@@ -1,7 +1,7 @@
 {% extends 'admin/master.html' %}
 {% import 'admin/lib.html' as lib with context %}
 
-{% block body %}
+{% block fa_body %}
   {% block navlinks %}
   <ul class="nav nav-tabs">
     <li class="nav-item">
@@ -24,10 +24,10 @@
   {% endblock %}
 
   {% block details_search %}
-    <div class="form-inline fa_filter_container col-lg-6">
-      <label for="fa_filter">{{ _gettext('Filter') }}</label>
+    <div class="fa_filter_container input-group mb-3">
+      <span class="input-group-text" for="fa_filter">{{ _gettext('Filter') }}</span>
       <input id="fa_filter" type="text" class="ml-3 form-control">
-    </div>
+    </div>  
   {% endblock %}
 
   {% block details_table %}

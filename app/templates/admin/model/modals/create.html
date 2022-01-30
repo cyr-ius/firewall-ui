@@ -4,13 +4,11 @@
 {# store the jinja2 context for form_rules rendering logic #}
 {% set render_ctx = h.resolve_ctx() %}
 
-{% block body %}
+{% block fa_body %}
 
   <div class="modal-header">
     {% block header_text %}<h5 class="modal-title">{{ _gettext('Create New Record') }}</h5>{% endblock %}
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
   </div>
   {% call lib.form_tag(action=url_for('.create_view', url=return_url)) %}
   <div class="modal-body">
@@ -32,5 +30,6 @@
 {% endblock %}
 
 {% block tail %}
-  <script src="{{ admin_static.url(filename='admin/js/bs4_modal.js', v='1.0.0') }}"></script>
+  {# <script src="{{ admin_static.url(filename='admin/js/bs5_modal.js', v='1.0.0') }}"></script> #}
+  <script src="{{ url_for('static', filename='admin/js/bs5_modal.js') }}"></script>
 {% endblock %}

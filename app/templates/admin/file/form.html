@@ -1,7 +1,7 @@
 {% extends 'admin/master.html' %}
 {% import 'admin/lib.html' as lib with context %}
 
-{% block body %}
+{% block fa_body %}
   {% block header %}<h3>{{ header_text }}</h3>{% endblock %}
   {% block fa_form %}
     {{ lib.render_form(form, dir_url) }}

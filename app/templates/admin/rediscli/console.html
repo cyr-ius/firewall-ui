@@ -4,10 +4,11 @@
 
 {% block head %}
     {{ super() }}
-    <link href="{{ admin_static.url(filename='admin/css/bootstrap4/rediscli.css', v='1.0.0') }}" rel="stylesheet">
+    {# <link href="{{ admin_static.url(filename='admin/css/bootstrap5/rediscli.css', v='1.0.0') }}" rel="stylesheet"> #}
+    <link href="{{ url_for('static', filename='admin/css/bootstrap5/rediscli.css') }}" rel="stylesheet">
 {% endblock %}
 
-{% block body %}
+{% block fa_body %}
 <div class="console">
   <div class="console-container">
   </div>

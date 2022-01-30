@@ -10,7 +10,7 @@
     {{ lib.form_css() }}
 {% endblock %}
 
-{% block body %}
+{% block fa_body %}
     {% block model_menu_bar %}
     <ul class="nav nav-tabs">
         <li class="nav-item">
@@ -89,9 +89,9 @@
                                 <a href="{{ sort_url(column, True) }}" title="{{ _gettext('Sort by %(name)s', name=name) }}">
                                     {{ name }}
                                     {% if sort_desc %}
-                                        <span class="fa fa-chevron-up glyphicon glyphicon-chevron-up"></span>
+                                        <span class="bi bi-chevron-up"></span>
                                     {% else %}
-                                        <span class="fa fa-chevron-down glyphicon glyphicon-chevron-down"></span>
+                                        <span class="bi bi-chevron-down"></span>
                                     {% endif %}
                                 </a>
                             {% else %}
@@ -101,10 +101,7 @@
                             {{ name }}
                         {% endif %}
                         {% if admin_view.column_descriptions.get(c) %}
-                            <a class="fa fa-question-circle glyphicon glyphicon-question-sign"
-                               title="{{ admin_view.column_descriptions[c] }}"
-                               href="javascript:void(0)" data-role="tooltip"
-                            ></a>
+                            <a class="bi bi-question-circle" title="{{ admin_view.column_descriptions[c] }}" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="bottom"></a>
                         {% endif %}
                     </th>
                     {% endfor %}
@@ -188,11 +185,10 @@
       <div id="active-filters-data" style="display:none;">{{ active_filters|tojson|safe }}</div>
     {% endif %}
     {{ lib.form_js() }}
-    <script src="{{ admin_static.url(filename='admin/js/bs4_modal.js', v='1.0.0') }}"></script>
-    <script src="{{ admin_static.url(filename='admin/js/bs4_filters.js', v='1.0.0') }}"></script>
-    
+    {# <script src="{{ admin_static.url(filename='admin/js/bs5_modal.js', v='1.0.0') }}"></script> #}
+    <script src="{{ url_for('static', filename='admin/js/bs5_modal.js') }}"></script>
+    {# <script src="{{ admin_static.url(filename='admin/js/bs5_filters.js', v='1.0.0') }}"></script> #}
+    <script src="{{ url_for('static', filename='admin/js/bs5_filters.js') }}"></script>
 
-    {{ actionlib.script(_gettext('Please select at least one record.'),
-                        actions,
-                        actions_confirmation) }}
+    {{ actionlib.script(_gettext('Please select at least one record.'), actions, actions_confirmation) }}
 {% endblock %}

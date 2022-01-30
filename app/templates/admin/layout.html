@@ -2,10 +2,10 @@
   {% set icon_type = item.get_icon_type() %}
   {%- if icon_type %}
     {% set icon_value = item.get_icon_value() %}
-    {% if icon_type == 'glyph' %}
-      <i class="glyphicon {{ icon_value }}"></i>
+    {% if icon_type == 'bs' %}
+      <i class="bs {{ icon_value }}"></i>
     {% elif icon_type == 'fa' %}
-      <i class="bi {{ icon_value }}"></i>
+      <i class="fa {{ icon_value }}"></i>
     {% elif icon_type == 'image' %}
       <img src="{{ url_for('static', filename=icon_value) }}" alt="menu image">
     {% elif icon_type == 'image-url' %}
@@ -27,7 +27,7 @@
             {% else -%}
           <li class="dropdown{% if class_name %} {{ class_name }}{% endif %}">
         {%- endif %}
-      <a class="dropdown-toggle {% if is_main_nav %}nav-link{% else %}dropdown-item{% endif %}" data-toggle="dropdown" href="javascript:void(0)">
+      <a class="dropdown-toggle {% if is_main_nav %}nav-link{% else %}dropdown-item{% endif %}" data-bs-toggle="dropdown" href="javascript:void(0)">
         {% if item.class_name %}<span class="{{ item.class_name }}"></span> {% endif %}
         {{ menu_icon(item) }}{{ item.name }}
         {%- if 'dropdown-submenu' in class_name -%}
@@ -80,7 +80,8 @@
     {% set class_name = item.get_class_name() %}
     {% if item.is_accessible() and item.is_visible() %}
       <li{% if class_name %} class="{{ class_name }}"{% endif %}>
-        <a class="nav-link" href="{{ item.get_url() }}">{{ menu_icon(item) }}{{ item.name }}</a>
+        <a class="nav-link" href="{{ item.get_url() }}"{% if item.target %} target="{{ item.target }}"{% endif %}>
+          {{ menu_icon(item) }}{{ item.name }}</a>
       </li>
     {% endif %}
   {% endfor %}
@@ -91,13 +92,12 @@
     {% if messages %}
       {% for category, m in messages %}
         {% if category %}
-          {# alert-error changed to alert-danger in bootstrap 3, mapping is for backwards compatibility #}
           {% set mapping = {'message': 'info', 'error': 'danger'} %}
-          <div class="alert alert-{{ mapping.get(category, category) }} alert-dismissable">
+          <div class="alert alert-{{ mapping.get(category, category) }} alert-dismissible fade show" role="alert">
         {% else %}
           <div class="alert alert-dismissable">
         {% endif %}
-      <button type="button" class="btn-close" data-bs-dismiss="alert"  aria-hidden="true" aria-label="Close"></button>        
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       {{ m }}
       </div>
       {% endfor %}
