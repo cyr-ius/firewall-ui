@@ -8,7 +8,7 @@
     <ul class="navbar-nav flex-column mb-auto align-items-center align-items-sm-start" id="menu">
         <li class="nav-item">
             <a class="nav-link px-0 align-middle text-white {% if section == 'zones' %}active{% endif %}" data-bs-toggle="collapse" data-bs-target="#zones-collapse" aria-expanded="{{ 'true' if section == 'zones'  else 'false' }}" href="#">
-                <i class="bi-layers-half"></i><span class="ms-1 d-sm-inline">Zones</span>
+                <i class="bi bi-layers-half"></i><span class="ms-1 d-sm-inline">Zones</span>
             </a>
             <div id="zones-collapse" class="collapse nav flex-column ms-1 {% if section == 'zones' and g.collapsed==false %}show{% endif %}" data-bs-parent="#sidebar" >
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small navbar-nav-scroll" style="--bs-scroll-height: 400px;">
@@ -22,7 +22,7 @@
         </li>    
         <li class="nav-item">
             <a class="nav-link px-0 align-middle text-white {% if section == 'services' %}active{% endif %}" data-bs-toggle="collapse" data-bs-target="#services-collapse" aria-expanded="{{ 'true' if section == 'services'  else 'false' }}" href="#">
-                <i class="bi-box-seam"></i><span class="ms-1 d-sm-inline">Services</span>
+                <i class="bi bi-box-seam"></i><span class="ms-1 d-sm-inline">Services</span>
             </a>
             <div id="services-collapse" class="collapse nav flex-column ms-1 {% if section == 'services' and g.collapsed==false %}show{% endif %}" data-bs-parent="#sidebar">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small navbar-nav-scroll"  style="--bs-scroll-height: 400px;">
@@ -36,7 +36,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link px-0 align-middle text-white {% if section == 'ipsets' %}active{% endif %}" data-bs-toggle="collapse" data-bs-target="#ipsets-collapse" aria-expanded="{{ 'true' if section == 'ipsets'  else 'false' }}" href="#">
-                <i class="bi-bricks"></i><span class="ms-1 d-sm-inline">IPsets</span> 
+                <i class="bi bi-bricks"></i><span class="ms-1 d-sm-inline">IPsets</span> 
             </a>
             <div id="ipsets-collapse" class="collapse  nav flex-column ms-1 {% if section == 'ipsets' and g.collapsed==false  %}show{% endif %}" data-bs-parent="#sidebar">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small navbar-nav-scroll"  style="--bs-scroll-height: 400px;">
@@ -50,7 +50,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link px-0 align-middle text-white {% if section == 'icmptypes' %}active{% endif %}" data-bs-toggle="collapse" data-bs-target="#icmptypes-collapse" aria-expanded="{{ 'true' if section == 'icmptypes'  else 'false' }}" href="#">
-                <i class="bi-code-square" aria-hidden="true"></i><span class="ms-1 d-sm-inline">ICMP Types</span>
+                <i class="bi bi-code-square" aria-hidden="true"></i><span class="ms-1 d-sm-inline">ICMP Types</span>
             </a>
             <div id="icmptypes-collapse" class="collapse nav flex-column ms-1 {% if section == 'icmptypes' and g.collapsed==false  %}show{% endif %}" data-bs-parent="#sidebar">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small navbar-nav-scroll"  style="--bs-scroll-height: 400px;">
@@ -64,7 +64,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link align-middle px-0 text-white {% if section == 'helpers' %}active{% endif %}" data-bs-toggle="collapse" data-bs-target="#assistants-collapse" aria-expanded="{{ 'true' if section == 'helpers'  else 'false' }}" href="#">
-                <i class="bi-life-preserver" aria-hidden="true"></i><span class="ms-1 d-sm-inline">Helpers</span>
+                <i class="bi bi-life-preserver" aria-hidden="true"></i><span class="ms-1 d-sm-inline">Helpers</span>
             </a>
             <div id="assistants-collapse" class="collapse nav flex-column ms-1 {% if section == 'helpers' and g.collapsed==false  %}show{% endif %}" data-bs-parent="#sidebar">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small navbar-nav-scroll"  style="--bs-scroll-height: 400px;">
@@ -78,28 +78,30 @@
         </li>
         <li class="nav-item">
             <a class="nav-link align-middle px-0 text-white {% if section == 'directconfigs' %}active{% endif %}"  href="{{ url_for('firewall.specific_tab', section='directconfigs', tabname='chains')}}">
-                <i class="bi-bullseye" aria-hidden="true"></i><span class="ms-1 d-sm-inline">Direct config</span>
+                <i class="bi bi-bullseye" aria-hidden="true"></i><span class="ms-1 d-sm-inline">Direct config</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link align-middle px-0 text-white {% if section == 'whitelists' %}active{% endif %}" href="{{ url_for('firewall.specific_tab', section='whitelists', tabname='contexts') }}">
-                <i class="bi-lock" aria-hidden="true"></i><span class="ms-1 d-sm-inline">White list</span>
+                <i class="bi bi-lock" aria-hidden="true"></i><span class="ms-1 d-sm-inline">White list</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link align-middle px-0 text-white {% if section == 'logs' %}active{% endif %}" href="{{ url_for('main.logs')}}">
-                <i class="bi-newspaper" aria-hidden="true"></i><span class="ms-1 d-sm-inline">Logs</span>
+                <i class="bi bi-newspaper"></i><span class="ms-1 d-sm-inline">Logs</span>
             </a>
         </li>
-        <li>
-            <a class="nav-link align-middle px-0 text-white" data-bs-toggle="collapse" href="#admin_menu">
-                <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-sm-inline">Administration</span>
+        {% if current_user.has_role("dba") %}
+        <li class="nav-item">
+            <a class="nav-link align-middle px-0  text-white text-decoration-none {% if section == 'admin' %}active{% endif %}" data-bs-toggle="collapse" href="#admin_menu">
+                <i class="bi bi-speedometer2"></i><span class="ms-3 d-sm-inline">Administration</span>
             </a>
-            <ul class="collapse nav flex-column ms-1" id="admin_menu" data-bs-parent="#menu">
+            <ul class="collapse nav flex-column ms-1 {% if section == 'admin' %}show{% endif %}" id="admin_menu" data-bs-parent="#menu">
                 {% import 'admin/layout.html' as layout with context -%}
                 {{ layout.menu() }}
             </ul>
-        </li>           
+        </li>   
+        {% endif %}        
     </ul>
      <hr>
     <div class="dropdown dropup pb-1">
