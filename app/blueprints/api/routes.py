@@ -11,7 +11,7 @@ from .handlers import (
     handle_firewall_exception,
     handle_form_exception,
 )
-from ..firewall.utils import get_object
+from ..firewall.helpers import getObject
 from .views import FirewallView, LogView, SectionView
 
 api_bp = Blueprint("api", __name__, url_prefix="/api")
@@ -49,7 +49,7 @@ sc_bp.add_url_rule(
 @sc_bp.route("<string:section>/<string:item>/reset", methods=["POST"])
 @auth_required()
 def reset(section, item):
-    obj = get_object(section, "permanent", item)
+    obj = getObject(section, "permanent", item)
     obj.loadDefaults()
     return {}
 

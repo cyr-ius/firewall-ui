@@ -11,7 +11,7 @@ from flask_security import auth_required
 
 from .handlers import FormException
 from ..firewall.structure import STRUCTURE, permanent
-from ..firewall.utils import get_object, saveSection, setItem, settings2dict, get_log
+from ..firewall.helpers import getObject, setSection, setItem, settings2dict, getLog
 
 
 class SectionView(MethodView):
@@ -33,7 +33,7 @@ class SectionView(MethodView):
     # Read
     def get(self):
         if self.item is not None:
-            obj = get_object(self.section, self.config_mode, self.item)
+            obj = getObject(self.section, self.config_mode, self.item)
             return settings2dict(self.section, self.config_mode, obj, self.structure)
 
     # Create
@@ -51,9 +51,9 @@ class SectionView(MethodView):
     # Modify
     def put(self):
         form = self.structure["settings"]["form"]()
-        obj = get_object(self.section, self.config_mode, self.item)
+        obj = getObject(self.section, self.config_mode, self.item)
         if form.validate_on_submit():
-            settings = saveSection(
+            settings = setSection(
                 self.config_mode, self.section, obj, form.cleaned_data
             )
             obj.update(settings)
@@ -62,7 +62,7 @@ class SectionView(MethodView):
 
     # Modify
     def delete(self):
-        obj = get_object(self.section, self.config_mode, self.item)
+        obj = getObject(self.section, self.config_mode, self.item)
         obj.remove()
         return {}
 
@@ -84,7 +84,7 @@ class FirewallView(MethodView):
         self.item = kwargs.get("item")
         self.tabname = kwargs.get("tabname")
         self.structure = STRUCTURE[self.section]
-        self.obj = get_object(self.section, self.config_mode, self.item)
+        self.obj = getObject(self.section, self.config_mode, self.item)
         return super().dispatch_request()
 
     # Read
@@ -163,6 +163,6 @@ class LogView(MethodView):
         if end := request.args.get("end"):
             end = datetime.datetime.strptime(end, "%Y-%m-%dT%H:%M:%S")
 
-        log = get_log(log, query, start, end)
+        log = getLog(log, query, start, end)
 
         return jsonify(log)

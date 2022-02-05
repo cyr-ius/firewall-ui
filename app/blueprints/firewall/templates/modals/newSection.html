@@ -10,7 +10,11 @@
       {{ form.csrf_token }}
       <div class="modal-body">
           {% for field in form if field.id not in ['submit','csrf_token']%}
+          {% if field.type == "SelectField" %}
+          <div class="mb-3">{{ render.field_select(field,label_before=true) }}</div>
+          {% else %}
           <div class="mb-3">{{ render.field(field,label_before=true) }}</div>
+          {% endif %}
           {% endfor %}
       </div>
       <div class="modal-footer">

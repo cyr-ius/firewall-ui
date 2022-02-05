@@ -15,7 +15,7 @@ from flask_security import auth_required, current_user
 from .forms import frm_change_zone, frm_logs
 from .models import Setting
 from ..firewall.structure import STRUCTURE
-from ..firewall.utils import context, get_log
+from ..firewall.helpers import context, getLog
 
 main_bp = Blueprint("main", __name__)
 
@@ -73,7 +73,7 @@ def index():
 def logs():
     journal = {}
     if request.method == "GET":
-        journal = get_log("firewall")
+        journal = getLog("firewall")
 
     if request.method == "POST":
         query = request.form.get("search")
@@ -83,7 +83,7 @@ def logs():
             start = datetime.datetime.strptime(start, "%Y-%m-%dT%H:%M")
         if end := request.form.get("date_end"):
             end = datetime.datetime.strptime(end, "%Y-%m-%dT%H:%M")
-        journal = get_log(log, query, start, end, level)
+        journal = getLog(log, query, start, end, level)
 
     return render_template("logs.html", journal=journal, form=frm_logs())
 

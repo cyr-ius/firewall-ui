@@ -5,7 +5,7 @@ from flask_security import auth_required
 
 
 from .structure import STRUCTURE
-from .utils import get_object, setItem, settings2dict
+from .helpers import getObject, setItem, settings2dict
 
 
 class GenericView(MethodView):
@@ -32,7 +32,7 @@ class GenericView(MethodView):
         )
 
         try:
-            self.obj = get_object(self.section, self.config_mode, self.item)
+            self.obj = getObject(self.section, self.config_mode, self.item)
             self.form = self.structure[self.tabname]["form"]()
         except Exception:
             abort(404)

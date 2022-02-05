@@ -8,7 +8,6 @@
         <div class="modal-body">
           <form id="modal_form_section" class="needs-validation" method="POST" novalidate>
             {{ form.csrf_token }}
-            {{ form.form_errors }}
             {% for field in form if field.id not in ['submit','csrf_token']%}
             <div class="mb-3">{{ render.field(field, label_before=true) }}</div>
             {% endfor %}

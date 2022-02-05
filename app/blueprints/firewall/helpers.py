@@ -33,7 +33,7 @@ def context():
     }
 
 
-def get_object(section, config_mode, item=None):
+def getObject(section, config_mode, item=None):
     structure = STRUCTURE[section]
     get_item = structure[config_mode].get("get_item")
     get_direct = structure[config_mode].get("get_direct")
@@ -70,25 +70,25 @@ def _settingDict(config_mode, obj, items):
     return config
 
 
-def saveSection(config_mode, section, obj, datas):
+def setSection(config_mode, section, obj, cleaned_date):
     saveset = obj
     if config_mode == "permanent":
         saveset = obj.getSettings()
 
-    saveset.setVersion(datas.get("version", ""))
-    saveset.setShort(datas.get("short", ""))
-    saveset.setDescription(datas.get("description", ""))
+    saveset.setVersion(cleaned_date.get("version", ""))
+    saveset.setShort(cleaned_date.get("short", ""))
+    saveset.setDescription(cleaned_date.get("description", ""))
 
     if section in ["zones"]:
-        if target := datas.get("target"):
+        if target := cleaned_date.get("target"):
             saveset.setTarget(target)
     if section in ["icmptypes"]:
-        if destination := datas.get(""):
+        if destination := cleaned_date.get(""):
             saveset.setDestinations(destination)
     if section in ["ipsets"]:
-        if hashtype := datas.get("hashtype"):
+        if hashtype := cleaned_date.get("hashtype"):
             saveset.setType(hashtype)
-        saveset.setOptions(datas.get("options", {}))
+        saveset.setOptions(cleaned_date.get("options", {}))
     return saveset
 
 
@@ -104,7 +104,7 @@ def setItem(obj, section, item, tabname, structure, form, method):
     return jsonify(data=form.cleaned_data)
 
 
-def get_log(log, query="", start=None, end=None, level=None):
+def getLog(log, query="", start=None, end=None, level=None):
     uid_list = os.listdir("/var/log/journal")
     j = journal.Reader(path="/var/log/journal")
     j.this_machine(uid_list[0])

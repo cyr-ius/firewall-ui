@@ -10,9 +10,16 @@ from wtforms import (
     FieldList,
 )
 from wtforms.validators import IPAddress, Optional, MacAddress, DataRequired
-from wtforms.widgets import CheckboxInput
+from wtforms.widgets import CheckboxInput, HiddenInput
 
-from ...forms.validators import NumberRange, PortRange, Command, Uid, Protocol, Interface
+from ...forms.validators import (
+    NumberRange,
+    PortRange,
+    Command,
+    Uid,
+    Protocol,
+    Interface,
+)
 from .consts import (
     ACTIONS,
     CHAINS_TABLE,
@@ -323,10 +330,11 @@ class frm_rich_rules(frm):
         render_kw={"class": "form-control", "placeholder": _("Priority")},
     )
 
-    element = BooleanField(
+    element = HiddenField(
         label=_("Element"),
         validators=[Optional()],
-        render_kw={"class": "form-check-input"},
+        render_kw={"class": "invisible", "style": "display: none;"},
+        widget=CheckboxInput(),
     )
 
     ELEMENTS.append(("", "---"))
@@ -388,10 +396,11 @@ class frm_rich_rules(frm):
         min_entries=1,
     )
 
-    action = BooleanField(
+    action = HiddenField(
         label=_("Action"),
         validators=[Optional()],
-        render_kw={"class": "form-check-input"},
+        render_kw={"class": "invisible", "style": "display: none;"},
+        widget=CheckboxInput(),
     )
     action_level = SelectField(
         label=_("Level"),
@@ -504,10 +513,11 @@ class frm_rich_rules(frm):
         render_kw={"class": "form-check-input"},
     )
 
-    log = BooleanField(
+    log = HiddenField(
         label=_("Logs"),
         validators=[Optional()],
-        render_kw={"class": "form-check-input"},
+        render_kw={"class": "invisible", "style": "display: none;"},
+        widget=CheckboxInput(),
     )
     log_level = SelectField(
         label=_("Level"),
@@ -541,10 +551,11 @@ class frm_rich_rules(frm):
         render_kw={"class": "form-control", "style": "display: none;", "disabled": ""},
     )
 
-    audit = BooleanField(
+    audit = HiddenField(
         label=_("Audit"),
         validators=[Optional()],
-        render_kw={"class": "form-check-input"},
+        render_kw={"class": "invisible", "style": "display: none;"},
+        widget=CheckboxInput(),
     )
     audit_limit = BooleanField(
         label=_("Limit"),
@@ -573,7 +584,7 @@ class frm_rich_rules(frm):
             if v is False or v is None or v == "" or v == "---":
                 self.cleaned_data.pop(k)
 
-        element = source = masquerade = ""
+        element = audit = source = masquerade = ""
 
         if family := self.cleaned_data.get("family", ""):
             family = f' family="{family}"'
@@ -615,21 +626,21 @@ class frm_rich_rules(frm):
             destination = f' destination{reverse} address="{destination}"'
 
         if log := self.cleaned_data.get("log", ""):
-            if limit := self.cleaned_data.get("log_limit", ""):
-                lv = self.cleaned_data["log_value"]
-                lu = self.cleaned_data["log_unit"]
-                limit = f' limit value="{lv}/{lu}"'
-            log = f" log level=\"{ self.cleaned_data['log_level']}\"{limit}"
+            if log_level := self.cleaned_data.get("log_level", ""):
+                if limit := self.cleaned_data.get("log_limit", ""):
+                    lv = self.cleaned_data["log_value"]
+                    lu = self.cleaned_data["log_unit"]
+                    limit = f' limit value="{lv}/{lu}"'
+                log = f" log level=\"{log_level}\"{limit}"
 
         if audit := self.cleaned_data.get("audit", ""):
             if limit := self.cleaned_data.get("audit_limit", ""):
                 av = self.cleaned_data["audit_value"]
                 au = self.cleaned_data["audit_unit"]
                 limit = f' limit value="{av}/{au}"'
-            audit = f" audit{limit}"
+                audit = f" audit{limit}"
 
-        if action := self.cleaned_data.get("action", ""):
-            level = self.cleaned_data["action_level"]
+        if action_level := self.cleaned_data.get("action_level", ""):
             if atype := self.cleaned_data.get("action_type", "") and (
                 (stype := self.cleaned_data.get("action_type_ipv4"))
                 or (stype := self.cleaned_data.get("action_type_ipv6"))  # noqa: W503
@@ -639,7 +650,7 @@ class frm_rich_rules(frm):
                 av = self.cleaned_data["action_value"]
                 au = self.cleaned_data["action_unit"]
                 limit = f' limit value="{av}/{au}"'
-            action = f" {level}{atype}{limit}"
+            action = f" {action_level}{atype}{limit}"
 
         rule = "rule{priority}{family}{element}{source}{destination}{log}{audit}{action}{masquerade}".format(
             priority=priority,
