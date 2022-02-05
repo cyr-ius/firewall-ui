@@ -13,4 +13,4 @@ flask assets build
 mkdir -p ./static/img
 cp -Rv /app/ressources/admin ./static
 
-exec gunicorn --bind 0.0.0.0:8000 --workers 3 'app:create_app()' "$@"
+exec gunicorn --bind 0.0.0.0:8000 --workers 3 'app:create_app' "$@"

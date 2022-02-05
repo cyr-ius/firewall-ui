@@ -21,9 +21,9 @@ RUN apt-get update && apt-get install -y python3 python3-venv python3-systemd py
 
 # Install pip requirements
 COPY requirements.txt .
-RUN python3 -m venv --system-site-packages /env \
-    && /env/bin/pip3 install --upgrade pip \
-    && /env/bin/pip3 install --no-cache-dir -r requirements.txt 
+RUN python3 -m venv --system-site-packages /env 
+RUN /env/bin/pip3 install --upgrade pip
+RUN /env/bin/pip3 install --no-cache-dir -r requirements.txt 
 
 # clean content
 RUN rm -rf /var/lib/apt/lists/*
@@ -31,8 +31,8 @@ RUN rm -rf /var/lib/apt/lists/*
 COPY entrypoint.sh .
 RUN chmod +x entrypoint.sh
 
-WORKDIR /app
-COPY ./app /app/fwui
+COPY ./app /app
+RUN ls /app
 
 ENV VIRTUAL_ENV /env
 ENV PATH /env/bin:$PATH
