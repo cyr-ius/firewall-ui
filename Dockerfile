@@ -28,15 +28,14 @@ RUN /env/bin/pip3 install --no-cache-dir -r requirements.txt
 # clean content
 RUN rm -rf /var/lib/apt/lists/*
 
-COPY entrypoint.sh .
-RUN chmod +x entrypoint.sh
+COPY docker-entrypoint.sh .
+RUN chmod +x docker-entrypoint.sh
 
-COPY ./app /app
-RUN ls /app
+COPY ./app /opt
 
 ENV VIRTUAL_ENV /env
 ENV PATH /env/bin:$PATH
 
 EXPOSE 8000
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]

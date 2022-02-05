@@ -1,9 +1,10 @@
 version: "3.6"
 services:
-  app:
+  fwui:
     build: 
       context: https://github.com/cyr-ius/firewall-ui.git#master
       dockerfile: Dockerfile
+    container_name: fwui-app
     restart: unless-stopped
     privileged: true
     volumes:
@@ -19,9 +20,10 @@ services:
 
   web:
     image: nginx:stable-alpine
+    container_name: fwui-web
     restart: unless-stopped
     depends_on:
-      - app
+      - fwui
     volumes:
       - static_volume:/var/www/html/static
       - ./site.conf:/etc/nginx/conf.d/default.conf
