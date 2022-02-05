@@ -31,7 +31,7 @@ RUN rm -rf /var/lib/apt/lists/*
 COPY docker-entrypoint.sh .
 RUN chmod +x docker-entrypoint.sh
 
-COPY ./app /opt
+COPY ./app /opt/app
 
 ENV VIRTUAL_ENV /env
 ENV PATH /env/bin:$PATH
