@@ -1,12 +1,20 @@
-{% extends 'zones.html' %} {% block tab_content%}
+{% extends 'zones.html' %}
+{% block tab_content%}
 <form id="form_add" class="row g-1 needs-validation mt-1 mb-2 align-items-center" novalidate>
   {{ form.csrf_token }}
-  <div>{{ form.rule }}</div>
+
+  {% for field in form if field.type == 'HiddenField' %}
+    {{ field }}
+  {% endfor %}
+
   {% if form.errors %}
     {% for field, errors in form.errors.items() %}
     <div class="alert alert-error">{{ form[field].label }}: {{ ', '.join(errors) }}</div>
     {% endfor %}
   {% endif %}
+
+
+
   <div class="row p-0 m-0">
     <div class="col-auto">{{ form.family }}</div>
     <div class="col-auto">{{ form.priority }}</div>
@@ -19,20 +27,11 @@
   <div class="accordion accordion-flush pt-3" id="accordionRichRules">
     <div class="accordion-item">
       <h2 class="accordion-header" id="panelElement-headingOne">
-        <button
-          class="accordion-button p-1"
-          type="button"
-          aria-expanded="false"
-          aria-controls="panelElement"
-        >
-          {{ render.field_switch(form.element) }}
+        <button id="btn_element" class="accordion-button p-1 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelElement" aria-expanded="false" aria-controls="panelElement">
+          {{ _("Element") }}
         </button>
       </h2>
-      <div
-        id="panelElement"
-        class="accordion-collapse collapse"
-        aria-labelledby="panelElement-headingOne"
-      >
+      <div id="panelElement" class="accordion-collapse collapse" aria-labelledby="panelElement-headingOne">
         <div class="accordion-body row align-items-center">
           <div class="col-auto">{{ form.element_level }}</div>
           <div class="col-auto">{{ form.element_level_service }}</div>
@@ -47,31 +46,22 @@
     </div>
     <div class="accordion-item">
       <h2 class="accordion-header" id="panelAction-headingOne">
-        <button
-          class="accordion-button p-1"
-          type="button"
-          aria-expanded="false"
-          aria-controls="panelAction"
-        >
-          {{ render.field_switch(form.action) }}
+        <button id="btn_action" class="accordion-button p-1 collapsed" type="button" aria-controls="panelAction" data-bs-toggle="collapse" data-bs-target="#panelAction">
+          {{ _("Action") }}
         </button>
       </h2>
-      <div
-        id="panelAction"
-        class="accordion-collapse collapse"
-        aria-labelledby="panelAction-headingOne"
-      >
+      <div id="panelAction"  class="accordion-collapse collapse" aria-labelledby="panelAction-headingOne">
         <div class="accordion-body row align-items-center">
           <div class="col-auto">{{ form.action_level }}</div>
           <div class="col-auto">
-            {{ render.field_switch(form.action_type) }}
+            {{ render.field_switch(form.action_type,label_after=True) }}
           </div>
           <div class="col-auto">{{ form.action_type_ipv4 }}</div>
           <div class="col-auto">{{ form.action_type_ipv6 }}</div>
           <div class="col-auto">{{ form.action_mark }}</div>
           <div class="col-auto">{{ form.action_mask }}</div>
           <div class="col-auto">
-            {{ render.field_switch(form.action_limit) }}
+            {{ render.field_switch(form.action_limit,label_after=True) }}
           </div>
           <div class="col-auto">{{ form.action_value }}</div>
           <div class="col-auto">{{ form.action_unit }}</div>
@@ -80,22 +70,11 @@
     </div>
     <div class="accordion-item">
       <h2 class="accordion-header" id="panelSource-headingOne">
-        <button
-          class="accordion-button p-1"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#panelSource"
-          aria-expanded="false"
-          aria-controls="panelSource"
-        >
+        <button id="btn_source" class="accordion-button p-1 collapsed" type="button" aria-controls="panelSource" data-bs-toggle="collapse" data-bs-target="#panelSource">
           {{ _("Source") }}
         </button>
       </h2>
-      <div
-        id="panelSource"
-        class="accordion-collapse collapse"
-        aria-labelledby="panelSource-headingOne"
-      >
+      <div id="panelSource" class="accordion-collapse collapse" aria-labelledby="panelSource-headingOne">
         <div class="accordion-body row align-items-center">
           <div class="col-auto">{{ form.src }}</div>
           <div class="col-auto">{{ form.src_mac }}</div>
@@ -107,22 +86,11 @@
     </div>
     <div class="accordion-item">
       <h2 class="accordion-header" id="panelDestination-headingOne">
-        <button
-          class="accordion-button p-1"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#panelDestination"
-          aria-expanded="false"
-          aria-controls="panelDestination"
-        >
+        <button id="btn_destination" class="accordion-button p-1 collapsed" type="button" aria-controls="panelDestination" data-bs-toggle="collapse" data-bs-target="#panelDestination">
           {{ _("Destination") }}
         </button>
       </h2>
-      <div
-        id="panelDestination"
-        class="accordion-collapse collapse"
-        aria-labelledby="panelDestination-headingOne"
-      >
+      <div id="panelDestination" class="accordion-collapse collapse" aria-labelledby="panelDestination-headingOne">
         <div class="accordion-body row align-items-center">
           <div class="col-auto">{{ form.dst_ip }}</div>
           <div class="col-auto">{{ render.field_check(form.dst_reverse) }}</div>
@@ -131,24 +99,15 @@
     </div>
     <div class="accordion-item">
       <h2 class="accordion-header" id="panelLogs-headingOne">
-        <button
-          class="accordion-button p-1"
-          type="button"
-          aria-expanded="false"
-          aria-controls="panelLogs"
-        >
-          {{ render.field_switch(form.log)}}
+        <button id="btn_log" class="accordion-button p-1 collapsed" type="button" aria-expanded="false" aria-controls="panelLogs" data-bs-toggle="collapse" data-bs-target="#panelLogs">
+          {{ _("Log") }}
         </button>
       </h2>
-      <div
-        id="panelLogs"
-        class="accordion-collapse collapse"
-        aria-labelledby="panelLogs-headingOne"
-      >
+      <div id="panelLogs" class="accordion-collapse collapse" aria-labelledby="panelLogs-headingOne">
         <div class="accordion-body row align-items-center">
           <div class="col-auto">{{ form.log_level }}</div>
           <div class="col-auto">{{ form.log_prefix }}</div>
-          <div class="col-auto">{{ render.field_switch(form.log_limit) }}</div>
+          <div class="col-auto">{{ render.field_switch(form.log_limit,label_after=True) }}</div>
           <div class="col-auto">{{ form.log_value }}</div>
           <div class="col-auto">{{ form.log_unit }}</div>
         </div>
@@ -156,23 +115,14 @@
     </div>
     <div class="accordion-item">
       <h2 class="accordion-header" id="panelAudit-headingOne">
-        <button
-          class="accordion-button p-1"
-          type="button"
-          aria-expanded="false"
-          aria-controls="panelAudit"
-        >
-          {{ render.field_switch(form.audit) }}
+        <button id="btn_audit" class="accordion-button p-1 collapsed" type="button" aria-expanded="false" aria-controls="panelAudit" data-bs-toggle="collapse" data-bs-target="#panelAudit">
+        {{ _("Audit") }}
         </button>
       </h2>
-      <div
-        id="panelAudit"
-        class="accordion-collapse collapse"
-        aria-labelledby="panelAudit-headingOne"
-      >
+      <div id="panelAudit" class="accordion-collapse collapse" aria-labelledby="panelAudit-headingOne">
         <div class="accordion-body row align-items-center">
           <div class="col-auto">
-            {{ render.field_switch(form.audit_limit) }}
+            {{ render.field_switch(form.audit_limit, label_after=True) }}
           </div>
           <div class="col-auto">{{ form.audit_value }}</div>
           <div class="col-auto">{{ form.audit_unit }}</div>
@@ -232,6 +182,8 @@
     $("#icmptype :input").prop("disabled",true);
     $("#forwardport :input").prop("disabled",true);
     $("#sourceport :input").prop("disabled",true);
+    {# $('#log').removeAttr("checked"); #}
+    {# $('#audit').removeAttr("checked"); #}
   });
 
   $('#family').change(function(event){
@@ -253,7 +205,7 @@
     }
   });
 
-  $('#element').click(function(event){
+  $('#btn_element').click(function(event){
     $("#service :input").prop("disabled",true);
     $("#port :input").prop("disabled",true);
     $("#protocol :input").prop("disabled",true);
@@ -262,11 +214,11 @@
     $("#forwardport :input").prop("disabled",true);
     $("#sourceport :input").prop("disabled",true);  
     $('#element_level').prop("disabled",true);  
-    if ($(this).is(':checked')) {
-      $('#panelElement').addClass("show");
+    if ($(this).attr("aria-expanded") == "true"){
+      $('#element').prop( "checked", true );
       $('#element_level').prop("disabled",false); 
     } else {
-      $('#panelElement').removeClass("show");
+      $('#element').prop( "checked", false );
       $('#element_level').prop("disabled",true); 
     }
   });
@@ -311,7 +263,7 @@
 
   });
 
-  $('#action').click(function(event){
+  $('#btn_action').click(function(event){
     $('#action_type').hide().attr("disabled","");
     $('#action_type_ipv4').hide().attr("disabled","");
     $('#action_type_ipv6').hide().attr("disabled","");
@@ -319,12 +271,12 @@
     $('#action_value').hide().attr("disabled","");
     $('#action_unit').hide().attr("disabled","");     
     $('#action_type').prop( "checked", false );
-    if ($(this).is(':checked')) {
-      $('#panelAction').addClass("show");
+    if ($(this).attr("aria-expanded") == "true"){
+      $('#action').prop( "checked", true );
       $('#action_level').show().removeAttr("disabled");
       $('#action_limit').show().removeAttr("disabled");
     } else {
-      $('#panelAction').removeClass("show");
+      $('#action').prop( "checked", false );
       $('#action_level').show().removeAttr("disabled");
       $('#action_limit').show().removeAttr("disabled");
     }
@@ -378,22 +330,21 @@
     else if ($el == 'ipset') {$('#src_ipset').show().removeAttr("disabled")}
   });
 
-  $('#log').click(function(event){
-      $('#log_limit').hide().attr("disabled","");
+  $('#btn_log').click(function(event){
       $('#log_level').hide().attr("disabled","");
+      $('#log_limit').hide().attr("disabled","");
       $('#log_prefix').hide().attr("disabled","");
       $('#log_value').hide().attr("disabled","");
       $('#log_unit').hide().attr("disabled","");  
-    if ($(this).is(':checked')) {
-      $('#panelLogs').addClass("show")
+    if ($(this).attr("aria-expanded") == "true"){
+      $('#log').prop( "checked", true );
       $('#log_limit').show().removeAttr("disabled");
       $('#log_level').show().removeAttr("disabled");
       $('#log_prefix').show().removeAttr("disabled");
     } else {
-      $('#panelLogs').removeClass("show");
+      $('#log').prop( "checked", false );
     }
   });
-
 
   $('#log_limit').click(function(event){
     if ($(this).is(':checked')) {
@@ -405,16 +356,15 @@
     }
   });
 
-
-  $('#audit').click(function(event){
+  $('#btn_audit').click(function(event){
     $('#audit_limit').prop( "checked", false );
     $('#audit_value').hide().attr("disabled","");
-    $('#audit_unit').hide().attr("disabled","");
-    if ($(this).is(':checked')) {
-      $('#panelAudit').addClass("show")
+    $('#audit_unit').hide().attr("disabled","");    
+    if ($(this).attr("aria-expanded") == "true"){
+      $('#audit').prop( "checked", true );
       $('#audit_limit').show().removeAttr("disabled");
     } else {
-      $('#panelAudit').removeClass("show");
+      $('#audit').prop( "checked", false );
       $('#audit_limit').hide().attr("disabled","");
     }
   });
