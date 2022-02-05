@@ -8,6 +8,9 @@ flask db upgrade --directory $dbm
 
 # Assets
 flask assets build
-cp -Rf /app/ressources/admin /app/static
+
+# Static ressources
+mkdir -p ./static/img
+cp -Rv /app/ressources/admin ./static
 
 exec gunicorn --bind 0.0.0.0:8000 --workers 3 'app:create_app()' "$@"
