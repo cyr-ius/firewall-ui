@@ -8,7 +8,7 @@ services:
     restart: unless-stopped
     privileged: true
     volumes:
-      - static_volume:/app/static
+      - static_volume:/opt/static
       - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
       - /var/run/dbus:/var/run/dbus
       - /var/log/journal:/var/log/journal:ro            
