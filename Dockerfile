@@ -33,7 +33,6 @@ RUN chmod +x entrypoint.sh
 
 WORKDIR /app
 COPY ./app /app/fwui
-COPY ./static /app/static
 
 ENV VIRTUAL_ENV /env
 ENV PATH /env/bin:$PATH
