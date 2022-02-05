@@ -1,7 +1,9 @@
 version: "3.6"
 services:
   app:
-    build: ..
+    build: 
+      context: https://github.com/cyr-ius/firewall-ui.git#master
+      dockerfile: Dockerfile
     restart: unless-stopped
     privileged: true
     volumes:
