@@ -9,6 +9,7 @@ services:
     privileged: true
     volumes:
       - static_volume:/opt/static
+      - database_volume:/opt/database
       - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
       - /var/run/dbus:/var/run/dbus
       - /var/log/journal:/var/log/journal:ro            
@@ -25,8 +26,8 @@ services:
     depends_on:
       - fwui
     volumes:
-      - static_volume:/var/www/html/static
-      - ./site.conf:/etc/nginx/conf.d/default.conf
+      - static_volume:/var/www/html/static:ro
+      - ./site.conf:/etc/nginx/conf.d/default.conf:ro
     environment:
       - TZ=Europe/Paris
     ports:
