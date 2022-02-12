@@ -4,7 +4,6 @@ FROM ubuntu:21.10
 # set version label
 ARG BUILD_DATE
 ARG VERSION
-ARG FIREWALLUI_RELEASE
 LABEL build_version="version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="cyr-ius"
 
