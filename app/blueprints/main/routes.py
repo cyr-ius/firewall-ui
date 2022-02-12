@@ -8,6 +8,7 @@ from flask import (
     render_template,
     request,
     session,
+    escape,
 )
 from flask.helpers import url_for
 from flask_security import auth_required, current_user
@@ -125,7 +126,7 @@ def actions():
     except Exception as error:
         flash(error)
 
-    return redirect(request.referrer)
+    return redirect(escape(request.referrer))
 
 
 @main_bp.route("/changezone", methods=["POST"])
