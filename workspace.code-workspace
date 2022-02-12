@@ -137,7 +137,6 @@
 			"Yubikey",
 			"znmgnx"
 		],
-		"python.pythonPath": "/media/datas/firewall-ui/.venv/bin/python",
 		"cSpell.language": "en,en-US,en-GB"
 	}
 }
