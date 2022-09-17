@@ -6,7 +6,7 @@ import datetime
 from firewall.dbus_utils import dbus_to_python
 from flask import abort, jsonify, request, session
 from flask.views import MethodView
-from flask_security import auth_required
+from flask_security import auth_required, permissions_required
 
 
 from .handlers import FormException
@@ -16,7 +16,10 @@ from ..firewall.helpers import getObject, setSection, setItem, settings2dict, ge
 
 class SectionView(MethodView):
     methods = ["GET", "POST", "PUT", "DELETE"]
-    decorators = [auth_required()]
+    decorators = [
+        auth_required(),
+        permissions_required("section-write", "section-read"),
+    ]
 
     def __init__(self, *args, **kwargs):
         self.config_mode = "permanent"
@@ -37,6 +40,7 @@ class SectionView(MethodView):
             return settings2dict(self.section, self.config_mode, obj, self.structure)
 
     # Create
+    @permissions_required("section-write")
     def post(self):
         form = self.structure["settings"]["form"]()
         if form.validate_on_submit():
@@ -49,6 +53,7 @@ class SectionView(MethodView):
         raise FormException(form.errors)
 
     # Modify
+    @permissions_required("section-write")
     def put(self):
         form = self.structure["settings"]["form"]()
         obj = getObject(self.section, self.config_mode, self.item)
@@ -61,6 +66,7 @@ class SectionView(MethodView):
         raise FormException(form.errors)
 
     # Modify
+    @permissions_required("section-write")
     def delete(self):
         obj = getObject(self.section, self.config_mode, self.item)
         obj.remove()
@@ -149,7 +155,7 @@ class FirewallView(MethodView):
 
 class LogView(MethodView):
     methods = ["GET"]
-    decorators = [auth_required()]
+    decorators = [auth_required(), permissions_required("log-read")]
 
     # Read
     def get(self, *args, **xargs):

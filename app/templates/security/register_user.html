@@ -1,7 +1,7 @@
 {% extends "security/base.html" %}
 {% block content %}
 {% include "security/_messages.html" %}
-<p class="login-box-msg">Enter your personal details below</p>
+<p class="login-box-msg">{{ _fsdomain("Enter your personal details below")}}</p>
 <form action="{{ url_for_security('register') }}" method="POST" name="register_user_form" novalidate>
   {{ register_user_form.hidden_tag() }}
   <div class="input-group mb-3">

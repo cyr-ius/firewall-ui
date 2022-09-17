@@ -1,10 +1,11 @@
-from flask_babel import gettext as _
+from flask_babel import gettext as _, Babel
 from flask_wtf.form import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, SelectField
 from wtforms.validators import Optional, DataRequired, Email
 
 
 class frm_user_profile(FlaskForm):
+    babel = Babel()
     first_name = StringField(
         _("First name"),
         validators=[DataRequired(message=_("Please input your first name"))],
@@ -25,4 +26,5 @@ class frm_user_profile(FlaskForm):
         validators=[Optional()],
         render_kw={"placeholder": _("URI")},
     )
+    locale = SelectField(_("Language"), choices=["fr", "en"])
     submit = SubmitField(_("Save"))

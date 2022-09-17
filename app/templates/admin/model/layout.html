@@ -41,12 +41,12 @@
     {% endif %} {% if page_size != default_page_size %}
     <input type="hidden" name="page_size" value="{{ page_size }}" />
     {% endif %}
-    <div class="pull-right">
-      <button type="submit" class="btn btn-primary" style="display: none">
+    <div class="btn-group">
+      <button type="submit" class="btn btn-primary btn-sm" style="display: none">
         {{ _gettext('Apply') }}
       </button>
       {% if active_filters %}
-      <a href="{{ clear_search_url }}" class="btn btn-secondary">{{ _gettext('Reset Filters') }}</a>
+      <a href="{{ clear_search_url }}" class="btn btn-secondary btn-sm">{{ _gettext('Reset Filters') }}</a>
       {% endif %}
     </div>
     <table class="filters"></table>
@@ -65,37 +65,18 @@
     <input type="hidden" name="sort" value="{{ sort_column }}" />
     {% endif %} {% if sort_desc %}
     <input type="hidden" name="desc" value="{{ sort_desc }}" />
-    {% endif %} {% if search %}
-    {# <div class="form-inline input-group"> #}
-    <div class="input-group mb-3">
+    {% endif %} 
+    {% if search %}
+    <div class="input-group input-group-sm mt-1">
       <input class="form-control {{ input_class }}" size="30" type="text" name="search" value="{{ search }}" placeholder="{{ _gettext('%(placeholder)s', placeholder=search_placeholder) }}"/>
-      <div class="input-group-append">
-        <span class="input-group-text">
-          <a href="{{ clear_search_url }}" class="align-middle">
-            <span class="bi bi-x-circle"></span>
-          </a>
-        </span>
-      </div>
-      <button class="btn btn-secondary my-2 my-sm-0 ml-2" type="submit">
-        {{ _gettext('Search') }}
-      </button>
+      <span class="input-group-text"><a href="{{ clear_search_url }}" class="align-middle"><span class="bi bi-x-circle"></span></a></span>
+      <button class="btn btn-outline-secondary" type="submit">{{ _gettext('Search') }}</button>
     </div>
     {% else %}
-    <div class="mb-3 row">
-      <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
-      <div class="col-sm-10">
-        <input class="form-control {{ input_class }}" size="30" type="text" name="search" value="" placeholder="{{ _gettext('%(placeholder)s', placeholder=search_placeholder) }}"/>
-      </div>
-      <button class="btn btn-secondary col-sm-2 my-2 my-sm-0 ml-2" type="submit">
-        {{ _gettext('Search') }}
-      </button>    
-    </div> 
-    <div class="form-inline">
+    <div class="input-group input-group-sm mt-1">
       <input class="form-control {{ input_class }}" size="30" type="text" name="search" value="" placeholder="{{ _gettext('%(placeholder)s', placeholder=search_placeholder) }}"/>
-      <button class="btn btn-secondary my-2 my-sm-0 ml-2" type="submit">
-        {{ _gettext('Search') }}
-      </button>
-    </div>
+      <button class="btn btn-outline-secondary" type="submit">{{ _gettext('Search') }}</button>    
+    </div> 
     {% endif %}
   </form>
 {% endmacro %}

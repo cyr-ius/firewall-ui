@@ -1,4 +1,5 @@
 import datetime
+from math import perm
 from flask import (
     Blueprint,
     current_app,
@@ -11,7 +12,7 @@ from flask import (
     escape,
 )
 from flask.helpers import url_for
-from flask_security import auth_required, current_user
+from flask_security import auth_required, current_user, permissions_required
 
 from .forms import frm_change_zone, frm_logs
 from .models import Setting
@@ -58,7 +59,6 @@ def index():
     actives_zones = current_app.runtime_config.getActiveZones()
     # logs = LogsView()
     # logs.get(request, args, kwargs)
-    flash("HelloWorld")
     return render_template(
         "main.html",
         sources=sources,
@@ -71,6 +71,7 @@ def index():
 
 @main_bp.route("/logs", methods=["GET", "POST"])
 @auth_required()
+@permissions_required("logs-read")
 def logs():
     journal = {}
     if request.method == "GET":
@@ -93,25 +94,25 @@ def logs():
 @auth_required()
 def actions():
     try:
-        if default_zone := request.args.get("default_zone"):
+        if default_zone := request.args.get("default_zone") and current_user.has_permission("changezone"):
             current_app.runtime_config.setDefaultZone(zone=default_zone)
 
         if config_mode := request.args.get("config_mode"):
             session["config_mode"] = config_mode
 
-        if denied_log := request.args.get("denied_log"):
+        if (denied_log := request.args.get("denied_log")) and current_user.has_permission("logs-write"):
             current_app.runtime_config.setLogDenied(denied_log)
 
-        if panic_mode := request.args.get("panic_mode"):
+        if (panic_mode := request.args.get("panic_mode")) and current_user.has_permission("panicmode"):
             if panic_mode == "False":
                 current_app.runtime_config.enablePanicMode()
             else:
                 current_app.runtime_config.disablePanicMode()
 
-        if automatic_helpers := request.args.get("automatic_helpers"):
+        if (automatic_helpers := request.args.get("automatic_helpers")) and current_user.has_permission("automatichelper"):
             current_app.runtime_config.setAutomaticHelpers(automatic_helpers)
 
-        if lockdown_mode := request.args.get("lockdown_mode"):
+        if (lockdown_mode := request.args.get("lockdown_mode")) and current_user.has_permission("lockdown"):
             if lockdown_mode == "False":
                 current_app.runtime_config.enableLockdown()
             else:
@@ -120,7 +121,7 @@ def actions():
         if request.args.get("reload"):
             current_app.runtime_config.reload()
 
-        if request.args.get("runtimetopermanent"):
+        if request.args.get("runtimetopermanent") and current_user.has_permission("permanent"):
             current_app.runtime_config.runtimeToPermanent()
 
     except Exception as error:
@@ -131,6 +132,7 @@ def actions():
 
 @main_bp.route("/changezone", methods=["POST"])
 @auth_required()
+@permissions_required("changezone-write")
 def changezone(changezone=None):
     structure = STRUCTURE["zones"]
     config_mode = "permanent"

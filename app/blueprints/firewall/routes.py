@@ -1,4 +1,5 @@
 from flask import Blueprint
+from flask_security import permissions_required
 
 from .views import GenericView, RedirectView
 

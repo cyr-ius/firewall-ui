@@ -6,6 +6,7 @@
     </a>
     <hr class="my-0" style="width:100%;" />
     <ul class="navbar-nav flex-column mb-auto align-items-center align-items-sm-start" id="menu">
+        {% if current_user.has_permission("zones-read") %}
         <li class="nav-item">
             <a class="nav-link px-0 align-middle text-white {% if section == 'zones' %}active{% endif %}" data-bs-toggle="collapse" data-bs-target="#zones-collapse" aria-expanded="{{ 'true' if section == 'zones'  else 'false' }}" href="#">
                 <i class="bi bi-layers-half"></i><span class="ms-1 d-sm-inline">Zones</span>
@@ -20,6 +21,8 @@
                 </ul>
             </div>
         </li>    
+        {% endif %}
+        {% if current_user.has_permission("services-read") %}
         <li class="nav-item">
             <a class="nav-link px-0 align-middle text-white {% if section == 'services' %}active{% endif %}" data-bs-toggle="collapse" data-bs-target="#services-collapse" aria-expanded="{{ 'true' if section == 'services'  else 'false' }}" href="#">
                 <i class="bi bi-box-seam"></i><span class="ms-1 d-sm-inline">Services</span>
@@ -34,6 +37,8 @@
                 </ul>
             </div>
         </li>
+        {% endif %}
+        {% if current_user.has_permission("ipsets-read") %}
         <li class="nav-item">
             <a class="nav-link px-0 align-middle text-white {% if section == 'ipsets' %}active{% endif %}" data-bs-toggle="collapse" data-bs-target="#ipsets-collapse" aria-expanded="{{ 'true' if section == 'ipsets'  else 'false' }}" href="#">
                 <i class="bi bi-bricks"></i><span class="ms-1 d-sm-inline">IPsets</span> 
@@ -48,6 +53,8 @@
                 </ul>
             </div>
         </li>
+        {% endif %}
+        {% if current_user.has_permission("icmptypes-read") %}
         <li class="nav-item">
             <a class="nav-link px-0 align-middle text-white {% if section == 'icmptypes' %}active{% endif %}" data-bs-toggle="collapse" data-bs-target="#icmptypes-collapse" aria-expanded="{{ 'true' if section == 'icmptypes'  else 'false' }}" href="#">
                 <i class="bi bi-code-square" aria-hidden="true"></i><span class="ms-1 d-sm-inline">ICMP Types</span>
@@ -62,6 +69,8 @@
                 </ul>
             </div>
         </li>
+        {% endif %}
+        {% if current_user.has_permission("helpers-read") %}
         <li class="nav-item">
             <a class="nav-link align-middle px-0 text-white {% if section == 'helpers' %}active{% endif %}" data-bs-toggle="collapse" data-bs-target="#assistants-collapse" aria-expanded="{{ 'true' if section == 'helpers'  else 'false' }}" href="#">
                 <i class="bi bi-life-preserver" aria-hidden="true"></i><span class="ms-1 d-sm-inline">Helpers</span>
@@ -76,22 +85,29 @@
                 </ul>
             </div>
         </li>
+        {% endif %}
+        {% if current_user.has_permission("directconfigs-read") %}
         <li class="nav-item">
             <a class="nav-link align-middle px-0 text-white {% if section == 'directconfigs' %}active{% endif %}"  href="{{ url_for('firewall.specific_tab', section='directconfigs', tabname='chains')}}">
                 <i class="bi bi-bullseye" aria-hidden="true"></i><span class="ms-1 d-sm-inline">Direct config</span>
             </a>
         </li>
+        {% endif %}
+        {% if current_user.has_permission("whitelists-read") %}
         <li class="nav-item">
             <a class="nav-link align-middle px-0 text-white {% if section == 'whitelists' %}active{% endif %}" href="{{ url_for('firewall.specific_tab', section='whitelists', tabname='contexts') }}">
                 <i class="bi bi-lock" aria-hidden="true"></i><span class="ms-1 d-sm-inline">White list</span>
             </a>
         </li>
+        {% endif %}
+        {% if current_user.has_permission("logs-read") %}
         <li class="nav-item">
             <a class="nav-link align-middle px-0 text-white {% if section == 'logs' %}active{% endif %}" href="{{ url_for('main.logs')}}">
                 <i class="bi bi-newspaper"></i><span class="ms-1 d-sm-inline">Logs</span>
             </a>
         </li>
-        {% if current_user.has_role("dba") %}
+        {% endif %}
+        {% if current_user.has_role("admin") or current_user.has_role("admin_user") or current_user.has_role("admin_role") %}
         <li class="nav-item">
             <a class="nav-link align-middle px-0  text-white text-decoration-none {% if section == 'admin' %}active{% endif %}" data-bs-toggle="collapse" href="#admin_menu">
                 <i class="bi bi-speedometer2"></i><span class="ms-3 d-sm-inline">Administration</span>

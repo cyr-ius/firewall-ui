@@ -96,7 +96,7 @@ main {
     color: #000000 ! important;
 }
 
-#menu .nav-link.active, .nav-pills .show > .nav-link {
+#menu .nav-link.active, .nav-pills .show > .nav-link, .nav-item.active > .nav-link {
     /* background-color: #333a40; */
     color: #2b0108 !important;
 }

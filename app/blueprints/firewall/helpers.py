@@ -3,10 +3,12 @@ import os
 import re
 
 from flask import abort, current_app, g, jsonify, session
+from flask_login import current_user
+from flask_security import permissions_required
 from systemd import journal
 
-from .structure import STRUCTURE
 from .consts import LOG_LEVELS
+from .structure import STRUCTURE
 
 
 def context():
@@ -70,6 +72,7 @@ def _settingDict(config_mode, obj, items):
     return config
 
 
+@permissions_required("section-edit")
 def setSection(config_mode, section, obj, cleaned_date):
     saveset = obj
     if config_mode == "permanent":
@@ -93,6 +96,11 @@ def setSection(config_mode, section, obj, cleaned_date):
 
 
 def setItem(obj, section, item, tabname, structure, form, method):
+    if (
+        session.get("config_mode") == "permanent"
+        and current_user.has_permission("permanent") is False
+    ):
+        abort(403)
 
     getattr(obj, structure[tabname][method])(**form.cleaned_data)
 
@@ -104,6 +112,7 @@ def setItem(obj, section, item, tabname, structure, form, method):
     return jsonify(data=form.cleaned_data)
 
 
+@permissions_required("logs-read")
 def getLog(log, query="", start=None, end=None, level=None):
     uid_list = os.listdir("/var/log/journal")
     j = journal.Reader(path="/var/log/journal")

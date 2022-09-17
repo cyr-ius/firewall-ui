@@ -106,8 +106,8 @@ var AdminFilters = function(element, filtersElement, filterGroups, activeFilters
         // Filter list
         $el.append(
             $('<td/>').append(
-                $('<a href="#" class="btn btn-secondary remove-filter" />')
-                    .append($('<span class="close-icon">&times;</span>'))
+                $('<a href="#" class="btn btn-secondary btn-sm remove-filter" />')
+                    .append($('<span class="bi bi-close">&times;</span>'))
                     .append('&nbsp;')
                     .append(name)
                     .click(removeFilter)

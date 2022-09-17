@@ -1,8 +1,7 @@
-# app/__init__.py
 import logging
 import os
 
-from flask import Flask, request, g
+from flask import Flask, request, g, session
 from flask_admin import Admin, AdminIndexView, helpers as admin_helpers
 from flask_admin.consts import ICON_TYPE_FONT_AWESOME
 from flask_assets import Environment
@@ -10,7 +9,6 @@ from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_security import Security, SQLAlchemySessionUserDatastore
 from flask_security.utils import hash_password
-from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from flask_babel import Babel
 
@@ -85,12 +83,6 @@ def create_app(config=None):
         elif config.endswith(".py"):
             app.config.from_pyfile(config)
 
-    # Load Flask-Session
-    if app.config.get("FILESYSTEM_SESSIONS_ENABLED"):
-        app.config["SESSION_TYPE"] = "filesystem"
-        session = Session()
-        session.init_app(app)
-
     # Load Database
     DATABASE_URI = app.config.get("MARIADB_DATABASE_URI")
     if app.config.get("DB_TYPE") != "mariadb":
@@ -160,6 +152,7 @@ def create_app(config=None):
     security.init_app(
         app,
         app.user_datastore,
+        register_blueprint=True,
         register_form=ExtendedRegisterForm,
         confirm_register_form=ExtendedRegisterForm,
     )
@@ -192,17 +185,7 @@ def create_app(config=None):
         if len(db.session.query(Setting).all()) == 0:
             Setting().init_db()
 
-        app.user_datastore.find_or_create_role(
-            name="admin",
-            permissions={"admin-read", "admin-write", "user-read", "user-write"},
-        )
-        app.user_datastore.find_or_create_role(
-            name="user", permissions={"user-read", "user-write"}
-        )
-        app.user_datastore.find_or_create_role(
-            name="dba",
-            permissions={"dba-read", "dba-write"},
-        )
+        Role().init_db(app)
 
         if not app.user_datastore.find_user(username=app.config["USERNAME"]):
             app.user_datastore.create_user(
@@ -256,5 +239,17 @@ def create_app(config=None):
         for k in dir(value):
             res.append("%r %r\n" % (k, getattr(value, k)))
         return "\n".join(res)
+
+    @babel.localeselector
+    def get_locale():
+        if user := getattr(getattr(g, "identity", None), "user", None):
+            session["lang"] = user.locale
+            return session["lang"]
+        return request.accept_languages.best_match(["de", "fr", "en"])
+
+    @migrate.configure
+    def configure_alembic(config):
+        # modify config object
+        return config
 
     return app

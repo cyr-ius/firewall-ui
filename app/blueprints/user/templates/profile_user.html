@@ -5,10 +5,9 @@
     <div class="card-body">
       <form id="frm_user_profile" method="post" class="card-text" role="form" novalidate>
         {{ form.csrf_token }}
-        <div class="mb-3">{{ render.field(form.first_name, label_before=true)}}</div>
-        <div class="mb-3">{{ render.field(form.last_name, label_before=true)}}</div>
-        <div class="mb-3">{{ render.field(form.email, label_before=true)}}</div>
-        <div class="mb-3">{{ render.field(form.gravatar_url, label_before=true)}}</div>
+        {% for field in form if field.id not in ['submit','csrf_token']%}
+        <div class="mb-3">{{render.field(field, label_before=true)}}</div>
+        {% endfor %}
         <div class="text-end mt-3">{{ render.button(form.submit) }}</div>
       </form>
     </div>

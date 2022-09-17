@@ -108,3 +108,13 @@ body.modal-open {
     margin-top: 20px;
     margin-bottom: 10px;
 }
+
+.select2-selection__choice {
+    font-size: .75em;
+    color: white;
+    padding-top: .35em;
+    padding-bottom: .35em;
+    padding-left: .65em;
+    padding-right:.65em;
+    border-radius: border-radius;
+}

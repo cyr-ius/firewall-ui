@@ -11,7 +11,9 @@
                     </a>
                     <ul class="dropdown-menu" style="">
                         <li><a class="dropdown-item" href="{{ url_for('main.actions', config_mode='runtime') }}">Runtime</a></li>
+                        {% if current_user.has_permission("permanent") %}
                         <li><a class="dropdown-item" href="{{ url_for('main.actions', config_mode='permanent') }}">Permanent</a></li>
+                        {% endif %}
                     </ul>
             </li>   
             <span class="navbar-text ms-3">Default Zone: </span>
@@ -27,7 +29,7 @@
             </li>                                
         </ul> 
         <ul class="navbar-nav ms-md-auto">
-                {% if session.config_mode == 'permanent' %}
+                {% if session.config_mode == 'permanent' and current_user.has_permission("section-write") %}
                 <div class="btn-group">
                 {% if section and item %}
                     <button id="section_delete" class="btn btn-danger btn-sm" data-message="Are you sur to delete {{item}} ?" data-uri="{{url_for('api.section.item', section=section, item=item)}}">
@@ -52,7 +54,9 @@
                 {% endif %}        
             <li class="nav-item"><a class="btn btn-secondary btn-sm ms-2" href="{{ url_for('main.actions', reload=true) }}"><i class="bi-load"></i>Reload</a></li>
             <li class="nav-item"><a class="btn btn-secondary btn-sm ms-2" href="{{ url_for('main.actions', completreload=true) }}">Full Reload</a></li>
-            <li class="nav-item"><a class="btn btn-secondary btn-sm ms-2" href="{{ url_for('main.actions', runtimetopermanent=true) }}">To Permanent</a></li>     
+            {% if current_user.has_permission("permanent") %}
+            <li class="nav-item"><a class="btn btn-secondary btn-sm ms-2" href="{{ url_for('main.actions', runtimetopermanent=true) }}">To Permanent</a></li>
+            {% endif %}
         </ul>   
 </nav>
 {% endblock %}

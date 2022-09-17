@@ -19,7 +19,7 @@ bs_icons = (
         "cssrewrite",
         replace=lambda url: re.sub(
             r"./fonts/",
-            "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/fonts/",
+            "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/fonts/",
             url,
         ),
     ),
@@ -31,17 +31,15 @@ css_main = Bundle(
     "https://fonts.googleapis.com/css?family=Roboto+Mono:400,300,700",
     "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css",
     Bundle(
-        "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.min.css",
+        "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.min.css",
         filters=bs_icons,
     ),
-    "https://rawcdn.githack.com/darkterminal/tagin/6fa2863c13aa1841f33cf6dcbbf266c92fbf5412/dist/css/tagin.min.css",
     "https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css",
     output="css/main.css",
 )
 
 js_main = Bundle(
     "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js",
-    # "https://rawcdn.githack.com/darkterminal/tagin/6fa2863c13aa1841f33cf6dcbbf266c92fbf5412/dist/js/tagin.min.js",
     "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js",
     "https://cdn.jsdelivr.net/momentjs/latest/moment.min.js",
     "https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js",

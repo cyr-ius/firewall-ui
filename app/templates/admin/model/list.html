@@ -52,7 +52,7 @@
         {% endif %}
 
         {% if search_supported %}
-        <li class="nav-item ml-2">
+        <li class="nav-item ms-auto">
             {{ model_layout.search_form() }}
         </li>
         {% endif %}
@@ -73,7 +73,7 @@
                 {% block list_header scoped %}
                     {% if actions %}
                     <th class="list-checkbox-column">
-                        <input type="checkbox" name="rowtoggle" class="action-rowtoggle" title="{{ _gettext('Select all records') }}" />
+                        <input type="checkbox" name="rowtoggle" class="form-check action-rowtoggle" title="{{ _gettext('Select all records') }}" />
                     </th>
                     {% endif %}
                     {% block list_row_actions_header %}
@@ -113,7 +113,7 @@
             {% block list_row scoped %}
                 {% if actions %}
                 <td>
-                    <input type="checkbox" name="rowid" class="action-checkbox" value="{{ get_pk_value(row) }}" title="{{ _gettext('Select record') }}" />
+                    <input type="checkbox" name="rowid" class="form-check action-checkbox" value="{{ get_pk_value(row) }}" title="{{ _gettext('Select record') }}" />
                 </td>
                 {% endif %}
                 {% block list_row_actions_column scoped %}

@@ -14,6 +14,7 @@ FLASK_ADMIN_FLUID_LAYOUT = False
 SALT = os.getenv("SALT", None)
 SECRET_KEY = os.getenv("SECRET_KEY", None)
 FILESYSTEM_SESSIONS_ENABLED = os.getenv("FILESYSTEM_SESSIONS_ENABLED", True)
+SESSION_TYPE = "filesystem"
 
 # DATABASE CONFIG
 DB_TYPE = os.getenv("DB_TYPE", "sqlite")

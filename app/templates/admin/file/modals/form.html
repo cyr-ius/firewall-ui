@@ -1,6 +1,11 @@
 {% import 'admin/static.html' as admin_static with context %}
 {% import 'admin/lib.html' as lib with context %}
 
+{% block head %}
+    {{ super() }}
+    {{ lib.form_css() }}
+{% endblock %}
+
 {% block fa_body %}
   {# content added to modal-content #}
   <div class="modal-header">

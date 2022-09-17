@@ -87,7 +87,7 @@ You will find in the docker directory, a `docker-compose` file which allows you 
 
 * You can launch an instance of firewall-ui in a development environment:
 
-`SECRET_KEY=0000 FLASK_ENV="development" /usr/bin/python3 -m flask run`
+`SECRET_KEY=0000 /usr/bin/python3 -m flask --debug run`
 
 * In a Production environment, prefer used unicorn (or other WSGI) :
 
@@ -97,18 +97,18 @@ Be careful in this case, you must expose the static content (css, png, etc ..) w
 
 ### Flask packages requirements
 
-Flask 2.0.2
+Flask 2.2.2
 Flask-Assets 2.0
-Flask-Login 0.5.0
+Flask-Login 0.6.2
 Flask-Mail 0.9.1
 Flask-SQLAlchemy 2.5.1
 Flask-Migrate 3.1.0
 Flask-Session 0.4.0
-Flask-SeaSurf 0.3.1
-Flask-WTF 1.0.0
+Flask-SeaSurf 1.1.1
+Flask-WTF 1.0.1
 Flask-Admin 1.6.0
-Flask-Security-Too 4.1.2
-Flask-Babel2.0.0
+Flask-Security-Too 5.0.1
+Flask-Babel 2.0.0
 
 all packages in requirements.txt
 

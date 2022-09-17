@@ -2,6 +2,11 @@
 {% import 'admin/lib.html' as lib with context %}
 {% import 'admin/actions.html' as actionslib with context %}
 
+{% block head %}
+    {{ super() }}
+    {{ lib.form_css() }}
+{% endblock %}
+
 {% block fa_body %}
     {% block breadcrums %}
       <nav area-label="breadcrumb">
@@ -31,7 +36,7 @@
                 {% block list_header scoped %}
                 {% if actions %}
                 <th class="list-checkbox-column">
-                    <input type="checkbox" name="rowtoggle" class="action-rowtoggle" />
+                    <input type="checkbox" name="rowtoggle" class="form-check action-rowtoggle" />
                 </th>
                 {% endif %}
                 <th class="">&nbsp;</th>
@@ -64,18 +69,18 @@
             {% if actions %}
             <td>
                 {% if not is_dir %}
-                <input type="checkbox" name="rowid" class="action-checkbox" value="{{ path }}" />
+                <input type="checkbox" name="rowid" class="form-check action-checkbox" value="{{ path }}" />
                 {% endif %}
             </td>
             {% endif %}
-            <td>
+            <td class="list-buttons-column">
                 {% block list_row_actions scoped %}
                 {% if admin_view.can_rename and path and name != '..' %}
                   {%- if admin_view.rename_modal -%}
                     {{ lib.add_modal_button(url=get_url('.rename', path=path, modal=True), title=_gettext('Rename File'), content='<i class="bi bi-pencil"></i>') }}
                   {% else %}
                     <a class="icon" href="{{ get_url('.rename', path=path) }}" title="{{ _gettext('Rename File') }}">
-                      <i class="bi bi-pencil"></i>
+                      <span class="bi bi-pencil"></span>
                     </a>
                   {%- endif -%}
                 {% endif %}
@@ -85,8 +90,8 @@
                         <form class="icon" method="POST" action="{{ get_url('.delete') }}">
                             {{ delete_form.path(value=path) }}
                             {{ delete_form.csrf_token }}
-                            <button onclick="return confirm('{{ _gettext('Are you sure you want to delete \\\'%(name)s\\\' recursively?', name=name) }}')">
-                                <i class="bi bi-x-circle"></i>
+                            <button class="icon" onclick="return confirm('{{ _gettext('Are you sure you want to delete \\\'%(name)s\\\' recursively?', name=name) }}')">
+                              <span class="bi bi-x-circle"></span>
                             </button>
                         </form>
                         {% endif %}
@@ -95,7 +100,7 @@
                         {{ delete_form.path(value=path) }}
                         {{ delete_form.csrf_token }}
                         <button onclick="return confirm('{{ _gettext('Are you sure you want to delete \\\'%(name)s\\\'?', name=name) }}')">
-                            <i class="bi bi-trash"></i>
+                            <span class="bi bi-trash"></span>
                         </button>
                     </form>
                     {% endif %}
@@ -105,7 +110,7 @@
             {% if is_dir %}
             <td colspan="2">
                 <a href="{{ get_dir_url('.index_view', path)|safe }}">
-                    <i class="bi bi-folder"></i> <span>{{ name }}</span>
+                    <i class="bi bi-folder"></i><span>{{ name }}</span>
                 </a>
             </td>
             {% else %}
@@ -144,7 +149,7 @@
             {%- if admin_view.upload_modal -%}
               {{ lib.add_modal_button(url=get_dir_url('.upload', path=dir_path, modal=True), btn_class="btn btn-secondary", content=_gettext('Upload File')) }}
             {% else %}
-              <a class="btn btn-secondary" href="{{ get_dir_url('.upload', path=dir_path) }}">{{ _gettext('Upload File') }}</a>
+              <a class="btn btn-secondary btn-sm" href="{{ get_dir_url('.upload', path=dir_path) }}">{{ _gettext('Upload File') }}</a>
             {%- endif -%}
         </div>
         {% endif %}
@@ -153,13 +158,13 @@
             {%- if admin_view.mkdir_modal -%}
               {{ lib.add_modal_button(url=get_dir_url('.mkdir', path=dir_path, modal=True), btn_class="btn btn-secondary", content=_gettext('Create Directory')) }}
             {% else %}
-              <a class="btn btn-secondary" href="{{ get_dir_url('.mkdir', path=dir_path) }}">{{ _gettext('Create Directory') }}</a>
+              <a class="btn btn-secondary btn-sm" href="{{ get_dir_url('.mkdir', path=dir_path) }}">{{ _gettext('Create Directory') }}</a>
             {%- endif -%}
         </div>
         {% endif %}
         {% if actions %}
         <div class="mx-1">
-            {{ actionslib.dropdown(actions, 'dropdown-toggle btn btn-secondary') }}
+            {{ actionslib.dropdown(actions, 'dropdown-toggle btn btn-secondary btn-sm') }}
         </div>
         {% endif %}
     </div>

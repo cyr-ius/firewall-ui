@@ -1,5 +1,5 @@
 # For more information, please refer to https://aka.ms/vscode-docker-python
-FROM ubuntu:21.10
+FROM ubuntu:22.04
 
 # set version label
 ARG BUILD_DATE
@@ -32,6 +32,7 @@ RUN chmod +x docker-entrypoint.sh
 
 WORKDIR /opt
 COPY ./app ./app
+COPY ./migrations ./migrations
 
 ENV VIRTUAL_ENV /env
 ENV PATH /env/bin:$PATH
