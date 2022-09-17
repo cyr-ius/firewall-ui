@@ -1,13 +1,6 @@
 # For more information, please refer to https://aka.ms/vscode-docker-python
 FROM ubuntu:22.04
-
-# set version label
-ARG BUILD_DATE
-ARG VERSION
-LABEL build_version="version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="cyr-ius"
-
-EXPOSE 8000
 
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -16,7 +9,7 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 # Install dependencies
-RUN apt-get update && apt-get install -y python3 python3-venv python3-systemd python3-dbus python3-firewall
+RUN apt-get update && apt-get install -y python3 python3-dev python3-venv python3-systemd python3-dbus python3-firewall build-essential
 
 # Install pip requirements
 COPY requirements.txt .
