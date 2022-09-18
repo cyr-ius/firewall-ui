@@ -10,7 +10,7 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 # Install dependencies
-RUN apt-get update && apt-get install -y python3 python3-dev python3-venv python3-systemd python3-dbus python3-firewall build-essential
+RUN apt-get update && apt-get install -y python3 python3-dev python3-venv python3-systemd python3-dbus python3-firewall build-essential tzdata
 
 # Install pip requirements
 COPY requirements.txt .
