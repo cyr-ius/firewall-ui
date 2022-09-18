@@ -81,8 +81,8 @@ jobs:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{env.IMAGE_NAME}}:${{ steps.vars.outputs.tag }}
-            ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{env.IMAGE_NAME}}:latest           
+            ${{ env.REGISTRY }}/${{env.IMAGE_NAME | lower}}:${{ steps.vars.outputs.tag }}
+            ${{ env.REGISTRY }}//${{env.IMAGE_NAME | lower}}:latest           
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             BUILDTIME=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
