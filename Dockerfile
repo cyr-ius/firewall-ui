@@ -1,6 +1,7 @@
 # For more information, please refer to https://aka.ms/vscode-docker-python
 FROM ubuntu:22.04
 LABEL maintainer="cyr-ius"
+LABEL org.opencontainers.image.description "Firewall-UI is a webinterface for firewalld"
 
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE=1
