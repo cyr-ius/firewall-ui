@@ -1,7 +1,13 @@
 {% macro field(field) %}
   {% if kwargs.label_before %}{{ field.label(class="form-label col-form-label mb-1") }}{% endif %}
     {{ field(class="form-control is-invalid" if field.errors else "form-control", placeholder=field.label.text, **kwargs)|safe }}
-    <div class="valid-feedback"></div>    
+    {% if field.errors %}
+      <div class="invalid-feedback">
+      {% for error in field.errors %}
+        {{ error }}
+      {% endfor %}
+      </div>
+    {% endif %}  
   {% if kwargs.label_after %}{{ field.label(class="form-label col-form-label mt-1") }}{% endif %}
 {% endmacro%}
 
@@ -10,7 +16,13 @@
   <div class="form-check form-switch">
   {{ field(class_="form-check-input", **kwargs) }}
   {% if kwargs.label_after %}{{ field.label(class="form-check-label") }}{% endif %}
-  <div class="valid-feedback"></div>   
+    {% if field.errors %}
+      <div class="invalid-feedback">
+      {% for error in field.errors %}
+        {{ error }}
+      {% endfor %}
+      </div>
+    {% endif %}  
   </div>
 {% endmacro %}
 
@@ -18,7 +30,13 @@
   <div class="form-check">
   {{ field(class_="form-check-input", **kwargs) | safe}}
   {{ field.label(class_="form-check-label", **kwargs) | safe}}
-  <div class="valid-feedback"></div>   
+    {% if field.errors %}
+      <div class="invalid-feedback">
+      {% for error in field.errors %}
+        {{ error }}
+      {% endfor %}
+      </div>
+    {% endif %} 
   </div>
 {% endmacro %}
 
@@ -26,7 +44,13 @@
   {% if kwargs.label_before %}{{ field.label(class="form-label") }}{% endif %}
   {{ field(class="form-select is-invalid" if field.errors else "form-select", **kwargs)|safe }}
   {% if kwargs.label_after %}{{ field.label(class="form-label") }}{% endif %}   
-  <div class="valid-feedback"></div>   
+    {% if field.errors %}
+      <div class="invalid-feedback">
+      {% for error in field.errors %}
+        {{ error }}
+      {% endfor %}
+      </div>
+    {% endif %} 
 {% endmacro %}
 
 {% macro button(field) %}
@@ -46,6 +70,18 @@
 {% else %}
 <div class="form-floating">{{field}}</div>
 {% endif %}
+{% endmacro %}
+
+{% macro form_errors(form) %}
+  {% if form.form_errors %}
+    <div>
+    <ul>
+    {% for error in form.form_errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+    </div>
+  {% endif %}
 {% endmacro %}
 
 {% macro flash_message(category)%}

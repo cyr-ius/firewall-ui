@@ -1,5 +1,4 @@
 import datetime
-from math import perm
 from flask import (
     Blueprint,
     current_app,
@@ -94,7 +93,7 @@ def logs():
 @auth_required()
 def actions():
     try:
-        if default_zone := request.args.get("default_zone") and current_user.has_permission("changezone"):
+        if (default_zone := request.args.get("default_zone")) and current_user.has_permission("changezone"):
             current_app.runtime_config.setDefaultZone(zone=default_zone)
 
         if config_mode := request.args.get("config_mode"):

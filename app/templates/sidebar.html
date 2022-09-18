@@ -107,7 +107,7 @@
             </a>
         </li>
         {% endif %}
-        {% if current_user.has_role("admin") or current_user.has_role("admin_user") or current_user.has_role("admin_role") %}
+        {% if current_user.has_role("admin") or current_user.has_role("dba") %}
         <li class="nav-item">
             <a class="nav-link align-middle px-0  text-white text-decoration-none {% if section == 'admin' %}active{% endif %}" data-bs-toggle="collapse" href="#admin_menu">
                 <i class="bi bi-speedometer2"></i><span class="ms-3 d-sm-inline">Administration</span>
@@ -117,7 +117,7 @@
                 {{ layout.menu() }}
             </ul>
         </li>   
-        {% endif %}        
+        {% endif %}           
     </ul>
      <hr>
     <div class="dropdown dropup pb-1">

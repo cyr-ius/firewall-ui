@@ -3,11 +3,13 @@
 <form id="form_add" method="POST" class="row needs-validation mt-4 mb-4 align-items-center" novalidate>
   {{ form.csrf_token }}
   <div class="col form-inline-css">
+  <div class="form-check">
   {% if settings  %}
-  {{ render.field_switch(form.nat, checked='checked') }}
+  {{ render.field_switch(form.nat, checked='checked', label_after=true) }}
   {% else %}
-  {{ render.field_switch(form.nat) }}
+  {{ render.field_switch(form.nat, label_after=true) }}
   {% endif %}
+  </div>
   </div>
   <input type="hidden" class="btn_del" data-attr="#form_add">
 </form>

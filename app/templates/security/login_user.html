@@ -1,20 +1,43 @@
 {% extends "security/base.html" %} 
+{% from "security/_macros.html" import render_field_with_errors, render_field, render_field_errors, render_form_errors %}
 {% block content %} 
-{% include "security/_messages.html" %}
+{# {% include "security/_messages.html" %} #}
 <form  action="{{ url_for_security('login') }}"  method="POST"  name="login_user_form"  novalidate>
   {{ login_user_form.hidden_tag() }}
-  <div class="mb-3">
-    {{ render.field(login_user_form.email) }}
+  {{ login_user_form.csrf_token }}
+  {{ render.form_errors(login_user_form) }}
+  <div class="input-group mb-3">
+    <span class="input-group-text">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
+      </svg>
+    </span>  
+    {{ render.field(login_user_form.username) }}
   </div>
-  <div class="mb-3">
+  <div class="input-group mb-3">
+    <span class="input-group-text">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
+        <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+      </svg>
+    </span>
     {{ render.field(login_user_form.password) }}
   </div>
   <div class="mb-3">
-  {{ render.field_switch(login_user_form.remember)}}
+  {{ render.field_switch(login_user_form.remember, label_after=true)}}
   </div>
-  {{ render_field_errors(login_user_form.csrf_token) }}
-  {{ render_errors }} 
-  <div class="d-grid gap-2">{{ render.button(login_user_form.submit) }}</div>
-</form>
+  <div class="d-grid gap-2">
+    {{ render.button(login_user_form.submit) }}
+  </div>
+  </form>
+  {% if security.webauthn %}
+    <hr class="fs-gap">
+    <h2>{{ _fsdomain("Use WebAuthn to Sign In") }}</h2>
+    <div>
+      <form method="GET" id="wan-signin-form" name="wan_signin_form">
+        <input id="wan_signin" name="wan_signin" type="submit" value="{{ _fsdomain('Sign in with WebAuthn') }}"
+          formaction="{{ url_for_security("wan_signin") }}">
+      </form>
+    </div>
+  {% endif %}
 {% include "security/_menu.html" %} 
 {% endblock %}

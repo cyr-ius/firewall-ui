@@ -1,4 +1,4 @@
-from flask_security.models import fsqla_v2 as fsqla
+from flask_security.models import fsqla_v3 as fsqla
 
 from ... import db
 
@@ -34,7 +34,7 @@ class Role(db.Model, fsqla.FsRoleMixin):
             },
         )
         app.user_datastore.find_or_create_role(
-            name="no permanent",
+            name="no_permanent",
             permissions={
                 "directconfigs-read",
                 "helpers-read",
@@ -49,6 +49,7 @@ class Role(db.Model, fsqla.FsRoleMixin):
         )
         app.user_datastore.find_or_create_role(name="admin_user")
         app.user_datastore.find_or_create_role(name="admin_role")
+        app.user_datastore.find_or_create_role(name="dba")
 
 
 class RolesUsers(db.Model):
