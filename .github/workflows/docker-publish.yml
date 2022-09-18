@@ -76,10 +76,8 @@ jobs:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            ghcr.io/${{ github.repository_owner }}/firewall-ui:${{ steps.vars.outputs.tag }}
-            ghcr.io/${{ github.repository_owner }}/firewall-ui:${{ github.ref }}
-            ghcr.io/${{ github.repository_owner }}/firewall-ui:latest
-            
+            ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{env.IMAGE_NAME}}:${{ github.ref }}
+            ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{env.IMAGE_NAME}}:latest           
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             BUILDTIME=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
