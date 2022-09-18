@@ -72,11 +72,9 @@ jobs:
 
       - name: Set output
         id: vars
-        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
-
-      - name: Set lower case
-        id: vars
-        run: echo ::set-output name=image_name::${IMAGE_NAME,,}
+        run: |
+          echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+          echo ::set-output name=image_name::${IMAGE_NAME,,}
         env:
           IMAGE_NAME: '${{ github.repository }}'
 
