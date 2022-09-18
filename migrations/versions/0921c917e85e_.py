@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '0921c917e85e'
+revision = "0921c917e85e"
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -18,8 +18,8 @@ depends_on = None
 
 def upgrade():
     meta = sa.MetaData(bind=op.get_bind())
-    meta.reflect(only=('role',))
-    role = sa.Table('role', meta)
+    meta.reflect(only=("role",))
+    role = sa.Table("role", meta)
     op.bulk_insert(
         role,
         [
@@ -35,9 +35,9 @@ def upgrade():
             },
             {"id": 3, "name": "admin_user", "permissions": ""},
             {"id": 4, "name": "admin_role", "permissions": ""},
+            {"id": 5, "name": "dba", "permissions": ""},
         ],
     )
-
 
 
 def downgrade():
