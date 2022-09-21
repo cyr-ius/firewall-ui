@@ -70,7 +70,7 @@ def create_app(config=None):
     app.wsgi_app = ProxyFix(app.wsgi_app)
 
     # Load default configuration
-    app.config.from_object("app.config")
+    app.config.from_object("src.config")
 
     # Load config file from FLASK_CONF env variable
     if "FLASK_CONF" in os.environ:
@@ -178,7 +178,6 @@ def create_app(config=None):
     )
 
     # Init database
-    @app.before_first_request
     def create_tables():
         app.logger.info("Initialising the table in database.")
         db.create_all()
@@ -187,16 +186,19 @@ def create_app(config=None):
 
         Role().init_db(app)
 
-        if not app.user_datastore.find_user(username=app.config["USERNAME"]):
+        if not app.user_datastore.find_user(username=app.config["APP_USERNAME"]):
             app.user_datastore.create_user(
-                email=app.config["USER_MAIL"],
-                password=hash_password(app.config["PASSWORD"]),
-                username=app.config["USERNAME"],
-                first_name=app.config["USERNAME"],
+                email=app.config["APP_MAIL"],
+                password=hash_password(app.config["APP_PASSWORD"]),
+                username=app.config["APP_USERNAME"],
+                first_name=app.config["APP_USERNAME"],
                 roles=["admin"],
             )
         db.session.commit()
         app.logger.info("Database is ready.")
+
+    with app.app_context():
+        create_tables()
 
     # Register context proccessors
     @app.context_processor

@@ -48,8 +48,8 @@ js_main = Bundle(
 )
 
 js_custom = Bundle(
-    "../app/ressources/js/custom.js", filters="rjsmin", output="js/custom.js"
+    "../src/ressources/js/custom.js", filters="rjsmin", output="js/custom.js"
 )
 css_custom = Bundle(
-    "../app/ressources/css/custom.css", filters="cssmin", output="css/custom.css"
+    "../src/ressources/css/custom.css", filters="cssmin", output="css/custom.css"
 )

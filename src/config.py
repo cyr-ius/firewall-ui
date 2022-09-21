@@ -4,7 +4,7 @@ basedir = os.path.abspath(os.path.abspath(os.path.dirname(__file__)))
 
 # GENERAL SETTINGS
 SITE_NAME = "Firewall UI"
-VERSION = "1.1"
+VERSION = "1.2.0"
 
 # ADMIN
 FLASK_ADMIN_SWATCH = "cerulean"
@@ -58,6 +58,6 @@ SECURITY_TWO_FACTOR_SETUP_TEMPLATE = "profile_authenticate.html"
 SECURITY_CHANGE_PASSWORD_TEMPLATE = "profile_password.html"
 
 # DEFAULT ACCOUNT
-USERNAME = os.getenv("USERNAME", "admin")
-PASSWORD = os.getenv("PASSWORD", "admin")
-USER_MAIL = os.getenv("USER_MAIL", "please_change_me@localhost")
+APP_USERNAME = os.getenv("APP_USERNAME", "admin")
+APP_PASSWORD = os.getenv("APP_PASSWORD", "admin")
+APP_MAIL = os.getenv("APP_MAIL", "please_change_me@localhost")
