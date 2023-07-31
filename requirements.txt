@@ -19,7 +19,7 @@ netifaces==0.11.0
 requests==2.26.0
 bcrypt==3.1.4
 pyqrcode==1.2.1
-cryptography==39.0.1
+cryptography==41.0.2
 bleach==4.1.0
 gunicorn==20.1.0
 qrcode==7.3.1
