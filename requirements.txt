@@ -10,7 +10,7 @@ Flask-SeaSurf>=1.1.1
 Flask-WTF>=1.0.1
 Flask-Admin>=1.6.0
 Flask-Security-Too>=5.0.1
-Flask-Babel>=2.0.0
+Flask-Babel==2.0.0
 cssmin>=0.2.0
 jsmin>=3.0.0
 pyotp>=2.6.0
@@ -21,3 +21,4 @@ pyqrcode==1.2.1
 bleach==4.1.0
 gunicorn==22.0.0
 qrcode==7.3.1
+cryptography
