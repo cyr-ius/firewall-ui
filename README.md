@@ -73,15 +73,15 @@ You will find in the docker directory, a `docker-compose` file which allows you 
 
 #### Administrator of FirewallUI
 
-`USERNAME=`
+`APP_USERNAME=`
 
 #### Password
 
-`PASSWORD=`
+`APP_PASSWORD=`
 
 #### Email
 
-`USER_MAIL=`
+`APP_MAIL=`
 
 #### Run Server
 

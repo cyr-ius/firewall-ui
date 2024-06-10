@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Assets
-flask assets build
+flask --app ./src assets build
 
 # Static ressources
 mkdir -p ./static/img
