@@ -19,6 +19,6 @@ netifaces>=0.11.0
 bcrypt==3.1.4
 pyqrcode==1.2.1
 bleach==4.1.0
-gunicorn==22.0.0
+gunicorn==23.0.0
 qrcode==7.3.1
 cryptography
