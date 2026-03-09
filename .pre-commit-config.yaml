@@ -5,7 +5,7 @@ repos:
       - id: pyupgrade
         args: [--py39-plus]
   - repo: https://github.com/psf/black-pre-commit-mirror
-    rev: 26.1.0
+    rev: 26.3.0
     hooks:
       - id: black
         args:
@@ -13,7 +13,7 @@ repos:
           - --quiet
         files: ^((app|script|tests)/.+)?[^/]+\.py$
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.4.1
+    rev: v2.4.2
     hooks:
       - id: codespell
         args:
