@@ -38,7 +38,7 @@ repos:
         args:
           - --ignore=D100,D101,D102,D103,E501
   - repo: https://github.com/PyCQA/isort
-    rev: 8.0.1
+    rev: 9.0.0a3
     hooks:
       - id: isort
         args: ["--profile", "black"]
